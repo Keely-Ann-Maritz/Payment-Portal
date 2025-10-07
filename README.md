@@ -12,4 +12,20 @@
 
 <br>
 
+## Implemented
+- SSL Certificate
+- Regex
+- Whitelisting
+- Blacklisting
+- JWT Token
+- bcrypt (Salting and Hashing)
+- helmet
+- X-Frame-Options
+
+<br>
+
+## Instructions on how to run the application
+
+<br>
+
 ## References
