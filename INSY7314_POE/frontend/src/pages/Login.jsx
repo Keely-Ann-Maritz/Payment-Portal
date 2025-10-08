@@ -5,14 +5,14 @@ import { Navigate, useNavigate } from "react-router-dom";
 //import styling packages
 //this one particular
 import { useState, useEffect } from 'react'
-
+import { useLayoutEffect } from 'react'
 
 import {
   LoginUser
 } from "../services/apiService.js";
 
 // every page needs to return a default function, so that it can be called elsewhere
-export default function Login() {
+export default function Login({ setShowNavbar }) {
   // this formData is for CREATING A NEW PAYMENT
   const [formData, setFormData] = useState({
     username: "",
@@ -26,6 +26,10 @@ export default function Login() {
     accountnumber: "",
     password: "",
   })
+
+  useLayoutEffect(() => {
+        setShowNavbar(false);
+    }, [])
 
   // this method will handle what to do when user input happens in our form element
   const handleInputChange = (e) => {
@@ -139,7 +143,7 @@ export default function Login() {
               </div>
               <div className="mb-4">
                 <label htmlFor="accountnumber" className="form-label text-muted">Account Number</label>
-                <input className="form-control" type='number' name="accountnumber" placeholder="4873 49385 60938 2866" value={formData.accountnumber} onChange={handleInputChange} required />
+                <input className="form-control" type='number' name="accountnumber" min="0" placeholder="4873 49385 60938 2866" value={formData.accountnumber} onChange={handleInputChange} required />
               </div>
               <div className="mb-4">
                 <label htmlFor="password" className="form-label text-muted">Password</label>

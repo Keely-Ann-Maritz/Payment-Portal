@@ -1,35 +1,36 @@
 // calling in the required imports to handle routing between multiple pages
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navigation from './components/Navigation.jsx'
+import {useState} from 'react'
+
 // call in our pages
-import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import PaymentForm from './pages/PaymentForm.jsx'
 import FormThankYou from './pages/FormThankYou.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-import PaymentHistory from './pages/paymentHistory.jsx'
+import PaymentHistory from './pages/PaymentHistory.jsx'
 import Register from './pages/Register.jsx'
 
 import './App.css'
 
-//import Navigation from './components/Navigation'
-
 function App() {
+  const [showNavbar, setShowNavbar] = useState(true);
   return (
     <Router>
-      <Routes>
-        <Route path="/paymentHistory" element={<ProtectedRoute><PaymentHistory /></ProtectedRoute>} />
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/form" element={<ProtectedRoute><PaymentForm /></ProtectedRoute>} />
-        <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou /></ProtectedRoute>} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
+      {showNavbar && <Navigation />}
+        <Routes>
+          <Route path="/" element={<Login setShowNavbar={setShowNavbar}/>} />
+          <Route path="/login" element={<Login setShowNavbar={setShowNavbar}/>} />
+          <Route path="/register" element={<Register setShowNavbar={setShowNavbar}/>} />
+          <Route path="/paymentHistory" element={<ProtectedRoute><PaymentHistory setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
+          <Route path="/form" element={<ProtectedRoute><PaymentForm setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
+          <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
       </Routes>
     </Router>
   )

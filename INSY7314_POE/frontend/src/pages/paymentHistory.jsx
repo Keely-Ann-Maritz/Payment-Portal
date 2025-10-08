@@ -1,16 +1,21 @@
 // importing required react components
 import { useEffect, useState } from "react";
+import { useLayoutEffect } from 'react'
+
+import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
-// as well as our API methods we created
 import {
     getAllPayments,
     deletePayment,
 } from "../services/apiService.js";
 
-export default function paymentHistory() {
+export default function PaymentHistory({ setShowNavbar }) {
     const [payments, setPayments] = useState([]);
 
+    useLayoutEffect(() => {
+        setShowNavbar(true);
+    }, [])
 
     const fetchPayments = async () => {
         // fetch all payments using the apiService method we created earlier, storing the response in a temp variable

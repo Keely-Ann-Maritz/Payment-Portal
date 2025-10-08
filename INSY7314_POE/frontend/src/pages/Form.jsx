@@ -220,7 +220,7 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                     className="back-btn bg-gray-600 text-white w-full lg:w-[381px] min-h-[53px] rounded-lg"
                     aria-label="confirm button"
                 >
-                    BACK
+                    SKIP
                 </button>
             </div>
         </form>

@@ -10,9 +10,10 @@ import {
 } from "../services/apiService.js";
 
 import React, { useState } from "react";
+import { useLayoutEffect } from 'react'
 
 
-export default function Register() {
+export default function Register({ setShowNavbar }) {
     // this formData is for CREATING A NEW PAYMENT
     const [formData, setFormData] = useState({
         username: "",
@@ -23,6 +24,10 @@ export default function Register() {
     });
 
     const { login } = useAuth();
+
+    useLayoutEffect(() => {
+            setShowNavbar(false);
+        }, [])
 
     // this method will handle what to do when user input happens in our form element
     const handleInputChange = (e) => {
@@ -52,7 +57,7 @@ export default function Register() {
 
         //for account number
         if (!regexAccountNum.test(formData.accountnumber)) {
-            errors.accountnumber = "Account number Must be atleast 8 numbers";
+            errors.accountnumber = "Account number must be atleast 8 numbers";
             accountnumChecked = false;
         }
         else {
@@ -61,7 +66,7 @@ export default function Register() {
 
         // //for Username
         if (!regexUsername.test(formData.username)) {
-            errors.username = "Username can only have letters,numbers and underscores";
+            errors.username = "Username can only have letters, numbers and underscores";
             usernameChecked = false;
         }
         else {
@@ -70,7 +75,7 @@ export default function Register() {
 
         // //for fullname
         if (!regexFullname.test(formData.fullname)) {
-            errors.fullname = "Full name can only have letters and spaces";
+            errors.fullname = "Fullname can only have letters and spaces";
             fullnameChecked = false;
         }
         else {
@@ -79,7 +84,7 @@ export default function Register() {
 
         //for password
         if (!regexPassword.test(formData.password)) {
-            errors.password = "Password must be atleast 8 characterslong and containone 1 uppercase letter, 1 lowercase  letter and a number with no special characters";
+            errors.password = "Password must be atleast 8 characters long and contain 1 uppercase letter, 1 lowercase  letter and a number with no special characters";
             passwordChecked = false;
         }
         else {
@@ -173,13 +178,13 @@ export default function Register() {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="accountnumber" className="form-label text-muted">Account Number</label>
-                                <input className="form-control" type='number' name="accountnumber" placeholder="4873 49385 60938 2866" value={formData.accountnumber} onChange={handleInputChange} required />
+                                <input className="form-control" type='number' name="accountnumber" placeholder="4873 49385 60938 2866" min="0" value={formData.accountnumber} onChange={handleInputChange} required />
                                 <div className="text-danger mt-1 small">{formErrors.accountnumber}</div>
 
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="accountnumber" className="form-label text-muted">ID Number</label>
-                                <input className="form-control" type='number' name="idnumber" placeholder="48734938509382866" value={formData.idnumber} onChange={handleInputChange} required />
+                                <input className="form-control" type='number' name="idnumber" placeholder="48734938509382866" min="0" value={formData.idnumber} onChange={handleInputChange} required />
                                 <div className="text-danger mt-1 small">{formErrors.idnumber}</div>
 
                             </div>

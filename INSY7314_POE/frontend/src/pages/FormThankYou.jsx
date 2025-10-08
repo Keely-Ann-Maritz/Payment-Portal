@@ -1,13 +1,19 @@
 import { useNavigate } from 'react-router-dom'
+import { useLayoutEffect } from 'react'
+
 import '../App.css'
 
 import Head from './Head.jsx'
 import iconComplete from '../assets/icon-complete.svg'
-export default function FormThankYou() {
+export default function FormThankYou({ setShowNavbar }) {
     const navigate = useNavigate();
     const handleClick = () => {
         navigate('/paymentHistory');
     }
+
+    useLayoutEffect(() => {
+        setShowNavbar(false);
+    }, [])
 
     return (
         <section className='thank-you max-md:mt-[91px] lg:ml-[349px] flex flex-col items-center'>

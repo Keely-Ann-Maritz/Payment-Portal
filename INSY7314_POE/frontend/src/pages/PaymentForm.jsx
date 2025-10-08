@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useLayoutEffect } from 'react'
+
 import '../App.css'
 import Head from './Head.jsx'
 import Form from './Form.jsx'
@@ -7,7 +9,7 @@ import {
   createPayment,
 } from "../services/apiService.js";
 
-export default function PaymentForm() {
+export default function PaymentForm({ setShowNavbar }) {
   const [formData, setFormData] = useState({
     paymentTitle: '',
     provider: '',
@@ -34,6 +36,11 @@ export default function PaymentForm() {
   })
   const [formattedCardNumber, setFormattedCardNumber] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
+  
+  useLayoutEffect(() => {
+        setShowNavbar(false);
+    }, [])
+
   useEffect(() => {
     setFormattedCardNumber(prevFormat => {
       prevFormat = formData.cardNumber.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim()
