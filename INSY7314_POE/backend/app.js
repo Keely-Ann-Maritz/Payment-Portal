@@ -3,6 +3,16 @@ const express = require('express');
 require('dotenv').config();
 const { connectToMongo } = require('./services/dbService.js');
 const { securityMiddlewares } = require('./middlewares/securityMiddleware.js');
+const https = require('https');
+const fs = require('fs');
+
+//create a vartible to hold where our certificate lives
+//we did 'npm install fs'
+const options = {
+    key: fs.readFileSync('./certs/localhost+1-key.pem'),
+    cert: fs.readFileSync('./certs/localhost+1.pem')
+
+}
 
 // call in our router
 const testRoutes = require('./routes/testRoutes.js');
@@ -40,6 +50,10 @@ const port = process.env.API_PORT || 5000
 connectToMongo();
 
 // tell the API to start listening on a port we provide (which will eventually move to a .env file)
-app.listen(port, () => {
-    console.log(`The API is now listening on port ${port}.`)
-});
+// app.listen(port, () => {
+//     console.log(`The API is now listening on port ${port}.`)
+// });
+
+https.createServer(options, app).listen(port, () => {
+    console.log(`The API is now SECURELY listening on port ${port}.`)
+})

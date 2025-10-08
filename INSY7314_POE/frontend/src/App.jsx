@@ -8,6 +8,8 @@ import PaymentForm from './pages/PaymentForm.jsx'
 import FormThankYou from './pages/FormThankYou.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import PaymentHistory from './pages/paymentHistory.jsx'
+import Register from './pages/Register.jsx'
+
 import './App.css'
 
 //import Navigation from './components/Navigation'
@@ -16,12 +18,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/paymentHistory" element={<PaymentHistory />} />
-        <Route path="/" element={<PaymentForm />} />
+        <Route path="/paymentHistory" element={<ProtectedRoute><PaymentHistory /></ProtectedRoute>} />
+        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/form" element={<PaymentForm />} />
-        <Route path="/formThankYou" element={<FormThankYou />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/form" element={<ProtectedRoute><PaymentForm /></ProtectedRoute>} />
+        <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou /></ProtectedRoute>} />
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />

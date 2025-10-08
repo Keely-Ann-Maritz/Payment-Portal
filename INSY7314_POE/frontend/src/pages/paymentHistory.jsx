@@ -44,9 +44,9 @@ export default function paymentHistory() {
         <div>
             <h1 className="paymentHistoryHeading">Payment History</h1>
             <div className="container mt-3">
-                <table border="1" className="table table-bordered">
+                <table border="1" className="table table-hover">
                     {/* thead specifies that the following row will be headings */}
-                    <thead class="thead-dark">
+                    <thead className="table-dark">
                         {/* tr denotes a new row */}
                         <tr>
                             {/* and each th represents a heading */}
@@ -80,7 +80,7 @@ export default function paymentHistory() {
                                 <td>{payment.status}</td>
                                 <td>
                                     <button
-                                        className="btn btn-danger"
+                                        className="btn btn-danger "
                                         onClick={() => {
                                             handleDelete(payment._id);
                                         }}

@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 
 // define the blueprint of a user
 const userSchema = new mongoose.Schema({
-    username: {type: String, required: true},
-    password: {type: String, required: true}
+    fullname: String,
+    username: String,
+    idnumber: String,
+    accountnumber: String,
+    password: String
 });
 
 // link it to the database

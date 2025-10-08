@@ -150,7 +150,6 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                 <div className="form--error text-error-color mt-1 text-xs">{formErrors.cardNumber}</div>
             </div>
 
-            <br />
 
             {/* Expiration + CVC */}
             <div className="form--exp_container flex w-full mt-4 mb-6 gap-x-4">

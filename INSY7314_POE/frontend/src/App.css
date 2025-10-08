@@ -18,13 +18,18 @@
   border-radius: 8px;
 }
 
+.backgroundImage {
+  background: #610595;
+  background-image: linear-gradient(to right, rgb(97, 5, 149), rgb(82, 136, 236));
+}
+
 :root {
   --main-color: #FFF;
   --second-color: #21092f;
   --font-color: #21092F;
   --second-font-color: #8F8694;
   --gradient: linear-gradient(163.95deg, #6348FE 4.74%, #610595 88.83%);
-  --font-family: 'Space Grotesk', sans-serif;
+  --font-family: sans-serif;
   --shadow: 0px 39px 60px 0px #00000024;
 }
 

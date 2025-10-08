@@ -16,30 +16,39 @@ const generateJwt = (username) => {
 
 const register = async (req, res) => {
     // pull the required information from the incoming request
-    const { username, password } = req.body;
+    const { username, password, fullname, idnumber, accountnumber } = req.body;
     // before signing the user up, we need to check if their username is already in use
     const exists = await User.findOne({ username: username })
     // if it is, say no
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt)
-    const hashedPassword = bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedidnumber = await bcrypt.hash(idnumber, 10);
+    const hashedAccountNumber = await bcrypt.hash(accountnumber.toString(), 10);
+
     try {
-        User.create({ username: username, password: hashedPassword });
+        await User.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber });
         res.status(200).json({ token: generateJwt(username) });
     } catch (e) {
         res.status(500).json({ error: e.message });
-    }
+    } res.status(500).json({ error: e.message });
+
 };
 
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, accountnumber } = req.body;
     const exists = await User.findOne({ username: username })
+
     // if the user is not present in our collection, let them know to try again
     if (!exists) return res.status(400).json({ message: "Invalid credentials." });
+
     // next, if the user DOES exist, we compare their entered password to what we have on file
-    const matching = await bcrypt.compare(password, exists.password);
+    const matchingPassword = await bcrypt.compare(password, exists.password);
+    const matchingAccountNum = await bcrypt.compare(accountnumber, exists.accountnumber);
+
     // if they don't match, say no
-    if (!matching) return res.status(400).json({ message: "Invalid credentials." });
+    if (!matchingPassword || !matchingAccountNum) return res.status(400).json({ message: "Invalid credentials." });
+
     // otherwise, generate a token and log them in
     res.status(200).json({ token: generateJwt(username) });
 };
