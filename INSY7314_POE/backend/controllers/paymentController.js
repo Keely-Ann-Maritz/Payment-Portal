@@ -1,10 +1,14 @@
 // call in our model, so that we can use it in our methods
 const Payment = require("../models/paymentModel.js");
+const creatingDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
 //call bcrypt for hashing the card number and cvv
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-
+// https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096
+const window = new JSDOM('').window;
+const DOMPurify = creatingDOMPurify(window);
 
 // GET: all payments
 const getPayments = async (req, res) => {
@@ -60,18 +64,22 @@ const createPayment = async (req, res) => {
   }
 
   try {
-    //salting and hashing the card number
+    // sanitzing the input fields
+    const sanitizedPaymentTitle = DOMPurify.sanitize(paymentTitle)
+    const sanitizedSwiftCode= DOMPurify.sanitize(swiftCode)
+    const sanitizedName = DOMPurify.sanitize(name)
 
+    // salting and hashing the card number
     const cardNumSalt = await bcrypt.genSalt(10);
     const hashedCardNumber = await bcrypt.hash(cardNumber.toString(), cardNumSalt);
 
-    //salting and hashing the CVV
+    // salting and hashing the CVV
     const cvcSalt = await bcrypt.genSalt(10);
 
     const hashedCVV = await bcrypt.hash(cvc.toString(), cvcSalt);
 
     // create a new payment instance using the information provided to us
-    const payment = await Payment.create({ paymentTitle, currency, provider, amount, swiftCode, name, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV });
+    const payment = await Payment.create({ paymentTitle: sanitizedPaymentTitle, currency, provider, amount, swiftCode: sanitizedSwiftCode, name: sanitizedName, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV });
     // and return code 201 (created), alongside the object we just added to the database
     res.status(201).json(payment);
   } catch (error) {

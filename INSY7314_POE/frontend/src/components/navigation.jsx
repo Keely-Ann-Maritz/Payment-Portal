@@ -8,6 +8,7 @@ export default function Navigation() {
         navigate('/')
     }
  
+    // https://www.geeksforgeeks.org/reactjs/how-to-make-the-navbar-collapse-on-smaller-screens-in-react-bootstrap/
     return (
         <Navbar expand='lg' className='navbar-glass' style={{backgroundColor: '#610595'}}>
             <Container>

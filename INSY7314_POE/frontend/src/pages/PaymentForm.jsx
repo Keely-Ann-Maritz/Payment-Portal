@@ -188,7 +188,7 @@ export default function PaymentForm({ setShowNavbar }) {
               formErrors={formErrors}
             />
             :
-            <FormThankYou />
+            <FormThankYou setShowNavbar={setShowNavbar}/>
           }
         </div>
       </div>

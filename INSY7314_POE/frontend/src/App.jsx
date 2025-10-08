@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard.jsx'
 import PaymentForm from './pages/PaymentForm.jsx'
 import FormThankYou from './pages/FormThankYou.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-import PaymentHistory from './pages/PaymentHistory.jsx'
+import PaymentHistory from './pages/paymentHistory.jsx'
 import Register from './pages/Register.jsx'
 
 import './App.css'
@@ -18,12 +18,13 @@ function App() {
   const [showNavbar, setShowNavbar] = useState(true);
   return (
     <Router>
+      {/* https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only */}
       {showNavbar && <Navigation />}
         <Routes>
           <Route path="/" element={<Login setShowNavbar={setShowNavbar}/>} />
           <Route path="/login" element={<Login setShowNavbar={setShowNavbar}/>} />
           <Route path="/register" element={<Register setShowNavbar={setShowNavbar}/>} />
-          <Route path="/paymentHistory" element={<ProtectedRoute><PaymentHistory setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
+          <Route path="/PaymentHistory" element={<ProtectedRoute><PaymentHistory setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
           <Route path="/form" element={<ProtectedRoute><PaymentForm setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
           <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
           <Route path="/dashboard" element={
