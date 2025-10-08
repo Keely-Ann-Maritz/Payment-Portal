@@ -19,7 +19,7 @@ const corsOptions = {
 const securityMiddlewares = (app) => {
     app.use(helmet({
         contentSecurityPolicy: {
-            useDefaults: true,
+            useDefaults: false,
             directives: {
                 // allow scripts from the website itself, but from nowhere else
                 'default-src': ["'self'"],
@@ -43,6 +43,21 @@ const securityMiddlewares = (app) => {
         // prevent IE users
         ieNoOpen: true,
     }));
+
+    // Content Security Policy (CSP)
+    // https://useful.codes/content-security-policy-csp-implementation-in-react/
+    app.use(
+        helmet.contentSecurityPolicy({
+            directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            styleSrc: ["'self'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:"],
+            connectSrc: ["'self'", "https://api.example.com"],
+            },
+        })
+    );
 
     app.use(cors(corsOptions));
 };

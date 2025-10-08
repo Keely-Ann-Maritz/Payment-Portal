@@ -54,6 +54,11 @@ connectToMongo();
 //     console.log(`The API is now listening on port ${port}.`)
 // });
 
+// Testing if the CSP works
+app.get('/', (req, res) => {
+  res.send('Hello, your CSP is configured!');
+});
+
 https.createServer(options, app).listen(port, () => {
     console.log(`The API is now SECURELY listening on port ${port}.`)
 })
