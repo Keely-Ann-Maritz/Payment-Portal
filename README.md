@@ -1,4 +1,4 @@
-# INSY7314_POE
+# Payment Portal
 
 <br>
 
@@ -15,12 +15,15 @@
 ## Implemented
 - SSL Certificate
 - Regex
-- Whitelisting
+- Whitelisting Techniques
 - Blacklisting
 - JWT Token
 - bcrypt (Salting and Hashing)
 - helmet
-- X-Frame-Options
+- X-Frame-Options (DENY)
+- Content Security Policy (CSP)
+- Rate limiting
+- DOMPurify
 
 <br>
 
