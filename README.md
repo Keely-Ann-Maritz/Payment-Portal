@@ -47,4 +47,5 @@ The following was not implemented : **express-mongo-sanitize package**
 - https://medium.com/@arunchaitanya/salting-and-hashing-passwords-with-bcrypt-js-a-comprehensive-guide-f5e31de3c40c
 - https://www.geeksforgeeks.org/javascript/how-to-validate-form-using-regular-expression-in-javascript/
 - https://blog.appsignal.com/2024/04/03/how-to-implement-rate-limiting-in-express-for-nodejs.html
+- https://youtu.be/I4CyzX5rhLU?si=qYrn3ATcG-1VYhcd
 
