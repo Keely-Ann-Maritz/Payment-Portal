@@ -142,7 +142,7 @@ export default function PaymentForm({ setShowNavbar }) {
     return errors;
   };
 
-  const noErrors = Object.values(formErrors).every(err => err === "");
+  
 
   const handleInput = (e) => {
     const { name, value } = e.target
@@ -153,9 +153,20 @@ export default function PaymentForm({ setShowNavbar }) {
       }
     })
   }
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setFormErrors(validate(formData))
+
+    // Form validation 
+    const formErrors = validate(formData)
+
+    // Stopping the form from submitting, if there are empty fields and validation errors displaying
+    // https://medium.com/@ddzik09/handling-forms-in-react-validation-and-error-handling-7c9391e2046b
+    if (Object.keys(formErrors).length > 0) {
+      setFormErrors(formErrors);
+      return;
+    }
+
     await createPayment(formData);
     const dateMonth = formData.month
     const dateYear = formData.year
@@ -178,7 +189,7 @@ export default function PaymentForm({ setShowNavbar }) {
 
         {/* Form Section */}
         <div className="lg:w-1/2 flex items-center justify-center lg:px-20 py-8 lg:py-0">
-          {!formSubmitted || !noErrors ?
+          {!formSubmitted ?
             <Form
               formSubmitted={formSubmitted}
               handleSubmit={handleSubmit}
