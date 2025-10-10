@@ -1,5 +1,3 @@
-// calling in AuthContext so we can use the LOGIN method
-import { useAuth } from "../context/AuthContext.jsx";
 
 // calling in Navigate so we can redirect the user to the dashboard
 import { Navigate, useNavigate } from "react-router-dom";
@@ -23,11 +21,10 @@ export default function Register({ setShowNavbar }) {
         password: "",
     });
 
-    const { login } = useAuth();
 
     useLayoutEffect(() => {
-            setShowNavbar(false);
-        }, [])
+        setShowNavbar(false);
+    }, [])
 
     // this method will handle what to do when user input happens in our form element
     const handleInputChange = (e) => {
@@ -99,7 +96,6 @@ export default function Register({ setShowNavbar }) {
             errors.idnumber = "";
         }
 
-        setFormErrors(errors);
 
 
         // call our wonderful API method to create a new payments
@@ -111,11 +107,14 @@ export default function Register({ setShowNavbar }) {
                 // and reset the form
                 setFormData({ fullname: "", username: "", idnumber: "", accountnumber: "", password: "" });
                 // navigate to Login Screen
-                handleLogin()
+                handleRegister()
             } catch (error) {
-                errors.loginError = error.response.data.message || "User details is incorrect!";
+                if (error.response.status == 500) {
+                    errors.fullname = error.response.data.message || "User details couldn't store";
+                }
             }
         }
+        setFormErrors(errors);
 
 
     };
@@ -129,13 +128,6 @@ export default function Register({ setShowNavbar }) {
         navigate("/Login");
     };
 
-    const handleLogin = () => {
-        // .. we login
-        login();
-        // and go where we need to go
-        navigate("/form");
-    };
-
     const [formErrors, setFormErrors] = useState({
         username: "",
         accountnumber: "",
@@ -143,12 +135,6 @@ export default function Register({ setShowNavbar }) {
         fullname: "",
         idnumber: ""
     })
-
-    const goToRegister = () => {
-
-        // and go where we need to go
-        navigate("/register");
-    };
 
     return (
         // <div>
@@ -178,13 +164,13 @@ export default function Register({ setShowNavbar }) {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="accountnumber" className="form-label text-muted">Account Number</label>
-                                <input className="form-control" type='number' name="accountnumber" placeholder="4873 49385 60938 2866" min="0" value={formData.accountnumber} onChange={handleInputChange} required />
+                                <input className="form-control" type='number' name="accountnumber" placeholder="34783479" min="0" value={formData.accountnumber} onChange={handleInputChange} required />
                                 <div className="text-danger mt-1 small">{formErrors.accountnumber}</div>
 
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="accountnumber" className="form-label text-muted">ID Number</label>
-                                <input className="form-control" type='number' name="idnumber" placeholder="48734938509382866" min="0" value={formData.idnumber} onChange={handleInputChange} required />
+                                <input className="form-control" type='number' name="idnumber" placeholder="4873493850938" min="0" value={formData.idnumber} onChange={handleInputChange} required />
                                 <div className="text-danger mt-1 small">{formErrors.idnumber}</div>
 
                             </div>

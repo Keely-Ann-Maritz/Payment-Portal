@@ -28,8 +28,8 @@ export default function Login({ setShowNavbar }) {
   })
 
   useLayoutEffect(() => {
-        setShowNavbar(false);
-    }, [])
+    setShowNavbar(false);
+  }, [])
 
   // this method will handle what to do when user input happens in our form element
   const handleInputChange = (e) => {
@@ -68,15 +68,6 @@ export default function Login({ setShowNavbar }) {
     let passwordChecked = true;
     let errors = {};
 
-
-    // if (!regexAccountNum.test(formData.accountnumber)) {
-    //   errors.accountnumber = "User details incorrect";
-    //   accountnumChecked = false;
-    // }
-    // else {
-    //   errors.username = "";
-    // }
-
     // //for Username
     if (!regexUsername.test(formData.username)) {
       errors.accountnumber = "User details incorrect";
@@ -100,15 +91,25 @@ export default function Login({ setShowNavbar }) {
         console.log("LoginUser response:", checkLogin);
 
         if (checkLogin && checkLogin.token) {
+          const token = checkLogin.token;
+          sessionStorage.setItem("authToken", token);
+          sessionStorage.setItem("username", formData.username);
+
           alert("User Logged in!");
           setFormData({ username: "", accountnumber: "", password: "" });
           handleLogin()
         } else {
+
           errors.loginError = "Backend Error";
 
         }
       } catch (error) {
-        errors.loginError = error.response.data.message || "User details is incorrect!";
+        if (error.response.status == 429) {
+          errors.loginError = error.response.data.message || "Too many attempts! Try again in 5 minutes";
+        } else {
+          errors.loginError = error.response.data.message || "User details is incorrect!";
+
+        }
       }
     }
     //calling the errors
@@ -139,11 +140,11 @@ export default function Login({ setShowNavbar }) {
                 <div className="text-danger mt-1 small">{formErrors.accountnumber}</div>
                 <div className="text-danger mt-1 small">{formErrors.password}</div>
                 <label type="text" className="form-label text-muted">Username</label>
-                <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleInputChange} required className="form-control" />
+                <input type="text" name="username" placeholder="John87" value={formData.username} onChange={handleInputChange} required className="form-control" />
               </div>
               <div className="mb-4">
                 <label htmlFor="accountnumber" className="form-label text-muted">Account Number</label>
-                <input className="form-control" type='number' name="accountnumber" min="0" placeholder="4873 49385 60938 2866" value={formData.accountnumber} onChange={handleInputChange} required />
+                <input className="form-control" type='number' name="accountnumber" min="0" placeholder="34783479" value={formData.accountnumber} onChange={handleInputChange} required />
               </div>
               <div className="mb-4">
                 <label htmlFor="password" className="form-label text-muted">Password</label>

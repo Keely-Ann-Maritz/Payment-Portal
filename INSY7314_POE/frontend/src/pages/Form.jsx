@@ -198,7 +198,6 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                     <div className="form--error text-error-color mt-1 text-xs">{formErrors.cvc}</div>
                 </div>
             </div>
-
             <br />
 
             <div className="flex gap-4 mt-6">
@@ -208,19 +207,19 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                     className="submit-btn bg-second-color text-main-color w-full lg:w-[381px] min-h-[53px] rounded-lg"
                     aria-label="confirm button"
                 >
-                    PAY NOW
+                    Pay Now
                 </button>
 
                 <br />
 
-                {/* Back */}
+                {/* Back button*/}
                 <button
                     type="button"
                     onClick={() => navigate("/paymentHistory")}
                     className="back-btn bg-gray-600 text-white w-full lg:w-[381px] min-h-[53px] rounded-lg"
                     aria-label="confirm button"
                 >
-                    SKIP
+                    Skip
                 </button>
             </div>
         </form>

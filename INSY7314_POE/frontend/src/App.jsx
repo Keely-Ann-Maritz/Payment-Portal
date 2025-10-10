@@ -1,7 +1,7 @@
 // calling in the required imports to handle routing between multiple pages
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navigation from './components/Navigation.jsx'
-import {useState} from 'react'
+import { useState } from 'react'
 
 // call in our pages
 import Login from './pages/Login.jsx'
@@ -20,18 +20,18 @@ function App() {
     <Router>
       {/* https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only */}
       {showNavbar && <Navigation />}
-        <Routes>
-          <Route path="/" element={<Login setShowNavbar={setShowNavbar}/>} />
-          <Route path="/login" element={<Login setShowNavbar={setShowNavbar}/>} />
-          <Route path="/register" element={<Register setShowNavbar={setShowNavbar}/>} />
-          <Route path="/PaymentHistory" element={<ProtectedRoute><PaymentHistory setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
-          <Route path="/form" element={<ProtectedRoute><PaymentForm setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
-          <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou setShowNavbar={setShowNavbar}/></ProtectedRoute>} />
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
+      <Routes>
+        <Route path="/" element={<Login setShowNavbar={setShowNavbar} />} />
+        <Route path="/login" element={<Login setShowNavbar={setShowNavbar} />} />
+        <Route path="/register" element={<Register setShowNavbar={setShowNavbar} />} />
+        <Route path="/PaymentHistory" element={<ProtectedRoute><PaymentHistory setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
+        <Route path="/form" element={<ProtectedRoute><PaymentForm setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
+        <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
       </Routes>
     </Router>
   )
