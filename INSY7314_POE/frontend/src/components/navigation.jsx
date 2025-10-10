@@ -53,6 +53,12 @@ export default function Navigation() {
                         >
                             Logout
                         </Nav.Link>
+                        <Nav.Link
+                            onClick={handleLogout}
+                            className='text-white hover-text-white transition-colors'
+                        >
+                            {sessionStorage.getItem("username")}
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
