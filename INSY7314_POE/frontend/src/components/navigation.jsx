@@ -19,7 +19,7 @@ export default function Navigation() {
         navigate('/')
     }
 
-    // Navigation bar (GeeksforGeeks,2025)
+    // Navigation bar which will display on teh payment history page(GeeksforGeeks,2025)
     return (
         <Navbar expand='lg' className='navbar-glass' style={{ backgroundColor: '#610595' }}>
             <Container>

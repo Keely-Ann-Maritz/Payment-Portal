@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// first, we need to create a schema, which is like a template for our object 
+// We create a mongoose schema that will be a map of all the details for a payment and their datatype, and helps against NoSQL injection
 // Added a status field which is assigned to pending as default (Maske, 2020)
 const paymentSchema = new mongoose.Schema({
     paymentTitle: String,
@@ -20,11 +20,10 @@ const paymentSchema = new mongoose.Schema({
     username: String
 });
 
-// we then define that the object references that schema, and give it a name
+// we then define that the object references the payment schema
 const Payment = mongoose.model('Payment', paymentSchema);
 
-// finally we export our object, so that we can reference it in other files
-// we will use our object in the controllers, so that we can interface with the database
+// finally we export our payment model object, so that we can reference it in other files
 module.exports = Payment;
 
 // References

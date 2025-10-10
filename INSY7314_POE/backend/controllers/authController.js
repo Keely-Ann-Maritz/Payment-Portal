@@ -1,4 +1,6 @@
+//importing bcrypt package to hash the passsword and account number
 const bcrypt = require('bcryptjs');
+// importing the json web token package since we are creating a token to generate a token upon login
 const jwt = require('jsonwebtoken');
 const { invalidateToken } = require('../middlewares/authMiddleware.js');
 const User = require('../models/userModel.js');
@@ -13,13 +15,12 @@ const generateJwt = (username) => {
     });
     // and returns it.
 };
-
 const register = async (req, res) => {
-    // pull the required information from the incoming request
+    // request the required register information from the incoming register request
     const { username, password, fullname, idnumber, accountnumber } = req.body;
     // before signing the user up, we need to check if their username is already in use
     const exists = await User.findOne({ username: username })
-    // if it is, say no
+    // if it is, sent a error status 400 informting the user that the username has been taken
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -27,29 +28,33 @@ const register = async (req, res) => {
     const hashedAccountNumber = await bcrypt.hash(accountnumber.toString(), 10);
 
     try {
+        // method that stores the uesr registeration details in the database
         await User.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber });
         res.status(200).json({ token: generateJwt(username) });
     } catch (e) {
+        //if user doesnt store , return teh error message
         res.status(500).json({ error: e.message });
     } res.status(500).json({ error: e.message });
 
 };
 
 const login = async (req, res) => {
+    //requesting the login details
     const { username, password, accountnumber } = req.body;
+    //Finding the username that matches one in the database
     const exists = await User.findOne({ username: username })
 
     // if the user is not present in our collection, let them know to try again
     if (!exists) return res.status(400).json({ message: "Invalid credentials." });
 
-    // next, if the user DOES exist, we compare their entered password to what we have on file (Chaitanya, 2023)
+    // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
     const matchingPassword = await bcrypt.compare(password, exists.password);
     const matchingAccountNum = await bcrypt.compare(accountnumber, exists.accountnumber);
 
-    // if they don't match, say no
+    // if if the password or account number doesnt match, inform the user with a message under the status code 400
     if (!matchingPassword || !matchingAccountNum) return res.status(400).json({ message: "Invalid credentials." });
 
-    // otherwise, generate a token and log them in
+    // if credentials do match, generate and send a JWT token generated from the username, to the front end 
     res.status(200).json({ token: generateJwt(username) });
 };
 
@@ -58,11 +63,11 @@ const logout = async (req, res) => {
     const authHeader = req.headers['authorization'];
     // grab the token (Bearer: <token>)
     const token = authHeader.split(" ")[1];
-    // check if there is indeed a token, if not, yell at the user
+    // check if there is indeed a token, if not, send an error back to the user
     if (!token) return res.status(400).json({ message: "You need to be logged in before you can log out" });
-    // otherwise invalidate the token
+    // oif a token exist, invalidate it
     invalidateToken(token);
-    // and log em out
+    // and they can now be logged out
     res.status(200).json({ message: "Logged out successfully." });
 };
 

@@ -2,25 +2,23 @@
 import { useAuth } from "../context/AuthContext.jsx";
 // calling in Navigate so we can redirect the user to the dashboard
 import { Navigate, useNavigate } from "react-router-dom";
-//import styling packages
-//this one particular
 import { useState, useEffect } from 'react'
 import { useLayoutEffect } from 'react'
 
+//importing the login user method that is called in the api service
 import {
   LoginUser
 } from "../services/apiService.js";
 
-// every page needs to return a default function, so that it can be called elsewhere
 // Hiding navigation bar (sahilatahar, 2023)
 export default function Login({ setShowNavbar }) {
-  // this formData is for CREATING A NEW PAYMENT
+  // this formData is for the login credentials
   const [formData, setFormData] = useState({
     username: "",
     accountnumber: "",
     password: "",
   });
-
+  //This for displaying errors
   const [formErrors, setFormErrors] = useState({
     loginError: "",
     username: "",
@@ -89,17 +87,19 @@ export default function Login({ setShowNavbar }) {
 
     if (passwordChecked && usernameChecked) {
       try {
+        //passing the form data t be checked to see if the user credentials match
         const checkLogin = await LoginUser(formData);
-        console.log("LoginUser response:", checkLogin);
 
         // (The Debug Arena, 2024)
         if (checkLogin && checkLogin.token) {
           const token = checkLogin.token;
+          //settting the token and the username if the details is a match
           sessionStorage.setItem("authToken", token);
           sessionStorage.setItem("username", formData.username);
-
+          //telling the user that they have been logged in
           alert("User Logged in!");
           setFormData({ username: "", accountnumber: "", password: "" });
+          // authenticating the user and taking them to the add payment form
           handleLogin()
         } else {
 
@@ -109,6 +109,7 @@ export default function Login({ setShowNavbar }) {
       } 
       // (The Debug Arena, 2025)
       catch (error) {
+        //if the rate limit is reached for the endpoint the user would be informed
         if (error.response.status == 429) {
           errors.loginError = error.response.data.message || "Too many attempts! Try again in 5 minutes";
         } else {
@@ -117,11 +118,11 @@ export default function Login({ setShowNavbar }) {
         }
       }
     }
-    // calling the errors
+    // calling the errors here after all posible errors have been set
     setFormErrors(errors);
   };
 
-  // Login form (Hallale,2024)
+  // Login form html and inputs(Hallale,2024)
   return (
     <div className=" backgroundImage bg-light d-flex align-items-center justify-content-center vh-100  " >
       <div className="card shadow-lg w-100" style={{ maxWidth: "480px" }}>

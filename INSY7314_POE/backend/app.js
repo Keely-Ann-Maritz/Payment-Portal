@@ -59,6 +59,7 @@ app.get('/', (req, res) => {
   res.send('Hello, your CSP is configured!');
 });
 
+//The port that the secure connection listen on
 https.createServer(options, app).listen(port, () => {
     console.log(`The API is now SECURELY listening on port ${port}.`)
 })

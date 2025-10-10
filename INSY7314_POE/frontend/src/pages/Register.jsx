@@ -36,13 +36,14 @@ export default function Register({ setShowNavbar }) {
         // prevent the button from being pressed automatically when it is created by React
         e.preventDefault();
 
-        //implementing regex patterns for the different (GeeksforGeeks, 2025)
+        //implementing regex patterns for the different inputs that needs to be met (GeeksforGeeks, 2025)
         let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         let regexIdNumber = /^\d{13}$/;
         let regexUsername = /^[a-zA-Z][a-zA-Z0-9_]{3,}$/;
         let regexAccountNum = /^\d{8,}$/;
         let regexFullname = /^[a-zA-Z\s-]+$/;
 
+        //to see which input has been checked
         let fullnameChecked = true;;
         let usernameChecked = true;;
         let idnumChecked = true;;
@@ -94,7 +95,7 @@ export default function Register({ setShowNavbar }) {
             errors.idnumber = "";
         }
 
-        // call our wonderful API method to create a new payments
+        // call our API method after we have checked that all inputs meet their regex pattern, and then to create a new payments
         if (passwordChecked && idnumChecked && usernameChecked && fullnameChecked && accountnumChecked) {
             try {
                 const checkRegister = await RegisterUser(formData);
@@ -116,12 +117,11 @@ export default function Register({ setShowNavbar }) {
     // set up for navigation
     const navigate = useNavigate();
 
-    // then in our method to handle a new login
+    // then in our method we navigate to the login
     const handleRegister = () => {
-        // and go where we need to go
         navigate("/Login");
     };
-
+    //registration errors variables
     const [formErrors, setFormErrors] = useState({
         username: "",
         accountnumber: "",
