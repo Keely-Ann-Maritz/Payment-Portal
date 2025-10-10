@@ -9,7 +9,7 @@
 <br>
 
 ## YouTube video
-* [Part 2 Demonstration Video]()
+* [Part 2 Demonstration Video](https://youtu.be/CcHt6UGd3lw)
 
 <br>
 
