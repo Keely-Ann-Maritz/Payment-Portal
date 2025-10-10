@@ -56,7 +56,7 @@ The following was not implemented : **express-mongo-sanitize package**
 6. Once logged in, enter the payment information and card details.
 7. Select the <b>Pay Now</b> button to make the payment.
 8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history. 
-9. If the user does not want to make a payment, select the <b>SKIP</b> button.
+9. If the user does not want to make a payment, select the <b>Skip</b> button.
 10. View all the payments on the Payment History page.
 11. Select the <b>Delete</b> button, if you wish to delete a payment.
 12. Use the navigation bar to navigate to the different pages:
