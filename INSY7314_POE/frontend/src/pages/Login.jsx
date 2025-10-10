@@ -12,6 +12,7 @@ import {
 } from "../services/apiService.js";
 
 // every page needs to return a default function, so that it can be called elsewhere
+// Hiding navigation bar (sahilatahar, 2023)
 export default function Login({ setShowNavbar }) {
   // this formData is for CREATING A NEW PAYMENT
   const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ export default function Login({ setShowNavbar }) {
     password: "",
   })
 
+  // Hiding the navigation bar for this page (sahilatahar, 2023)
   useLayoutEffect(() => {
     setShowNavbar(false);
   }, [])
@@ -55,20 +57,20 @@ export default function Login({ setShowNavbar }) {
   };
 
   // this method handles what happens when the submit button is pressed
-  //https://stackoverflow.com/questions/76508218/exporting-axios-response-using-react-js
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Preventing against SQL Injection (GeeksforGeeks, 2025)
     let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     let regexUsername = /^[a-zA-Z][a-zA-Z0-9_]{3,}$/;
     let regexAccountNum = /^\d{8,}$/;
 
-    // let accountnumChecked = true;;
+    
     let usernameChecked = true;;
     let passwordChecked = true;
     let errors = {};
 
-    // //for Username
+    // for Username
     if (!regexUsername.test(formData.username)) {
       errors.accountnumber = "User details incorrect";
       usernameChecked = false;
@@ -90,6 +92,7 @@ export default function Login({ setShowNavbar }) {
         const checkLogin = await LoginUser(formData);
         console.log("LoginUser response:", checkLogin);
 
+        // (The Debug Arena, 2024)
         if (checkLogin && checkLogin.token) {
           const token = checkLogin.token;
           sessionStorage.setItem("authToken", token);
@@ -103,7 +106,9 @@ export default function Login({ setShowNavbar }) {
           errors.loginError = "Backend Error";
 
         }
-      } catch (error) {
+      } 
+      // (The Debug Arena, 2025)
+      catch (error) {
         if (error.response.status == 429) {
           errors.loginError = error.response.data.message || "Too many attempts! Try again in 5 minutes";
         } else {
@@ -112,19 +117,12 @@ export default function Login({ setShowNavbar }) {
         }
       }
     }
-    //calling the errors
+    // calling the errors
     setFormErrors(errors);
   };
 
-
-  //https://bootstrapexamples.com/@prajwal/sign-in-form-with-bootstrap-5
-
+  // Login form (Hallale,2024)
   return (
-    // <div>
-    //   <h1>Login Page</h1>
-    //   <button>Login</button>
-    // </div>s
-    //https://bootstrapexamples.com/@prajwal/sign-in-form-with-bootstrap-5
     <div className=" backgroundImage bg-light d-flex align-items-center justify-content-center vh-100  " >
       <div className="card shadow-lg w-100" style={{ maxWidth: "480px" }}>
         <div className="card-body">
@@ -163,3 +161,10 @@ export default function Login({ setShowNavbar }) {
     </div>
   );
 }
+
+// References
+// The Debug Arena, 2025.Login Authentication using JWT token in React JS, Node JS and Mongo DB || MERN stack. [video online] Available at: <https://www.youtube.com/watch?v=yc5eQevcLso&t=1224s> [Accessed 22 September 2025].
+// Hallale,P.,2024.Sign in form with bootstrap 5. [online] Available at: <https://bootstrapexamples.com/@prajwal/sign-in-form-with-bootstrap-5> [Accessed 19 September 2025].
+// GeeksforGeeks, 2025.JavaScript - How to Validate Form Using Regular Expression. [online] Available at: <https://www.geeksforgeeks.org/javascript/how-to-validate-form-using-regular-expression-in-javascript/> [Accessed 3 October 2025].
+// The Debug Arena, 2024.Login in React using JWT token in Node js || Login and Register Authentication React JS. [video online]. Available at: <https://www.youtube.com/watch?v=B8FyLzNA2uk&t=647s> [Accessed 9 October 2025].
+// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].

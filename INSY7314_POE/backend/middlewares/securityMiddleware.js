@@ -1,7 +1,3 @@
-// cors - configuration options for an express API
-// csurf - how it helps for CSRF attacks, and how to configure it for a node.js API
-// helmet - how it helps when it comes to header protections and clickjacking
-// rate limiting, brute force prevention, and what libraries can be used to implement this for a node.js API
 
 const helmet = require('helmet');
 const cors = require('cors');
@@ -15,7 +11,7 @@ const corsOptions = {
     credentials: true,
 };
 
-
+// Setting the default Content Security Policy (CSP) to false (usefulcodes, 2025)
 const securityMiddlewares = (app) => {
     app.use(helmet({
         contentSecurityPolicy: {
@@ -23,7 +19,7 @@ const securityMiddlewares = (app) => {
             directives: {
                 // allow scripts from the website itself, but from nowhere else
                 'default-src': ["'self'"],
-                // prevent our website from being embedded on another website
+                // implementing X-Frame Options to prevent Cross-Site Scripting 
                 'frame-ancestors': ["'none'"],
             }
         },
@@ -45,7 +41,7 @@ const securityMiddlewares = (app) => {
     }));
 
     // Content Security Policy (CSP)
-    // https://useful.codes/content-security-policy-csp-implementation-in-react/
+    // using the following directives and helmet to prevent Cross-Site Scripting (usefulcodes, 2025)
     app.use(
         helmet.contentSecurityPolicy({
             directives: {
@@ -63,3 +59,6 @@ const securityMiddlewares = (app) => {
 };
 
 module.exports = { securityMiddlewares }
+
+// References
+// usefulcodes, 2025.Content Security Policy (CSP) Implementation in React. [online] Available at: <https://useful.codes/content-security-policy-csp-implementation-in-react/> [Accessed 7 October 2025].

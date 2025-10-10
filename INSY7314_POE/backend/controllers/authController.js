@@ -21,7 +21,7 @@ const register = async (req, res) => {
     const exists = await User.findOne({ username: username })
     // if it is, say no
     if (exists) return res.status(400).json({ message: "User already exists." });
-    // if not, lets hash their password (by providing their password, and the number of random iterations to salt)
+    // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
     const hashedPassword = await bcrypt.hash(password, 10);
     const hashedidnumber = await bcrypt.hash(idnumber, 10);
     const hashedAccountNumber = await bcrypt.hash(accountnumber.toString(), 10);
@@ -42,7 +42,7 @@ const login = async (req, res) => {
     // if the user is not present in our collection, let them know to try again
     if (!exists) return res.status(400).json({ message: "Invalid credentials." });
 
-    // next, if the user DOES exist, we compare their entered password to what we have on file
+    // next, if the user DOES exist, we compare their entered password to what we have on file (Chaitanya, 2023)
     const matchingPassword = await bcrypt.compare(password, exists.password);
     const matchingAccountNum = await bcrypt.compare(accountnumber, exists.accountnumber);
 
@@ -67,3 +67,7 @@ const logout = async (req, res) => {
 };
 
 module.exports = { register, login, logout };
+
+// References 
+// Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
+

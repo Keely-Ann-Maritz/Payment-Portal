@@ -1,12 +1,15 @@
 // call in our model, so that we can use it in our methods
 const Payment = require("../models/paymentModel.js");
+
+// calling DOMPurify (Das, 2025)
 const creatingDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
-//call bcrypt for hashing the card number and cvv
+
+// call bcrypt for hashing the card number and cvv/cvc (Chaitanya, 2023)
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-// https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096
+// Creating a window for DOMPurify (Das, 2025)
 const window = new JSDOM('').window;
 const DOMPurify = creatingDOMPurify(window);
 
@@ -64,21 +67,22 @@ const createPayment = async (req, res) => {
   }
 
   try {
-    // sanitzing the input fields
+    // sanitzing the input fields (Das, 2025)
     const sanitizedPaymentTitle = DOMPurify.sanitize(paymentTitle)
     const sanitizedSwiftCode= DOMPurify.sanitize(swiftCode)
     const sanitizedName = DOMPurify.sanitize(name)
 
-    // salting and hashing the card number
+    // salting and hashing the card number (Chaitanya, 2023)
     const cardNumSalt = await bcrypt.genSalt(10);
     const hashedCardNumber = await bcrypt.hash(cardNumber.toString(), cardNumSalt);
 
-    // salting and hashing the CVV
+    // salting and hashing the CVC/CVV (Chaitanya, 2023)
     const cvcSalt = await bcrypt.genSalt(10);
 
     const hashedCVV = await bcrypt.hash(cvc.toString(), cvcSalt);
 
-    // create a new payment instance using the information provided to us
+    // create a new payment instance using the information provided to us (Chaitanya, 2023)
+    // using the DOMPurify sanitized variables (Das, 2025)
     const payment = await Payment.create({ paymentTitle: sanitizedPaymentTitle, currency, provider, amount, swiftCode: sanitizedSwiftCode, name: sanitizedName, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV });
     // and return code 201 (created), alongside the object we just added to the database
     res.status(201).json(payment);
@@ -152,3 +156,8 @@ module.exports = {
   updatePayment,
   deletePayment,
 };
+
+// References 
+// Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
+// Das, A.,2025.7 Best Practices for Sanitizing Input in Node.js. [online] Available at: < https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096> [Accessed 6 October 2025].
+

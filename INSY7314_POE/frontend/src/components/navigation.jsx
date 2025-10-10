@@ -1,20 +1,25 @@
+// Importing the navigation bar and navigation (GeeksforGeeks,2025)
 import { Link, useNavigate } from 'react-router-dom'
 import { Navbar, Nav, Container } from 'react-bootstrap'
+
+// Importing authorization (The Debug Arena, 2025)
 import { useAuth } from "../context/AuthContext.jsx";
 
 
 export default function Navigation() {
+    // Using the navigation (GeeksforGeeks,2025)
     const navigate = useNavigate()
-
+    // Logging out variable (The Debug Arena, 2025)
     const { logout } = useAuth();
 
+    // Logout method (The Debug Arena, 2025)
     const handleLogout = () => {
         sessionStorage.clear();
         logout()
         navigate('/')
     }
 
-    // https://www.geeksforgeeks.org/reactjs/how-to-make-the-navbar-collapse-on-smaller-screens-in-react-bootstrap/
+    // Navigation bar (GeeksforGeeks,2025)
     return (
         <Navbar expand='lg' className='navbar-glass' style={{ backgroundColor: '#610595' }}>
             <Container>
@@ -54,3 +59,7 @@ export default function Navigation() {
         </Navbar>
     )
 }
+
+// References
+// GeeksforGeeks,2025. How to Make the Navbar Collapse on Smaller Screens in React Bootstrap. [online] Available at: <https://www.geeksforgeeks.org/reactjs/how-to-make-the-navbar-collapse-on-smaller-screens-in-react-bootstrap/> [Accessed 3 October 2025].
+// The Debug Arena, 2025.Login Authentication using JWT token in React JS, Node JS and Mongo DB || MERN stack. [video online] Available at: <https://www.youtube.com/watch?v=yc5eQevcLso&t=1224s> [Accessed 22 September 2025].

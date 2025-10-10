@@ -1,16 +1,15 @@
-
 // calling in Navigate so we can redirect the user to the dashboard
 import { Navigate, useNavigate } from "react-router-dom";
-//import styling packages
-//this one particular
+// import styling packages
 import {
     RegisterUser
 } from "../services/apiService.js";
 
+// Hiding navigation bar (sahilatahar, 2023)
 import React, { useState } from "react";
 import { useLayoutEffect } from 'react'
 
-
+// Hiding navigation bar (sahilatahar, 2023)
 export default function Register({ setShowNavbar }) {
     // this formData is for CREATING A NEW PAYMENT
     const [formData, setFormData] = useState({
@@ -21,7 +20,7 @@ export default function Register({ setShowNavbar }) {
         password: "",
     });
 
-
+    // Hiding navigation bar on this page (sahilatahar, 2023)
     useLayoutEffect(() => {
         setShowNavbar(false);
     }, [])
@@ -37,8 +36,7 @@ export default function Register({ setShowNavbar }) {
         // prevent the button from being pressed automatically when it is created by React
         e.preventDefault();
 
-        //implementing regex patterns for the different
-        //https://www.geeksforgeeks.org/javascript/how-to-validate-form-using-regular-expression-in-javascript/
+        //implementing regex patterns for the different (GeeksforGeeks, 2025)
         let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         let regexIdNumber = /^\d{13}$/;
         let regexUsername = /^[a-zA-Z][a-zA-Z0-9_]{3,}$/;
@@ -52,7 +50,7 @@ export default function Register({ setShowNavbar }) {
         let passwordChecked = true;
         let errors = {};
 
-        //for account number
+        // for account number 
         if (!regexAccountNum.test(formData.accountnumber)) {
             errors.accountnumber = "Account number must be atleast 8 numbers";
             accountnumChecked = false;
@@ -61,7 +59,7 @@ export default function Register({ setShowNavbar }) {
             errors.accountnumber = "";
         }
 
-        // //for Username
+        // for Username
         if (!regexUsername.test(formData.username)) {
             errors.username = "Username can only have letters, numbers and underscores";
             usernameChecked = false;
@@ -70,7 +68,7 @@ export default function Register({ setShowNavbar }) {
             errors.username = "";
         }
 
-        // //for fullname
+        // for fullname
         if (!regexFullname.test(formData.fullname)) {
             errors.fullname = "Fullname can only have letters and spaces";
             fullnameChecked = false;
@@ -79,7 +77,7 @@ export default function Register({ setShowNavbar }) {
             errors.fullname = "";
         }
 
-        //for password
+        // for password
         if (!regexPassword.test(formData.password)) {
             errors.password = "Password must be atleast 8 characters long and contain 1 uppercase letter, 1 lowercase  letter and a number with no special characters";
             passwordChecked = false;
@@ -87,7 +85,7 @@ export default function Register({ setShowNavbar }) {
         else {
             errors.password = "";
         }
-        //for ID number
+        // for ID number
         if (!regexIdNumber.test(formData.idnumber)) {
             errors.idnumber = "ID number must be 13 numbers";
             idnumChecked = false;
@@ -95,8 +93,6 @@ export default function Register({ setShowNavbar }) {
         else {
             errors.idnumber = "";
         }
-
-
 
         // call our wonderful API method to create a new payments
         if (passwordChecked && idnumChecked && usernameChecked && fullnameChecked && accountnumChecked) {
@@ -115,14 +111,12 @@ export default function Register({ setShowNavbar }) {
             }
         }
         setFormErrors(errors);
-
-
     };
 
     // set up for navigation
     const navigate = useNavigate();
 
-    // then in our method to handle a new login...
+    // then in our method to handle a new login
     const handleRegister = () => {
         // and go where we need to go
         navigate("/Login");
@@ -136,11 +130,8 @@ export default function Register({ setShowNavbar }) {
         idnumber: ""
     })
 
+    // Register Form (Hallale, 2024)
     return (
-        // <div>
-        //   <h1>Login Page</h1>
-        //   <button onClick={handleLogin}>Login</button>
-        // </div>
         <div className=" backgroundImage  bg-light d-flex align-items-center justify-content-center vh-100">
             <div className="card shadow-lg w-100" style={{ maxWidth: "480px" }}>
                 <div className="card-body">
@@ -194,3 +185,7 @@ export default function Register({ setShowNavbar }) {
 
     );
 }
+
+// References 
+// GeeksforGeeks, 2025.JavaScript - How to Validate Form Using Regular Expression. [online] Available at: <https://www.geeksforgeeks.org/javascript/how-to-validate-form-using-regular-expression-in-javascript/> [Accessed 3 October 2025].
+// Hallale, P., 2024.Sign in form with bootstrap 5. [online] Available at: <https://bootstrapexamples.com/@prajwal/sign-in-form-with-bootstrap-5> [Accessed 19 September 2025].

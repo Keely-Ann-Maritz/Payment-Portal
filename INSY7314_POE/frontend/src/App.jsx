@@ -18,7 +18,7 @@ function App() {
   const [showNavbar, setShowNavbar] = useState(true);
   return (
     <Router>
-      {/* https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only */}
+      {/* Hiding the navigation bar on specific pages (sahilatahar, 2023) */}
       {showNavbar && <Navigation />}
       <Routes>
         <Route path="/" element={<Login setShowNavbar={setShowNavbar} />} />
@@ -38,3 +38,6 @@ function App() {
 }
 
 export default App
+
+// References 
+// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].

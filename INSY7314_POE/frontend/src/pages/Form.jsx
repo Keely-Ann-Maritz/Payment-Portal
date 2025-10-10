@@ -1,4 +1,7 @@
+// Importing Navigation 
 import { useNavigate } from 'react-router-dom'
+
+// Payment Form (dangelo,2022)
 export default function Form({ formData, handleInput, formattedCardNumber, handleSubmit, formErrors }) {
     const { paymentTitle, provider, currency, amount, swiftCode, name, month, year, cvc } = formData;
     const navigate = useNavigate();
@@ -102,6 +105,8 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                 <input
                     className="form--input border border-gray-300 rounded-lg px-3 w-full lg:w-[381px] min-h-[45px]"
                     name="amount"
+                    type="number"
+                    min="0"
                     value={amount}
                     id="amount"
                     aria-label="amount"
@@ -113,7 +118,7 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
 
             <br />
 
-            {/* Cardholder Name */}
+            {/* Cardholder Name (dangelo,2022)*/}
             <div className="flex flex-col mb-6">
                 <label htmlFor="name" className="form--label mb-1">
                     CARDHOLDER NAME
@@ -132,7 +137,7 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
 
             <br />
 
-            {/* Card Number */}
+            {/* Card Number (dangelo,2022)*/}
             <div className="flex flex-col mb-6">
                 <label htmlFor="cardNumber" className="form--label mb-1">
                     CARD NUMBER
@@ -144,14 +149,14 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                     id="cardNumber"
                     aria-label="cardNumber"
                     onChange={handleInput}
-                    placeholder="e.g. 1234 5678 9123 0000"
+                    placeholder="e.g. #### #### #### ####"
                     maxLength={19}
                 />
                 <div className="form--error text-error-color mt-1 text-xs">{formErrors.cardNumber}</div>
             </div>
 
 
-            {/* Expiration + CVC */}
+            {/* Expiration + CVC/CVV (dangelo,2022)*/}
             <div className="form--exp_container flex w-full mt-4 mb-6 gap-x-4">
                 <div className="form--month_container mr-1">
                     <label htmlFor="month" className="form--label block mb-1">EXP. DATE</label>
@@ -184,7 +189,7 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                 </div>
 
                 <div className="form--cvc_container">
-                    <label htmlFor="cvc" className="form--label block mb-1">CVC</label>
+                    <label htmlFor="cvc" className="form--label block mb-1">CVC/CVV</label>
                     <input
                         className="form--input border border-gray-300 rounded-lg px-3 w-[120px] lg:w-[150px]"
                         name="cvc"
@@ -192,7 +197,7 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
                         id="cvc"
                         aria-label="cvc"
                         onChange={handleInput}
-                        placeholder="e.g. 123"
+                        placeholder="e.g. ***"
                         maxLength={3}
                     />
                     <div className="form--error text-error-color mt-1 text-xs">{formErrors.cvc}</div>
@@ -201,7 +206,7 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
             <br />
 
             <div className="flex gap-4 mt-6">
-                {/* Submit */}
+                {/* Submit (dangelo,2022)*/}
                 <button
                     type="submit"
                     className="submit-btn bg-second-color text-main-color w-full lg:w-[381px] min-h-[53px] rounded-lg"
@@ -225,3 +230,6 @@ export default function Form({ formData, handleInput, formattedCardNumber, handl
         </form>
     );
 }
+
+// References 
+// dangelo, E.2022.Interactive Card Details Form- React, Tailwind, Vite. [Source code] Available at: <Frontend Mentor | Interactive Card Details Form- React, Tailwind, Vite coding challenge solution> [Accessed 17 September 2025].

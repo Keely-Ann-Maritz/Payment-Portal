@@ -1,4 +1,4 @@
-// importing required react components
+// importing required react components (dangelo,2022)
 import { useEffect, useState } from "react";
 import { useLayoutEffect } from 'react'
 
@@ -10,9 +10,11 @@ import {
     deletePayment,
 } from "../services/apiService.js";
 
+// Payment History (sahilatahar, 2023)
 export default function PaymentHistory({ setShowNavbar }) {
     const [payments, setPayments] = useState([]);
 
+    // Displaying the navigation bar on this page (sahilatahar, 2023)
     useLayoutEffect(() => {
         setShowNavbar(true);
     }, [])
@@ -45,6 +47,7 @@ export default function PaymentHistory({ setShowNavbar }) {
         }
     };
 
+    // Payment Table 
     return (
         <div>
             <h1 className="paymentHistoryHeading">Payment History</h1>
@@ -101,3 +104,6 @@ export default function PaymentHistory({ setShowNavbar }) {
         </div>
     );
 }
+
+// References 
+// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].
