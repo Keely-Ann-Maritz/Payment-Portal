@@ -51,7 +51,7 @@ The following was not implemented : **express-mongo-sanitize package**
 1. In the terminal, ensure you are in the backend and frontend folders.
 2. Run the following command, in both the frontend and backend: ```npm run dev```
 3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
-4. Once the user has created an account, they will be redirected to the Login, where the user will be able to login to their account.
+4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
 5. If the user already has an account, enter the credentials to login to the Payment Portal.
 6. Once logged in, enter the payment information and card details.
 7. Select the <b>Pay Now</b> button to make the payment.
