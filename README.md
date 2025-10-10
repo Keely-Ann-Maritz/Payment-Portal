@@ -20,7 +20,7 @@
 - Blacklisting
 - JWT Token
 - bcrypt (Salting and Hashing)
-- helmet
+- helmet.js
 - X-Frame-Options (DENY)
 - Content Security Policy (CSP)
 - Rate limiting
