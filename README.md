@@ -50,12 +50,21 @@ The following was not implemented : **express-mongo-sanitize package**
 ## Instructions on how to run the application
 1. In the terminal, ensure you are in the backend and frontend folders.
 2. Run the following command, in both the frontend and backend: ```npm run dev```
-3. 5. If the user does not have an account, select the Register link to Create an Account.
-4. Once you have created an account, you will be redirected to the Login, to login to your account.
-5. If the user has an account, enter the credentials to Login to the Payment Portal.
-6. Once logged in, you will be redirected to the Payment Form, prompting you to make a payment.
-
-
+3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
+4. Once the user has created an account, they will be redirected to the Login, where the user will be able to login to their account.
+5. If the user already has an account, enter the credentials to login to the Payment Portal.
+6. Once logged in, enter the payment information and card details.
+7. Select the <b>Pay Now</b> button to make the payment.
+8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history. 
+9. If the user does not want to make a payment, select the <b>SKIP</b> button.
+10. View all the payments on the Payment History page.
+11. Select the <b>Delete</b> button, if you wish to delete a payment.
+12. Use the navigation bar to navigate to the different pages:
+    - Make a payment
+    - Payment History
+    - Logout
+13. Select the <b>Logout</b> button to exit the application.
+   
 <br>
 
 ## References
