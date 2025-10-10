@@ -27,23 +27,23 @@ const getPayments = async (req, res) => {
   }
 };
 
-// GET: a single payment
-const getPayment = async (req, res) => {
-  // get the id of the book that the user is looking for, from the parameters
-  const id = req.params.id;
+// GET: payments for a specific username
+const getPaymentByUsername = async (req, res) => {
+  // get the username of the payment that the user is looking for, from the parameters
+  const username = req.params.username;
 
   // null check
-  if (!id) {
-    res.status(400).json({ message: "Please provide an ID to search for!" });
+  if (!username) {
+    res.status(400).json({ message: "Please provide a username to search for!" });
   }
 
   try {
-    // try find the payment using the provided ID
-    const payment = await Payment.findById(id);
+    // try find the payment using the provided username
+    const payment = await Payment.find({username});
 
-    // if no payment is found matching the provided ID, we should return 404 with an informative message
+    // if no payment is found matching the provided username, we should return 404 with an informative message
     if (!payment) {
-      res.status(404).json({ message: "No payment found that matches that ID." });
+      res.status(404).json({ message: "No payment found that matches that username." });
     }
 
     // otherwise, return the payment
@@ -57,11 +57,11 @@ const getPayment = async (req, res) => {
 // POST: create a new payment
 const createPayment = async (req, res) => {
   // from the request sent by the browser/frontend application, look in the body for the required fields
-  const { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc } = req.body;
+  const { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc, username } = req.body;
 
   // checked that all information is provided
   if (!paymentTitle || !currency || !provider || !amount || !swiftCode || !name || !cardNumber || !month || !year || !cvc) {
-    res
+     res
       .status(400)
       .json({ message: "Please ensure that all fields are provided." });
   }
@@ -83,7 +83,7 @@ const createPayment = async (req, res) => {
 
     // create a new payment instance using the information provided to us (Chaitanya, 2023)
     // using the DOMPurify sanitized variables (Das, 2025)
-    const payment = await Payment.create({ paymentTitle: sanitizedPaymentTitle, currency, provider, amount, swiftCode: sanitizedSwiftCode, name: sanitizedName, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV });
+    const payment = await Payment.create({ paymentTitle: sanitizedPaymentTitle, currency, provider, amount, swiftCode: sanitizedSwiftCode, name: sanitizedName, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV, username });
     // and return code 201 (created), alongside the object we just added to the database
     res.status(201).json(payment);
   } catch (error) {
@@ -122,7 +122,7 @@ const updatePayment = async (req, res) => {
   }
 };
 
-// DELETE: nuke a payment from existence
+// DELETE: delete a payment from existence
 const deletePayment = async (req, res) => {
   // get the id of the payment we want to remove
   const id = req.params.id;
@@ -151,7 +151,7 @@ const deletePayment = async (req, res) => {
 
 module.exports = {
   getPayments,
-  getPayment,
+  getPaymentByUsername,
   createPayment,
   updatePayment,
   deletePayment,

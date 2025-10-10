@@ -4,8 +4,8 @@ import axios from '../interfaces/axiosInstance.js'
 // GET all the payments from the API
 export const getAllPayments = () => axios.get('/payments');
 
-// GET a specific payment
-export const getPaymentById = (id) => axios.get(`/payments/${id}`); 
+// GET all payments for a specific username
+export const getPaymentByUsername = (username) => axios.get(`/payments/${username}`); 
 
 // POST request, to create a new payment in our collection
 export const createPayment = (paymentData) => axios.post('/payments', paymentData);

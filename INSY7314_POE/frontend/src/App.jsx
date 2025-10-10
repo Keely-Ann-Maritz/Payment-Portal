@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 // call in our pages
 import Login from './pages/Login.jsx'
-import Dashboard from './pages/Dashboard.jsx'
 import PaymentForm from './pages/PaymentForm.jsx'
 import FormThankYou from './pages/FormThankYou.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
@@ -27,11 +26,6 @@ function App() {
         <Route path="/PaymentHistory" element={<ProtectedRoute><PaymentHistory setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
         <Route path="/form" element={<ProtectedRoute><PaymentForm setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
         <Route path="/formThankYou" element={<ProtectedRoute><FormThankYou setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
       </Routes>
     </Router>
   )

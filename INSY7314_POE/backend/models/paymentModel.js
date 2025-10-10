@@ -16,7 +16,8 @@ const paymentSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'pending'
-    }
+    },
+    username: String
 });
 
 // we then define that the object references that schema, and give it a name

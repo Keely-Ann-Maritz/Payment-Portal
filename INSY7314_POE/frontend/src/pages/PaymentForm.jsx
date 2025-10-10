@@ -22,7 +22,8 @@ export default function PaymentForm({ setShowNavbar }) {
     month: '',
     year: '',
     cvc: '',
-    name: ''
+    name: '',
+    username: '',
   })
   const [formErrors, setFormErrors] = useState({
     paymentTitle: '',
@@ -34,7 +35,7 @@ export default function PaymentForm({ setShowNavbar }) {
     month: '',
     year: '',
     cvc: '',
-    name: ''
+    name: '',
   })
   const [formattedCardNumber, setFormattedCardNumber] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -187,6 +188,9 @@ export default function PaymentForm({ setShowNavbar }) {
       return;
     }
 
+    const username= sessionStorage.getItem("username")
+    formData.username = username
+    
     await createPayment(formData);
     const dateMonth = formData.month
     const dateYear = formData.year

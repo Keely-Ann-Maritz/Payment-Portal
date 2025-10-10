@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
 import {
-    getAllPayments,
+    getPaymentByUsername,
     deletePayment,
 } from "../services/apiService.js";
 
@@ -20,8 +20,10 @@ export default function PaymentHistory({ setShowNavbar }) {
     }, [])
 
     const fetchPayments = async () => {
+        const username= sessionStorage.getItem("username")
+        
         // fetch all payments using the apiService method we created earlier, storing the response in a temp variable
-        const res = await getAllPayments();
+        const res = await getPaymentByUsername(username);
         // and update our payments variable with the response data
         setPayments(res.data);
     };
