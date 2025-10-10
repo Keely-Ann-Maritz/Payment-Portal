@@ -32,18 +32,20 @@ The following was not implemented : **express-mongo-sanitize package**
 <br>
 
 ## Instructions for setting up the Environment Development
-1. Install Visual Studio Code.
+1. Install Visual Studio Code:
       -  Download link: [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download)
-2. Open GitHub Desktop and clone the repository.
-3. Once, the repository is cloned, in GitHub Desktop, Open with Visual Studio Code.
-4. Make sure you are in the root folder.
-5. In the navigation bar, select the <b>Terminal</b> tab and open a new terminal.
-6. Once, the terminal has opened at the bottom of the screen, navigate into the backend and frontend folder.
-7. Run the following command in the backend and frontend, to install all packages: ```npm i```
-8. Add the .env file into the project.
-9. Run the commands to setup the SSL Certificates for the backend and frontend.
-10. Copy the certificates into a certs folder in the backend and frontend.
-11. Ensure you are in the backend folder, in the terminal and install the https package
+2. Install GitHub Desktop:
+      - Download link: [https://desktop.github.com/download/]
+3. Open GitHub Desktop and clone the repository.
+4. Once, the repository is cloned, in GitHub Desktop, Open with Visual Studio Code.
+5. Make sure you are in the root folder.
+6. In the navigation bar, select the <b>Terminal</b> tab and open a new terminal.
+7. Once, the terminal has opened at the bottom of the screen, navigate into the backend and frontend folder.
+8. Run the following command in the backend and frontend, to install all packages: ```npm i```
+9. Add the .env file into the project.
+10. Run the commands to setup the SSL Certificates for the backend and frontend.
+11. Copy the certificates into a certs folder in the backend and frontend.
+12. Ensure you are in the backend folder, in the terminal and install the https package.
 
 <br>
 
