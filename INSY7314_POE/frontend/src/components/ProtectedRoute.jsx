@@ -13,6 +13,6 @@ export default function ProtectedRoute({children}) {
         return <Navigate to="/login" replace />
     }
 
-    // otherwise, let them have access to the page they want to go to!
+    // if authenticated, let them have access to the payment form and payment history page
     return children;
 }

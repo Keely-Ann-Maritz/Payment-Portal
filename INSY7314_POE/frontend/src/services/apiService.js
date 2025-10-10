@@ -4,9 +4,9 @@ import axios from '../interfaces/axiosInstance.js'
 // GET all the payments from the API
 export const getAllPayments = () => axios.get('/payments');
 
-// GET a specific payment
-export const getPaymentById = (id) => axios.get(`/payments/${id}`); // remember, to call a variable in-line, we don't use ' (single quote)
-                                                                    // we use backticks ` (left of the number 1)
+// GET all payments for a specific username
+export const getPaymentByUsername = (username) => axios.get(`/payments/${username}`); 
+
 // POST request, to create a new payment in our collection
 export const createPayment = (paymentData) => axios.post('/payments', paymentData);
 
@@ -15,3 +15,28 @@ export const updatePayment = (id, paymentData) => axios.put(`/payments/${id}`, p
 
 // DELETE request, delete a payment 
 export const deletePayment = (id) => axios.delete(`/payments/${id}`);
+
+// POST request to register user (Sanchez,2023)
+export const RegisterUser = async (userData) => {
+    try {
+        const response = await axios.post(`/auth/register`, userData);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+// POST request to login user (Sanchez,2023)
+export const LoginUser = async (userData) => {
+    try {
+        const response = await axios.post(`/auth/login`, userData);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+// References 
+// Sanchez, E., 2023.Exporting Axios Response using React JS. [online] Available at: <https://stackoverflow.com/questions/76508218/exporting-axios-response-using-react-js> [Accessed 24 September 2025].

@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
-// define the blueprint of a user
+// define the user schema for registering a user as well as being used for the login of a user
 const userSchema = new mongoose.Schema({
-    username: {type: String, required: true},
-    password: {type: String, required: true}
+    fullname: String,
+    username: String,
+    idnumber: String,
+    accountnumber: String,
+    password: String
 });
 
-// link it to the database
+// link the user to the database
 const User = mongoose.model('User', userSchema);
 
 // expose it to the rest of the app

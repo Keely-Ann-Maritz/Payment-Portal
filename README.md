@@ -27,7 +27,7 @@
 - DOMPurify
 - Storing data into MongoDB
 
-The following was not implemented : **express-mongo-sanitize package**
+The following was not implemented : **express-mongo-sanitize package** and **HTTPOnly**
 
 <br>
 

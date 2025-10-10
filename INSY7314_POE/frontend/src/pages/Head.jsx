@@ -1,5 +1,8 @@
+// Importing the Bank card images ((dangelo,2022))
 import cardBack from '../assets/bg-card-back.png'
 import cardFront from '../assets/bg-card-front.png'
+
+// Displaying the Bank card ((dangelo,2022))
 export default function Head({ formData, formattedCardNumber }) {
     const { name, cardNumber, month, year, cvc } = formData
     return (
@@ -30,3 +33,6 @@ export default function Head({ formData, formattedCardNumber }) {
         </header>
     )
 }
+
+// References 
+// dangelo, E.2022.Interactive Card Details Form- React, Tailwind, Vite. [Source code] Available at: <Frontend Mentor | Interactive Card Details Form- React, Tailwind, Vite coding challenge solution> [Accessed 17 September 2025].

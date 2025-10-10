@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+/* Button styling (dangelo,2022)*/
 .submit-btn {
   background-color: #610595;
   color: white;
@@ -18,13 +19,19 @@
   border-radius: 8px;
 }
 
+.backgroundImage {
+  background: #610595;
+  background-image: linear-gradient(to right, rgb(97, 5, 149), rgb(82, 136, 236));
+}
+
+/* App styling (dangelo,2022)*/
 :root {
   --main-color: #FFF;
   --second-color: #21092f;
   --font-color: #21092F;
   --second-font-color: #8F8694;
   --gradient: linear-gradient(163.95deg, #6348FE 4.74%, #610595 88.83%);
-  --font-family: 'Space Grotesk', sans-serif;
+  --font-family: sans-serif;
   --shadow: 0px 39px 60px 0px #00000024;
 }
 
@@ -32,7 +39,7 @@
   min-height: 100vh;
 }
 
-/* typography */
+/* typography (dangelo,2022)*/
 html {
   font-family: var(--font-family);
   font-weight: 500;
@@ -86,7 +93,7 @@ header p {
   color: var(--main-color);
 }
 
-/* typography media query */
+/* typography media query (dangelo,2022)*/
 @media(min-width: 1000px) {
   h2 {
     font-size: 18px;
@@ -107,13 +114,12 @@ header p {
   }
 }
 
-/* Head styles */
-
+/* Head styles (dangelo,2022)*/
 .header--image_container_front {
   box-shadow: var(--shadow);
 }
 
-/* Form styles */
+/* Form styles (dangelo,2022)*/
 label {
   margin-bottom: 9px;
 }
@@ -130,3 +136,6 @@ input:focus {
 .form--error {
   color: red
 }
+
+/* References */
+/* dangelo, E.2022.Interactive Card Details Form- React, Tailwind, Vite. [Source code] Available at: <Frontend Mentor | Interactive Card Details Form- React, Tailwind, Vite coding challenge solution> [Accessed 17 September 2025]. */

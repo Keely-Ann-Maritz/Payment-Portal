@@ -1,7 +1,3 @@
-// cors - configuration options for an express API
-// csurf - how it helps for CSRF attacks, and how to configure it for a node.js API
-// helmet - how it helps when it comes to header protections and clickjacking
-// rate limiting, brute force prevention, and what libraries can be used to implement this for a node.js API
 
 const helmet = require('helmet');
 const cors = require('cors');
@@ -15,15 +11,15 @@ const corsOptions = {
     credentials: true,
 };
 
-
+// Setting the default Content Security Policy (CSP) to false (usefulcodes, 2025)
 const securityMiddlewares = (app) => {
     app.use(helmet({
         contentSecurityPolicy: {
-            useDefaults: true,
+            useDefaults: false,
             directives: {
                 // allow scripts from the website itself, but from nowhere else
                 'default-src': ["'self'"],
-                // prevent our website from being embedded on another website
+                // implementing X-Frame Options to prevent Cross-Site Scripting 
                 'frame-ancestors': ["'none'"],
             }
         },
@@ -44,7 +40,25 @@ const securityMiddlewares = (app) => {
         ieNoOpen: true,
     }));
 
+    // Content Security Policy (CSP)
+    // using the following directives and helmet to prevent Cross-Site Scripting (usefulcodes, 2025)
+    app.use(
+        helmet.contentSecurityPolicy({
+            directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            styleSrc: ["'self'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:"],
+            connectSrc: ["'self'", "https://api.example.com"],
+            },
+        })
+    );
+
     app.use(cors(corsOptions));
 };
 
 module.exports = { securityMiddlewares }
+
+// References
+// usefulcodes, 2025.Content Security Policy (CSP) Implementation in React. [online] Available at: <https://useful.codes/content-security-policy-csp-implementation-in-react/> [Accessed 7 October 2025].

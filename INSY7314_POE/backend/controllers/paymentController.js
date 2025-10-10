@@ -1,10 +1,17 @@
 // call in our model, so that we can use it in our methods
 const Payment = require("../models/paymentModel.js");
-//call bcrypt for hashing the card number and cvv
+
+// calling DOMPurify (Das, 2025)
+const creatingDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+
+// call bcrypt for hashing the card number and cvv/cvc (Chaitanya, 2023)
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-
+// Creating a window for DOMPurify (Das, 2025)
+const window = new JSDOM('').window;
+const DOMPurify = creatingDOMPurify(window);
 
 // GET: all payments
 const getPayments = async (req, res) => {
@@ -20,29 +27,29 @@ const getPayments = async (req, res) => {
   }
 };
 
-// GET: a single payment
-const getPayment = async (req, res) => {
-  // get the id of the book that the user is looking for, from the parameters
-  const id = req.params.id;
+// GET: payments for a specific username
+const getPaymentByUsername = async (req, res) => {
+  // get the username of the payment that the user is looking for, from the parameters
+  const username = req.params.username;
 
-  // null check
-  if (!id) {
-    res.status(400).json({ message: "Please provide an ID to search for!" });
+  // if the username doesn't exist, inform the user
+  if (!username) {
+    res.status(400).json({ message: "Please provide a username to search for!" });
   }
 
   try {
-    // try find the payment using the provided ID
-    const payment = await Payment.findById(id);
+    // try find the payments related to that user, using the provided username
+    const payment = await Payment.find({username});
 
-    // if no payment is found matching the provided ID, we should return 404 with an informative message
+    // if no payment is found matching the provided username, it would mean that they havent added any payments on their account yet
     if (!payment) {
-      res.status(404).json({ message: "No payment found that matches that ID." });
+      res.status(404).json({ message: "No payment found that matches that username." });
     }
 
-    // otherwise, return the payment
+    // if there is paynments created by them, return all of them to the frontend to display to the logged in user
     res.status(200).json(payment);
   } catch (error) {
-    // throw a server error if an issue occurs
+    // throws a server error there is an issue getting the payments of teh user
     res.status(500).json({ error: error.message });
   }
 };
@@ -50,28 +57,33 @@ const getPayment = async (req, res) => {
 // POST: create a new payment
 const createPayment = async (req, res) => {
   // from the request sent by the browser/frontend application, look in the body for the required fields
-  const { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc } = req.body;
+  const { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc, username } = req.body;
 
   // checked that all information is provided
   if (!paymentTitle || !currency || !provider || !amount || !swiftCode || !name || !cardNumber || !month || !year || !cvc) {
-    res
+     res
       .status(400)
       .json({ message: "Please ensure that all fields are provided." });
   }
 
   try {
-    //salting and hashing the card number
+    // sanitzing the input fields to protect against XSS attacks (Das, 2025)
+    const sanitizedPaymentTitle = DOMPurify.sanitize(paymentTitle)
+    const sanitizedSwiftCode= DOMPurify.sanitize(swiftCode)
+    const sanitizedName = DOMPurify.sanitize(name)
 
+    // salting and hashing the card number (Chaitanya, 2023)
     const cardNumSalt = await bcrypt.genSalt(10);
     const hashedCardNumber = await bcrypt.hash(cardNumber.toString(), cardNumSalt);
 
-    //salting and hashing the CVV
+    // salting and hashing the CVC/CVV (Chaitanya, 2023)
     const cvcSalt = await bcrypt.genSalt(10);
 
     const hashedCVV = await bcrypt.hash(cvc.toString(), cvcSalt);
 
-    // create a new payment instance using the information provided to us
-    const payment = await Payment.create({ paymentTitle, currency, provider, amount, swiftCode, name, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV });
+    // create a new payment instance using the information provided to us (Chaitanya, 2023)
+    // using the DOMPurify sanitized variables (Das, 2025)
+    const payment = await Payment.create({ paymentTitle: sanitizedPaymentTitle, currency, provider, amount, swiftCode: sanitizedSwiftCode, name: sanitizedName, cardNumber: hashedCardNumber, month, year, cvc: hashedCVV, username });
     // and return code 201 (created), alongside the object we just added to the database
     res.status(201).json(payment);
   } catch (error) {
@@ -90,32 +102,32 @@ const updatePayment = async (req, res) => {
     // firstly find the payment we need to update
     const payment = await Payment.findById(id);
 
-    // if no book, inform the user and don't proceed any further
+    // if no payment ID is given, inform the user and don't proceed any further
     if (!payment) {
       res.status(404).json({ message: "No payment found that matches that ID." });
     }
 
     // otherwise, we then update the updated fields
-    // finally, ensure that the new version (post update) is returned, rather than the old book
+    // finally, ensure that the new version of teh payment (post update) is returned, rather than the old payment
     payment = await Payment.findByIdAndUpdate(
       id,
       { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc },
       { new: true }
     );
-    // spit it out encoded in json
+    // return success status 200 upon the payment successfully updating
     res.status(202).json(payment);
   } catch (error) {
-    // if things go south, spit out the error message
+    // if it doesnt update we inform the frontend user
     res.status(500).json({ error: error.message });
   }
 };
 
-// DELETE: nuke a payment from existence
+// DELETE: delete a payment from the database
 const deletePayment = async (req, res) => {
-  // get the id of the payment we want to remove
+  // we pass the id of the payment we want to remove
   const id = req.params.id;
 
-  // null check
+  // checking to see if an ID was sent to the backend
   if (!id) {
     res.status(400).json({ message: "Please provide an ID to delete." });
   }
@@ -124,7 +136,7 @@ const deletePayment = async (req, res) => {
   try {
     var payment = await Payment.findById(id);
 
-    // if no payment, 404 and exit the method
+    // if no payment is found, 404 and exit the method
     if (!payment) {
       res.status(404).json({ message: "No payment found that matches that ID." });
     }
@@ -139,8 +151,13 @@ const deletePayment = async (req, res) => {
 
 module.exports = {
   getPayments,
-  getPayment,
+  getPaymentByUsername,
   createPayment,
   updatePayment,
   deletePayment,
 };
+
+// References 
+// Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
+// Das, A.,2025.7 Best Practices for Sanitizing Input in Node.js. [online] Available at: < https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096> [Accessed 6 October 2025].
+

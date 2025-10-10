@@ -1,20 +1,29 @@
-// importing required react components
+// importing required react components (dangelo,2022)
 import { useEffect, useState } from "react";
+import { useLayoutEffect } from 'react'
+
+import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
-// as well as our API methods we created
 import {
-    getAllPayments,
+    getPaymentByUsername,
     deletePayment,
 } from "../services/apiService.js";
 
-export default function paymentHistory() {
+// Payment History (sahilatahar, 2023)
+export default function PaymentHistory({ setShowNavbar }) {
     const [payments, setPayments] = useState([]);
 
+    // Displaying the navigation bar on this page (sahilatahar, 2023)
+    useLayoutEffect(() => {
+        setShowNavbar(true);
+    }, [])
 
     const fetchPayments = async () => {
+        const username= sessionStorage.getItem("username")
+        
         // fetch all payments using the apiService method we created earlier, storing the response in a temp variable
-        const res = await getAllPayments();
+        const res = await getPaymentByUsername(username);
         // and update our payments variable with the response data
         setPayments(res.data);
     };
@@ -40,13 +49,14 @@ export default function paymentHistory() {
         }
     };
 
+    // Payment Table 
     return (
         <div>
             <h1 className="paymentHistoryHeading">Payment History</h1>
             <div className="container mt-3">
-                <table border="1" className="table table-bordered">
+                <table border="1" className="table table-hover">
                     {/* thead specifies that the following row will be headings */}
-                    <thead class="thead-dark">
+                    <thead className="table-dark">
                         {/* tr denotes a new row */}
                         <tr>
                             {/* and each th represents a heading */}
@@ -80,7 +90,7 @@ export default function paymentHistory() {
                                 <td>{payment.status}</td>
                                 <td>
                                     <button
-                                        className="btn btn-danger"
+                                        className="btn btn-danger "
                                         onClick={() => {
                                             handleDelete(payment._id);
                                         }}
@@ -96,3 +106,6 @@ export default function paymentHistory() {
         </div>
     );
 }
+
+// References 
+// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].
