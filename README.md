@@ -14,38 +14,67 @@
 <br>
 
 ##  Implemented the following attack preventions, listed in Part 1:
-- SSL Certificate
+- Frontend and Backend SSL Certificates 
 - Regex
 - Whitelisting Techniques
-- Blacklisting
+- Blacklisting Techniques
 - JWT Token
 - bcrypt (Salting and Hashing)
-- helmet
+- helmet.js
 - X-Frame-Options (DENY)
 - Content Security Policy (CSP)
 - Rate limiting
 - DOMPurify
+- Storing data into MongoDB
 
 The following was not implemented : **express-mongo-sanitize package**
 
 <br>
 
-## Instructions on how to run the application
+## Instructions for setting up the Environment Development
+1. Install Visual Studio Code:
+      -  Download link: [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download)
+2. Install GitHub Desktop:
+      - Download link: [https://desktop.github.com/download/]
+3. Open GitHub Desktop and clone the repository.
+4. Once, the repository is cloned in GitHub Desktop, Select the button to Open with Visual Studio Code.
+5. Ensure you are in the root folder.
+6. In the navigation bar, select the <b>Terminal</b> navigation link and open a new terminal.
+7. Once, the terminal has opened at the bottom of the screen, navigate into the backend and frontend folder.
+8. Run the following command in the backend and frontend, to install all packages: ```npm i```
+9. Add the <b>.env</b> file into the project.
+10. Run the commands to setup the SSL Certificates for the backend and frontend.
+11. Copy the certificates into a <b>certs</b> folder in the backend and frontend.
+12. Ensure you are in the backend folder, in the terminal and install the https package.
 
 <br>
 
+## Instructions on how to run the application
+1. In the terminal, ensure you are in the backend and frontend folders.
+2. Run the following command, in both the frontend and backend: ```npm run dev```
+3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
+4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
+5. If the user already has an account, enter the credentials to login to the Payment Portal.
+6. Once logged in, enter the payment information and card details.
+7. Select the <b>Pay Now</b> button to make the payment.
+8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history. 
+9. If the user does not want to make a payment, select the <b>Skip</b> button.
+10. View all the payments on the Payment History page.
+11. Select the <b>Delete</b> button, if you wish to delete a payment.
+12. Use the navigation bar to navigate to the different pages:
+    - Make a payment
+    - Payment History
+    - Logout
+13. Select the <b>Logout</b> button to exit the application.
+   
+<br>
+
 ## References
-- https://www.geeksforgeeks.org/reactjs/how-to-make-the-navbar-collapse-on-smaller-screens-in-react-bootstrap/
-- https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only
-- https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096
-- https://useful.codes/content-security-policy-csp-implementation-in-react/
-- https://medium.com/@ddzik09/handling-forms-in-react-validation-and-error-handling-7c9391e2046b
-- https://www.frontendmentor.io/solutions/interactive-card-details-form-AfsnuieLiB
-- https://www.youtube.com/watch?v=yc5eQevcLso&t=1224s
-- https://bootstrapexamples.com/@prajwal/sign-in-form-with-bootstrap-5
-- https://stackoverflow.com/questions/76508218/exporting-axios-response-using-react-js
-- https://medium.com/@arunchaitanya/salting-and-hashing-passwords-with-bcrypt-js-a-comprehensive-guide-f5e31de3c40c
-- https://www.geeksforgeeks.org/javascript/how-to-validate-form-using-regular-expression-in-javascript/
-- https://blog.appsignal.com/2024/04/03/how-to-implement-rate-limiting-in-express-for-nodejs.html
-- https://youtu.be/I4CyzX5rhLU?si=qYrn3ATcG-1VYhcd
+
+Full reference list is provided in the PDF document, submitted on ARC.
+
+<br>
+
+
+
 
