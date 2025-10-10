@@ -34,6 +34,11 @@ The following was not implemented : **express-mongo-sanitize package**
 
 <br>
 
+## References
+
+Full reference list is provided in the PDF document, submitted on ARC.
+
+<br>
 
 
 
