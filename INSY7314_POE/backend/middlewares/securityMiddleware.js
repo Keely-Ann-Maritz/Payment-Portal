@@ -1,6 +1,10 @@
 
-const helmet = require('helmet');
-const cors = require('cors');
+import mongoSanitize from '@exortek/express-mongo-sanitize'
+import helmet from 'helmet';
+import cors from 'cors';
+
+//const helmet = require('helmet');
+//const cors = require('cors');
 
 const corsOptions = {
     // origin allows us to set where we will permit requests from (for now *, which allows everywhere and everyone!)
@@ -56,9 +60,10 @@ const securityMiddlewares = (app) => {
     );
 
     app.use(cors(corsOptions));
+    app.use(mongoSanitize());
 };
 
-module.exports = { securityMiddlewares }
+export { securityMiddlewares };
 
 // References
 // usefulcodes, 2025.Content Security Policy (CSP) Implementation in React. [online] Available at: <https://useful.codes/content-security-policy-csp-implementation-in-react/> [Accessed 7 October 2025].
