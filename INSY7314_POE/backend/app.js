@@ -15,7 +15,6 @@ dotenv.config();
 // setting up express using the default parameters
 const app = express();
 
-//const allowedOrigin = ["https://localhost:8080","http://localhost:8080"];
 app.use(cors({
     origin: "https://localhost:5173",
     credentials: true
