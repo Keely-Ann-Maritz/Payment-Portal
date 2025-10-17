@@ -30,7 +30,9 @@ export const RegisterUser = async (userData) => {
 // POST request to login user (Sanchez,2023)
 export const LoginUser = async (userData) => {
     try {
-        const response = await axios.post(`/auth/login`, userData);
+        const response = await axios.post(`/auth/login`, userData, {
+            withCredentials: true
+        });
         return response.data;
     } catch (error) {
         throw error;

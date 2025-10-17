@@ -3,16 +3,14 @@ import mongoSanitize from '@exortek/express-mongo-sanitize'
 import helmet from 'helmet';
 import cors from 'cors';
 
-//const helmet = require('helmet');
-//const cors = require('cors');
-
 const corsOptions = {
     // origin allows us to set where we will permit requests from (for now *, which allows everywhere and everyone!)
-    origin: '*',
+    origin: 'https://localhost:5173',
     // controlling what types of HTTP requests we will permit
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // allow the flow of credentials between our backend API and out frontend web portal
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 // Setting the default Content Security Policy (CSP) to false (usefulcodes, 2025)

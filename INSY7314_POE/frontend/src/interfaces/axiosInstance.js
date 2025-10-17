@@ -4,6 +4,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
     // this is the BASE URL, meaning that it must go before any API call we make with axios
     baseURL: 'https://localhost:5000/v1',
+    withCredentials: true,
     // we also tell it that we want to ask the server to respond with JSON, rather than cleartext
     headers: {
         'Content-Type': 'application/json'

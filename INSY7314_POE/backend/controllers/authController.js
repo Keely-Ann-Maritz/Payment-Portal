@@ -31,10 +31,12 @@ const register = async (req, res) => {
         // method that stores the uesr registeration details in the database
         await User.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber });
         res.status(200).json({ token: generateJwt(username) });
+    
     } catch (e) {
         //if user doesnt store , return teh error message
         res.status(500).json({ error: e.message });
     } res.status(500).json({ error: e.message });
+
 
 };
 
@@ -55,7 +57,16 @@ const login = async (req, res) => {
     if (!matchingPassword || !matchingAccountNum) return res.status(400).json({ message: "Invalid credentials." });
 
     // if credentials do match, generate and send a JWT token generated from the username, to the front end 
-    res.status(200).json({ token: generateJwt(username) });
+    const token = generateJwt(username);
+    
+    res.cookie("token",token,{
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 24*60*60*1000
+    });
+    
+    res.status(200).json({ message: "Logged in successfully!",token});
 };
 
 const logout = async (req, res) => {

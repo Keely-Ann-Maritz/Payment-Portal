@@ -92,9 +92,6 @@ export default function Login({ setShowNavbar }) {
 
         // (The Debug Arena, 2024)
         if (checkLogin && checkLogin.token) {
-          const token = checkLogin.token;
-          //settting the token and the username if the details is a match
-          sessionStorage.setItem("authToken", token);
           sessionStorage.setItem("username", formData.username);
           //telling the user that they have been logged in
           alert("User Logged in!");
@@ -109,12 +106,14 @@ export default function Login({ setShowNavbar }) {
       } 
       // (The Debug Arena, 2025)
       catch (error) {
-        //if the rate limit is reached for the endpoint the user would be informed
-        if (error.response.status == 429) {
-          errors.loginError = error.response.data.message || "Too many attempts! Try again in 5 minutes";
-        } else {
-          errors.loginError = error.response.data.message || "User details is incorrect!";
+        if(error.response){
+            //if the rate limit is reached for the endpoint the user would be informed
+            if (error.response.status === 429) {
+              errors.loginError = error.response.data.message || "Too many attempts! Try again in 5 minutes";
+            } else {
+              errors.loginError = error.response.data.message || "User details is incorrect!";
 
+          }
         }
       }
     }
@@ -132,7 +131,7 @@ export default function Login({ setShowNavbar }) {
             <p className="card-text text-muted">Login below to access your account</p>
           </div>
           <div className="mt-4">
-            <form formErrors onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <div className="text-danger mt-1 small">{formErrors.loginError}</div>
                 <div className="text-danger mt-1 small">{formErrors.username}</div>
