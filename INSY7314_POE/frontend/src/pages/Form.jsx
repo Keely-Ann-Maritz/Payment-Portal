@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 
 // Payment Form (dangelo,2022)
+// this is the html input form where you input the user details where we here call all teh functions fron the payment form to use
 export default function Form({ formData, handleInput, formattedCardNumber, handleSubmit, formErrors }) {
     const { paymentTitle, provider, currency, amount, swiftCode, name, month, year, cvc } = formData;
     const navigate = useNavigate();
