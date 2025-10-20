@@ -4,11 +4,10 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useLayoutEffect } from 'react'
+import { fetchUserDetails, LoginUser } from "../services/apiService.js";
 
 //importing the login user method that is called in the api service
-import {
-  LoginUser
-} from "../services/apiService.js";
+
 
 // Hiding navigation bar (sahilatahar, 2023)
 export default function Login({ setShowNavbar }) {
@@ -93,6 +92,12 @@ export default function Login({ setShowNavbar }) {
         // (The Debug Arena, 2024)
         if (checkLogin && checkLogin.token) {
           sessionStorage.setItem("username", formData.username);
+          sessionStorage.setItem("token",checkLogin.token);
+          
+          const fetchDetails = await fetchUserDetails(checkLogin.token);
+          console.log("Fetch user details:", fetchDetails.data);
+
+          sessionStorage.setItem("userDetails", JSON.stringify(fetchDetails.data));
           //telling the user that they have been logged in
           alert("User Logged in!");
           setFormData({ username: "", accountnumber: "", password: "" });

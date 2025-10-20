@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
     withCredentials: true,
     // we also tell it that we want to ask the server to respond with JSON, rather than cleartext
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     },
 });
 

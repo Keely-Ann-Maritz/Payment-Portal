@@ -15,6 +15,18 @@ const generateJwt = (username) => {
     });
     // and returns it.
 };
+
+// Getting the User Details (The Debug Arena,2025)
+const getUserDetails = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.user.username });
+        if (!user) return res.status(404).json({ message: "User Not Found" });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user details", error });
+    }
+};
+
 const register = async (req, res) => {
     // request the required register information from the incoming register request
     const { username, password, fullname, idnumber, accountnumber } = req.body;
@@ -59,6 +71,7 @@ const login = async (req, res) => {
     // if credentials do match, generate and send a JWT token generated from the username, to the front end 
     const token = generateJwt(username);
     
+    // Token with HTTPOnly (The Debug Arena,2025)
     res.cookie("token",token,{
             httpOnly: true,
             secure: true,
@@ -70,20 +83,25 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    // strip the header
-    const authHeader = req.headers['authorization'];
-    // grab the token (Bearer: <token>)
-    const token = authHeader.split(" ")[1];
+    const token = req.cookies?.token;
     // check if there is indeed a token, if not, send an error back to the user
-    if (!token) return res.status(400).json({ message: "You need to be logged in before you can log out" });
+    if (!token) return res.status(400).json({ message: "You need to be logged in before you can logout" });
     // oif a token exist, invalidate it
     invalidateToken(token);
+
+    // Clearing the token (The Debug Arena,2025)
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None'
+    });
+
     // and they can now be logged out
     res.status(200).json({ message: "Logged out successfully." });
 };
 
-module.exports = { register, login, logout };
+module.exports = { register, login, logout, getUserDetails };
 
 // References 
 // Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
-
+// The Debug Arena,2025.Access and Refresh Token in Backend || Token Authentication in React & Node.[video online] Available at: <https://www.youtube.com/watch?v=FjuAn-y_zWk> [Accessed 18 October 2025].

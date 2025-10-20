@@ -1,5 +1,7 @@
 // we need the required imports first
+import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react'
+import { fetchUserDetails } from '../services/apiService';
 
 // first we create our little section of memory for remembering if we're logged in
 const AuthContext = createContext();

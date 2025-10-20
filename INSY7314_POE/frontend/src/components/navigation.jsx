@@ -5,6 +5,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 // Importing authorization (The Debug Arena, 2025)
 import { useAuth } from "../context/AuthContext.jsx";
 
+import { Logout } from "../services/apiService.js";
 
 export default function Navigation() {
     // Using the navigation (GeeksforGeeks,2025)
@@ -14,10 +15,13 @@ export default function Navigation() {
 
     // Logout method (The Debug Arena, 2025)
     const handleLogout = () => {
+        //getLogout()
         sessionStorage.clear();
-        logout()
+        Logout()
         navigate('/')
     }
+
+    const username = sessionStorage.getItem("username");
 
     // Navigation bar which will display on teh payment history page(GeeksforGeeks,2025)
     return (
@@ -54,10 +58,10 @@ export default function Navigation() {
                             Logout
                         </Nav.Link>
                         <Nav.Link
-                            onClick={handleLogout}
+                            disabled
                             className='text-white hover-text-white transition-colors'
                         >
-                            {sessionStorage.getItem("username")}
+                            {username}
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
