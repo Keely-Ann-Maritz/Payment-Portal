@@ -21,3 +21,11 @@ services:
     depends_on:
       # in this instance, we wait until the backend is up and running
       - insy7314_poe
+  
+  insy7314_frontend_admin:
+    build:
+      context: ./frontend-admin
+    ports:
+      - "8081:5173"  
+    depends_on:
+      - insy7314_poe
