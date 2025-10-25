@@ -27,6 +27,33 @@ const getPayments = async (req, res) => {
   }
 };
 
+// GET: Payments with pending status
+const getPendingPayments = async (req, res) => {
+  try {
+    // create a new variable to hold the result of our query
+    // by saying .find({}), we are sending a query with no parameters to filter the results,
+    // meaning that the database will return ALL items in the collection (so every payment in this case)
+    const payments = await Payment.find({ status: "pending" });
+    // return the payments
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getUpdatedStatusPayments = async (req, res) => {
+  try {
+    // create a new variable to hold the result of our query
+    // by saying .find({}), we are sending a query with no parameters to filter the results,
+    // meaning that the database will return ALL items in the collection (so every payment in this case)
+    const payments = await Payment.find({ $or: [{ status: "accepted" }, { status: "rejected" }] });
+    // return the payments
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // GET: payments for a specific username
 const getPaymentByUsername = async (req, res) => {
   // get the username of the payment that the user is looking for, from the parameters
@@ -39,7 +66,7 @@ const getPaymentByUsername = async (req, res) => {
 
   try {
     // try find the payments related to that user, using the provided username
-    const payment = await Payment.find({username});
+    const payment = await Payment.find({ username });
 
     // if no payment is found matching the provided username, it would mean that they havent added any payments on their account yet
     if (!payment) {
@@ -61,7 +88,7 @@ const createPayment = async (req, res) => {
 
   // checked that all information is provided
   if (!paymentTitle || !currency || !provider || !amount || !swiftCode || !name || !cardNumber || !month || !year || !cvc) {
-     res
+    res
       .status(400)
       .json({ message: "Please ensure that all fields are provided." });
   }
@@ -69,7 +96,7 @@ const createPayment = async (req, res) => {
   try {
     // sanitzing the input fields to protect against XSS attacks (Das, 2025)
     const sanitizedPaymentTitle = DOMPurify.sanitize(paymentTitle)
-    const sanitizedSwiftCode= DOMPurify.sanitize(swiftCode)
+    const sanitizedSwiftCode = DOMPurify.sanitize(swiftCode)
     const sanitizedName = DOMPurify.sanitize(name)
 
     // salting and hashing the card number (Chaitanya, 2023)
@@ -155,9 +182,11 @@ module.exports = {
   createPayment,
   updatePayment,
   deletePayment,
+  getPendingPayments,
+  getUpdatedStatusPayments
 };
 
-// References 
+// References
 // Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
 // Das, A.,2025.7 Best Practices for Sanitizing Input in Node.js. [online] Available at: < https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096> [Accessed 6 October 2025].
 

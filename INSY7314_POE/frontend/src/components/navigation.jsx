@@ -18,6 +18,7 @@ export default function Navigation() {
         //getLogout()
         sessionStorage.clear();
         Logout()
+        logout()
         navigate('/')
     }
 

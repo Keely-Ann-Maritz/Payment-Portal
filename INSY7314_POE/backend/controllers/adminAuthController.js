@@ -3,8 +3,9 @@ const bcrypt = require('bcryptjs');
 // importing the json web token package since we are creating a token to generate a token upon login
 const jwt = require('jsonwebtoken');
 const { invalidateToken } = require('../middlewares/authMiddleware.js');
-const User = require('../models/userModel.js');
+const adminUser = require('../models/adminUserModel.js');
 require('dotenv').config();
+
 
 // helper method to generate our tokens, that takes in the username
 const generateJwt = (username) => {
@@ -16,10 +17,9 @@ const generateJwt = (username) => {
     // and returns it.
 };
 
-// Getting the User Details (The Debug Arena,2025)
 const getUserDetails = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.user.username });
+        const user = await adminUser.findOne({ username: req.user.username });
         if (!user) return res.status(404).json({ message: "User Not Found" });
         res.status(200).json(user);
     } catch (error) {
@@ -27,11 +27,12 @@ const getUserDetails = async (req, res) => {
     }
 };
 
+
 const register = async (req, res) => {
     // request the required register information from the incoming register request
-    const { username, password, fullname, idnumber, accountnumber } = req.body;
+    const { username, password, fullname, idnumber, accountnumber, admin } = req.body;
     // before signing the user up, we need to check if their username is already in use
-    const exists = await User.findOne({ username: username })
+    const exists = await adminUser.findOne({ username: username })
     // if it is, sent a error status 400 informting the user that the username has been taken
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
@@ -41,8 +42,8 @@ const register = async (req, res) => {
 
     try {
         // method that stores the uesr registeration details in the database
-        await User.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber });
-        res.status(200).json({ token: generateJwt(username) });
+        await adminUser.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber, admin: admin });
+        res.status(200).json({ success: true, token: generateJwt(username) });
 
     } catch (e) {
         //if user doesnt store , return teh error message
@@ -56,11 +57,10 @@ const login = async (req, res) => {
     //requesting the login details
     const { username, password, accountnumber } = req.body;
     //Finding the username that matches one in the database
-    const exists = await User.findOne({ username: username })
+    const exists = await adminUser.findOne({ username: username })
 
     // if the user is not present in our collection, let them know to try again
     if (!exists) return res.status(400).json({ message: "Invalid credentials." });
-
 
 
     // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
@@ -72,6 +72,7 @@ const login = async (req, res) => {
 
     // if credentials do match, generate and send a JWT token generated from the username, to the front end 
     const token = generateJwt(username);
+    const role = exists.admin;
 
     // Token with HTTPOnly (The Debug Arena,2025)
     res.cookie("token", token, {
@@ -81,7 +82,7 @@ const login = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000
     });
 
-    res.status(200).json({ message: "Logged in successfully!", token });
+    res.status(200).json({ message: "Logged in successfully!", token, role });
 };
 
 const logout = async (req, res) => {
@@ -102,8 +103,43 @@ const logout = async (req, res) => {
     res.status(200).json({ message: "Logged out successfully." });
 };
 
-module.exports = { register, login, logout, getUserDetails };
+const getEmployees = async (req, res) => {
+    try {
+        // create a new variable to hold the result of our query
+        // by saying .find({}), we are sending a query with no parameters to filter the results,
+        // meaning that the database will return ALL items in the collection (so every payment in this case)
+        const employees = await adminUser.find({ admin: false });
+        // return the payments
+        res.status(200).json(employees);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
-// References
-// Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
-// The Debug Arena,2025.Access and Refresh Token in Backend || Token Authentication in React & Node.[video online] Available at: <https://www.youtube.com/watch?v=FjuAn-y_zWk> [Accessed 18 October 2025].
+// DELETE: delete a payment from the database
+const deleteEmployee = async (req, res) => {
+    // we pass the id of the payment we want to remove
+    const id = req.params.id;
+
+    // checking to see if an ID was sent to the backend
+    if (!id) {
+        res.status(400).json({ message: "Please provide an ID to delete." });
+    }
+
+    // first try find the payment
+    try {
+        var employee = await adminUser.findById(id);
+
+        // if no payment is found, 404 and exit the method
+        if (!employee) {
+            res.status(404).json({ message: "No payment found that matches that ID." });
+        }
+
+        // find the payment, delete it, and return what it was
+        employee = await adminUser.findByIdAndDelete(id);
+        res.status(202).json(employee);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+module.exports = { register, login, logout, getEmployees, deleteEmployee, getUserDetails };

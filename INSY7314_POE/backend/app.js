@@ -40,6 +40,8 @@ app.use((req, res, next) => {
 const testRoutes = require('./routes/testRoutes.js');
 const paymentRoutes = require('./routes/paymentRoutes.js');
 const authRoutes = require('./routes/authRoutes.js');
+const adminAuthRoutes = require('./routes/adminAuthRoutes.js');
+
 
 // first we version our api (v1) so that breaking changes can live on a new version
 // then we specify an area that we want the routes to live in (in this case /test)
@@ -47,6 +49,8 @@ const authRoutes = require('./routes/authRoutes.js');
 app.use('/v1/test', testRoutes);
 app.use('/v1/payments', paymentRoutes);
 app.use('/v1/auth', authRoutes);
+app.use('/v1/adminauth', adminAuthRoutes);
+
 
 const port = process.env.API_PORT || 5000
 
@@ -68,7 +72,7 @@ const options = {
 
 // Testing if the CSP works
 app.get('/', (req, res) => {
-  res.send('Hello, your CSP is configured!');
+    res.send('Hello, your CSP is configured!');
 });
 
 //The port that the secure connection listen on
