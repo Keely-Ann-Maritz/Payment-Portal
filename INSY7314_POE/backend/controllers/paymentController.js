@@ -41,6 +41,7 @@ const getPendingPayments = async (req, res) => {
   }
 };
 
+
 //endpoint that pulls only the accepted or rejected payments - (mongodb, N/A)
 const getUpdatedStatusPayments = async (req, res) => {
   try {
@@ -150,6 +151,48 @@ const updatePayment = async (req, res) => {
   }
 };
 
+// Updating the payment status
+const updatePaymentStatus = async (req, res) => {
+ 
+  // first we get the ID from the url
+  const id = req.params.id;
+  const status = req.params.status;
+ 
+  try {
+    // firstly find the payment we need to update
+    let payment = await Payment.findById(id);
+ 
+    // if no payment ID is given, inform the user and don't proceed any further
+    if (!payment) {
+      res.status(404).json({ message: "No payment found that matches that ID." });
+    }
+ 
+    // otherwise, we then update the updated fields
+    // finally, ensure that the new version of teh payment (post update) is returned, rather than the old payment
+ 
+    payment = await Payment.findByIdAndUpdate(
+ 
+      id,
+ 
+      { status: status },
+ 
+      { new: true }
+ 
+    );
+ 
+    // return success status 200 upon the payment successfully updating
+ 
+    res.status(202).json(payment);
+ 
+  } catch (error) {
+ 
+    // if it doesnt update we inform the frontend user
+ 
+    res.status(500).json({ error: error.message });
+ 
+  }
+ 
+};
 // DELETE: delete a payment from the database
 const deletePayment = async (req, res) => {
   // we pass the id of the payment we want to remove
@@ -184,7 +227,8 @@ module.exports = {
   updatePayment,
   deletePayment,
   getPendingPayments,
-  getUpdatedStatusPayments
+  getUpdatedStatusPayments,
+  updatePaymentStatus   
 };
 
 // References

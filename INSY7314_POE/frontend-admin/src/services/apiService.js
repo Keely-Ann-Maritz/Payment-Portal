@@ -8,6 +8,8 @@ export const getEmployees = () => axios.get('/adminauth/getEmployees');
 
 export const deleteEmployee = (id) => axios.delete(`/adminauth/deleteEmployee/${id}`);
 
+export const updateStatus = (id, status) => axios.put(`/payments/updateStatus/${id}/${status}`);
+ 
 // Logging out
 export const Logout = () => axios.get('/adminauth/logout');
 

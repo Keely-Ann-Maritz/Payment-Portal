@@ -4,7 +4,7 @@ const express = require('express');
 const { verifyToken } = require('../middlewares/authMiddleware.js');
 
 // call in our functions from the controller
-const { getPayments, getPaymentByUsername, createPayment, updatePayment, deletePayment, getPendingPayments, getUpdatedStatusPayments } = require('../controllers/paymentController.js');
+const { getPayments, getPaymentByUsername, createPayment, updatePayment, deletePayment, getPendingPayments, getUpdatedStatusPayments, updatePaymentStatus} = require('../controllers/paymentController.js');
 //const { getPaymentByUsername } = require('../../frontend/src/services/apiService.js');
 
 // set up our router instance
@@ -26,7 +26,8 @@ router.post('/', verifyToken, createPayment);
 router.put('/:id', verifyToken, updatePayment);
 // when deleting we also pass an ID
 router.delete('/:id', verifyToken, deletePayment);
-
+// Updating the status of the payment
+router.put('/updateStatus/:id/:status', updatePaymentStatus)
 
 // finally we export our routes
 module.exports = router;
