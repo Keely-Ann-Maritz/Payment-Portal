@@ -11,12 +11,12 @@ import {
 } from "../services/apiService.js";
 
 // Payment History (sahilatahar, 2023)
-export default function ViewEmployees(/*{ setShowNavbar }*/) {
+export default function ViewEmployees({ setShowNavbar }) {
     const [employees, setEmpoyees] = useState([]);
 
     // Displaying the navigation bar on this page (sahilatahar, 2023)
     useLayoutEffect(() => {
-        /*setShowNavbar(true);*/
+        setShowNavbar(true);
     }, [])
 
     const fetchEmployees = async () => {
@@ -51,7 +51,7 @@ export default function ViewEmployees(/*{ setShowNavbar }*/) {
     // Payment Table 
     return (
         <div>
-            <h1 className="paymentHistoryHeading">Payment History</h1>
+            <h1 className="paymentHistoryHeading">Employee Account Management</h1>
             <div className="container mt-3">
                 <table border="1" className="table table-hover">
                     {/* thead specifies that the following row will be headings */}

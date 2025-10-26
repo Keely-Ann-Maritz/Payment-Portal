@@ -6,7 +6,7 @@ import './App.css'
 import './index.css'
 import App from './App.jsx'
 //importing bootstrap into all pages
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

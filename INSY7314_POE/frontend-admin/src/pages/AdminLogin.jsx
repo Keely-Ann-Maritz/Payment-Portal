@@ -10,7 +10,7 @@ import { fetchUserDetails, LoginAdmin } from "../services/apiService.js";
 
 
 // Hiding navigation bar (sahilatahar, 2023)
-export default function AdminLogin(/*{ setShowNavbar }*/) {
+export default function AdminLogin({ setShowNavbar, setRole }) {
     // this formData is for the login credentials
     const [formData, setFormData] = useState({
         username: "",
@@ -25,7 +25,7 @@ export default function AdminLogin(/*{ setShowNavbar }*/) {
 
     // Hiding the navigation bar for this page (sahilatahar, 2023)
     useLayoutEffect(() => {
-        //setShowNavbar(false);
+        setShowNavbar(false);
     }, [])
 
     // this method will handle what to do when user input happens in our form element
@@ -73,11 +73,11 @@ export default function AdminLogin(/*{ setShowNavbar }*/) {
 
         // for Username
         if (!regexUsername.test(formData.username)) {
-            errors.accountnumber = "User details incorrect";
+            errors.username = "User details incorrect";
             usernameChecked = false;
         }
         else {
-            errors.accountnumber = "";
+            errors.username = "";
         }
 
         if (!regexPassword.test(formData.password)) {
@@ -98,6 +98,8 @@ export default function AdminLogin(/*{ setShowNavbar }*/) {
 
 
                     if (checkLogin.role == true) {
+                        sessionStorage.setItem("role", "admin");
+                        setRole("admin");
                         sessionStorage.setItem("adminUsername", formData.username);
                         sessionStorage.setItem("token", checkLogin.token);
                         const fetchDetails = await fetchUserDetails(checkLogin.token);
@@ -106,11 +108,13 @@ export default function AdminLogin(/*{ setShowNavbar }*/) {
                         sessionStorage.setItem("userDetails", JSON.stringify(fetchDetails.data));
                         //telling the user that they have been logged in
                         alert("User Logged in!");
-                        setFormData({ username: "", accountnumber: "", password: "" });
+                        setFormData({ username: "", password: "" });
                         // authenticating the user and taking them to the add payment form
                         handleAdminLogin()
                     }
                     else {
+                        sessionStorage.setItem("role", "employee");
+                        setRole("employee"); 
                         sessionStorage.setItem("EmployeeUsername", formData.username);
                         sessionStorage.setItem("token", checkLogin.token);
 

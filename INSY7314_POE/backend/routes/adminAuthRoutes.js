@@ -29,5 +29,7 @@ router.get('/getEmployees', getEmployees)
 
 router.delete('/deleteEmployee/:id', deleteEmployee)
 
+// logout is a GET request, as we are just reading the token from the request header
+router.get('/logout', logout);
 
 module.exports = router;

@@ -10,12 +10,12 @@ import {
 } from "../services/apiService.js";
 
 // Payment History (sahilatahar, 2023)
-export default function ViewPendingPayments(/*{ setShowNavbar }*/) {
+export default function ViewPendingPayments({ setShowNavbar }) {
     const [payments, setPayments] = useState([]);
 
     // Displaying the navigation bar on this page (sahilatahar, 2023)
     useLayoutEffect(() => {
-        //setShowNavbar(true);
+        setShowNavbar(true);
     }, [])
 
     const fetchPayments = async () => {
