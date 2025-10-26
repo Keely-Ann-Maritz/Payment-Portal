@@ -23,6 +23,17 @@ export const LoginAdmin = async (userData) => {
     } catch (error) {
         throw error;
     }
+}
+
+export const RegisterAdmin = async (userData) => {
+    try {
+        const response = await axios.post(`/adminauth/adminRegister`, userData, {
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 
 }
 

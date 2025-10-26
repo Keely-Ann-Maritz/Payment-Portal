@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react'
 // call in our pages
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import AdminLogin from './pages/AdminLogin.jsx'
+import AddEmployee from './pages/AddEmployee.jsx'
 import ViewEmployees from './pages/ViewEmployees.jsx'
 import ViewPendingPayments from './pages/ViewPendingPayments.jsx'
+import ReviewedPayments from './pages/ReviewedPayments.jsx'
 import './App.css'
 
 // Routes for all the pages and the navbar, and which needs authentication to be accessed
@@ -44,8 +46,10 @@ function App() {
       <Routes>
         <Route path="/" element={<AdminLogin setShowNavbar={setShowNavbar} setRole={setRole} />} />
         <Route path="/AdminLogin" element={<AdminLogin setShowNavbar={setShowNavbar} setRole={setRole}/>} />
+        <Route path="/AddEmployee" element={<ProtectedRoute><AddEmployee setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
         <Route path="/ViewEmployees" element={<ProtectedRoute><ViewEmployees setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
         <Route path="/ViewPendingPayments" element={<ProtectedRoute><ViewPendingPayments setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
+        <Route path="/ReviewedPayments" element={<ProtectedRoute><ReviewedPayments setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
       </Routes>
     </Router>
   )

@@ -45,7 +45,7 @@ export default function EmployeeNavigation() {
                         </Nav.Link>
                         <Nav.Link
                             as={Link}
-                            to='/ViewReviewedPayments'
+                            to='/ReviewedPayments'
                             className='text-white hover-text-white transition-colors'
                         >
                             Reviewed Payments

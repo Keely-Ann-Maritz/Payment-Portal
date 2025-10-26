@@ -30,7 +30,7 @@ const getUserDetails = async (req, res) => {
 
 const register = async (req, res) => {
     // request the required register information from the incoming register request
-    const { username, password, fullname, idnumber, admin } = req.body;
+    const { username, password, fullname, idnumber } = req.body;
     // before signing the user up, we need to check if their username is already in use
     const exists = await adminUser.findOne({ username: username })
     // if it is, sent a error status 400 informting the user that the username has been taken
@@ -40,7 +40,7 @@ const register = async (req, res) => {
 
     try {
         // method that stores the uesr registeration details in the database
-        await adminUser.create({ username: username, password: hashedPassword, fullname: fullname, idnumber, admin: admin });
+        await adminUser.create({ username: username, password: hashedPassword, fullname: fullname, idnumber, admin: false });
         res.status(200).json({ success: true, token: generateJwt(username) });
 
     } catch (e) {

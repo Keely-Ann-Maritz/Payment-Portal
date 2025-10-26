@@ -40,7 +40,7 @@ export default function AdminNavigation() {
                     <Nav className='me-auto gap-3'>
                         <Nav.Link
                             as={Link}
-                            to='/AddEmployees'
+                            to='/AddEmployee'
                             className='text-white hover-text-white transition-colors'
                         >
                             Add Employee
