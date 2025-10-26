@@ -1,0 +1,104 @@
+// importing required react components (dangelo,2022)
+import { useEffect, useState } from "react";
+import { useLayoutEffect } from 'react'
+
+import { useNavigate } from 'react-router-dom'
+import '../App.css'
+
+import {
+    getEmployees,
+    deleteEmployee,
+} from "../services/apiService.js";
+
+// Payment History (sahilatahar, 2023)
+export default function ViewEmployees(/*{ setShowNavbar }*/) {
+    const [employees, setEmpoyees] = useState([]);
+
+    // Displaying the navigation bar on this page (sahilatahar, 2023)
+    useLayoutEffect(() => {
+        /*setShowNavbar(true);*/
+    }, [])
+
+    const fetchEmployees = async () => {
+
+        // fetch all payments using the apiService method we created earlier, storing the response in a temp variable
+        const res = await getEmployees();
+        // and update our payments variable with the response data
+        setEmpoyees(res.data);
+    };
+
+    // this method will run as soon as the page is loaded
+    useEffect(() => {
+        // fetching all of the payments in the background
+        fetchEmployees();
+    }, []);
+
+    // we create a method to handle when the delete button is pressed
+    const handleDelete = async (id) => {
+        // prompt the user to make sure that they're sure that they're sure they want to delete
+        if (
+            window.confirm(
+                "Are you sure you want to delete this Employee?"
+            )
+        ) {
+            // if yes, delete the payment using the provided id
+            await deleteEmployee(id);
+            // and update our cached payments array
+            fetchEmployees();
+        }
+    };
+
+    // Payment Table 
+    return (
+        <div>
+            <h1 className="paymentHistoryHeading">Payment History</h1>
+            <div className="container mt-3">
+                <table border="1" className="table table-hover">
+                    {/* thead specifies that the following row will be headings */}
+                    <thead className="table-dark">
+                        {/* tr denotes a new row */}
+                        <tr>
+                            {/* and each th represents a heading */}
+                            <th>Fullname</th>
+                            <th>Username</th>
+                            <th>Identification Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    {/* tbody - table body (data lives here) */}
+                    <tbody>
+                        {/* if there are NO payments, print a message across the table saying so */}
+                        {employees.length === 0 && (
+                            <tr>
+                                <td colSpan="5">No Employees available.</td>
+                            </tr>
+                        )}
+                        {/* if there ARE payments, we iterate through each book in the payments array (using temp variable book)
+            similar to a foreach loop, and we map the correct attribute to the correct column in the table */}
+                        {employees.map((employee) => (
+                            /* key lets us identify each row */
+                            <tr key={employee._id}>
+                                <td>{employee.fullname}</td>
+                                <td>{employee.username}</td>
+                                <td>{employee.idnumber}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-danger "
+                                        onClick={() => {
+                                            handleDelete(employee._id);
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+}
+
+// References
+// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].

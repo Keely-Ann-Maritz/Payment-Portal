@@ -41,6 +41,7 @@ const getPendingPayments = async (req, res) => {
   }
 };
 
+//endpoint that pulls only the accepted or rejected payments - (mongodb, N/A)
 const getUpdatedStatusPayments = async (req, res) => {
   try {
     // create a new variable to hold the result of our query
@@ -189,4 +190,5 @@ module.exports = {
 // References
 // Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
 // Das, A.,2025.7 Best Practices for Sanitizing Input in Node.js. [online] Available at: < https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096> [Accessed 6 October 2025].
+// mongodb, N/A.$or . [online] Available at: <https://www.mongodb.com/docs/manual/reference/operator/query/or/> [Accessed 25 October 2025].
 

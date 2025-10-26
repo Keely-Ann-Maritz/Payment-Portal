@@ -5,7 +5,6 @@ const admnUserSchema = new mongoose.Schema({
     fullname: String,
     username: String,
     idnumber: String,
-    accountnumber: String,
     password: String,
     admin: Boolean
 });

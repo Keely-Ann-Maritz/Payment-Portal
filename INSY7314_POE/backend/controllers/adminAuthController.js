@@ -30,19 +30,17 @@ const getUserDetails = async (req, res) => {
 
 const register = async (req, res) => {
     // request the required register information from the incoming register request
-    const { username, password, fullname, idnumber, accountnumber, admin } = req.body;
+    const { username, password, fullname, idnumber, admin } = req.body;
     // before signing the user up, we need to check if their username is already in use
     const exists = await adminUser.findOne({ username: username })
     // if it is, sent a error status 400 informting the user that the username has been taken
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
     const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedidnumber = await bcrypt.hash(idnumber, 10);
-    const hashedAccountNumber = await bcrypt.hash(accountnumber.toString(), 10);
 
     try {
         // method that stores the uesr registeration details in the database
-        await adminUser.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber, admin: admin });
+        await adminUser.create({ username: username, password: hashedPassword, fullname: fullname, idnumber, admin: admin });
         res.status(200).json({ success: true, token: generateJwt(username) });
 
     } catch (e) {
@@ -55,7 +53,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     //requesting the login details
-    const { username, password, accountnumber } = req.body;
+    const { username, password } = req.body;
     //Finding the username that matches one in the database
     const exists = await adminUser.findOne({ username: username })
 
@@ -65,10 +63,9 @@ const login = async (req, res) => {
 
     // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
     const matchingPassword = await bcrypt.compare(password, exists.password);
-    const matchingAccountNum = await bcrypt.compare(accountnumber, exists.accountnumber);
 
     // if if the password or account number doesnt match, inform the user with a message under the status code 400
-    if (!matchingPassword || !matchingAccountNum) return res.status(400).json({ message: "Invalid credentials." });
+    if (!matchingPassword) return res.status(400).json({ message: "Invalid credentials." });
 
     // if credentials do match, generate and send a JWT token generated from the username, to the front end 
     const token = generateJwt(username);

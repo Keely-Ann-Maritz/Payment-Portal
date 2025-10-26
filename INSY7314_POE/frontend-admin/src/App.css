@@ -1,42 +1,141 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Button styling (dangelo,2022)*/
+.submit-btn {
+  background-color: #610595;
+  color: white;
+  border-radius: 8px;
+}
+
+.back-btn {
+  background-color: gray;
+  color: white;
+  border-radius: 8px;
+}
+
+.backgroundImage {
+  background: #610595;
+  background-image: linear-gradient(to right, rgb(97, 5, 149), rgb(82, 136, 236));
+}
+
+/* App styling (dangelo,2022)*/
+:root {
+  --main-color: #FFF;
+  --second-color: #21092f;
+  --font-color: #21092F;
+  --second-font-color: #8F8694;
+  --gradient: linear-gradient(163.95deg, #6348FE 4.74%, #610595 88.83%);
+  --font-family: sans-serif;
+  --shadow: 0px 39px 60px 0px #00000024;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* typography (dangelo,2022)*/
+html {
+  font-family: var(--font-family);
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: 3.42px;
+}
+
+.paymentHistoryHeading {
+  padding-top: 30px;
+  padding-bottom: 30px;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h2 {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2px;
+  color: var(--second-font-color);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+input:placeholder-shown {
+  font-size: 12px;
+  line-height: 23px;
+  letter-spacing: 0px;
+  text-indent: 16px;
+}
+
+label {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2px;
+  color: var(--font-color);
+  text-transform: uppercase;
+}
+
+header h1 {
+  font-size: 18px;
+  line-height: 23px;
+  letter-spacing: 2.200000047683716px;
+  color: var(--main-color);
+}
+
+header p {
+  font-size: 9px;
+  line-height: 11px;
+  letter-spacing: 1.2857142686843872px;
+  color: var(--main-color);
+}
+
+/* typography media query (dangelo,2022)*/
+@media(min-width: 1000px) {
+  h2 {
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: 0px;
   }
-  to {
-    transform: rotate(360deg);
+
+  header h1 {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: 3.422222137451172px;
+  }
+
+  header p {
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 2px;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Head styles (dangelo,2022)*/
+.header--image_container_front {
+  box-shadow: var(--shadow);
 }
 
-.card {
-  padding: 2em;
+/* Form styles (dangelo,2022)*/
+label {
+  margin-bottom: 9px;
 }
 
-.read-the-docs {
-  color: #888;
+input,
+input:active,
+input:focus {
+  border: 1px solid #DFDEE0;
+  height: 45px;
+  border-radius: 8px;
+  text-indent: 16px;
 }
+
+.form--error {
+  color: red
+}
+
+/* References */
+/* dangelo, E.2022.Interactive Card Details Form- React, Tailwind, Vite. [Source code] Available at: <Frontend Mentor | Interactive Card Details Form- React, Tailwind, Vite coding challenge solution> [Accessed 17 September 2025]. */

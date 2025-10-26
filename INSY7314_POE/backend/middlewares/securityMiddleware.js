@@ -5,7 +5,8 @@ import cors from 'cors';
 
 const corsOptions = {
     // origin allows us to set where we will permit requests from (for now *, which allows everywhere and everyone!)
-    origin: 'https://localhost:5173',
+    origin: ['https://localhost:5173',
+        'https://localhost:5174'],
     // controlling what types of HTTP requests we will permit
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // allow the flow of credentials between our backend API and out frontend web portal
@@ -47,12 +48,12 @@ const securityMiddlewares = (app) => {
     app.use(
         helmet.contentSecurityPolicy({
             directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'"],
-            styleSrc: ["'self'", "https://fonts.googleapis.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            imgSrc: ["'self'", "data:"],
-            connectSrc: ["'self'", "https://api.example.com"],
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "'unsafe-inline'"],
+                styleSrc: ["'self'", "https://fonts.googleapis.com"],
+                fontSrc: ["'self'", "https://fonts.gstatic.com"],
+                imgSrc: ["'self'", "data:"],
+                connectSrc: ["'self'", "https://api.example.com"],
             },
         })
     );

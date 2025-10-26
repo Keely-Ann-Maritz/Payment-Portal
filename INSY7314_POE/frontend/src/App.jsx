@@ -33,5 +33,5 @@ function App() {
 
 export default App
 
-// References 
+// References
 // sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].
