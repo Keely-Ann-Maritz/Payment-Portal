@@ -26,8 +26,8 @@
 - Rate limiting
 - DOMPurify
 - Storing data into MongoDB
-
-The following was not implemented : **express-mongo-sanitize package** and **HTTPOnly**
+- Express-mongo-sanitize package
+- HTTPOnly
 
 <br>
 
