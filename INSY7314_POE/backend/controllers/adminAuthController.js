@@ -36,7 +36,8 @@ const register = async (req, res) => {
     // if it is, sent a error status 400 informting the user that the username has been taken
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const passwordSalt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password + process.env.PEPPER, passwordSalt);
 
     try {
         // method that stores the uesr registeration details in the database
@@ -62,7 +63,7 @@ const login = async (req, res) => {
 
 
     // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
-    const matchingPassword = await bcrypt.compare(password, exists.password);
+    const matchingPassword = await bcrypt.compare(password + process.env.PEPPER, exists.password);
 
     // if if the password or account number doesnt match, inform the user with a message under the status code 400
     if (!matchingPassword) return res.status(400).json({ message: "Invalid credentials." });

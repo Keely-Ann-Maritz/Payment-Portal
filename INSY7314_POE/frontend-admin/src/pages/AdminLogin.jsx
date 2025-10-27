@@ -114,7 +114,7 @@ export default function AdminLogin({ setShowNavbar, setRole }) {
                     }
                     else {
                         sessionStorage.setItem("role", "employee");
-                        setRole("employee"); 
+                        setRole("employee");
                         sessionStorage.setItem("EmployeeUsername", formData.username);
                         sessionStorage.setItem("token", checkLogin.token);
 

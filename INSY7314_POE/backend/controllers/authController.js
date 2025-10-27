@@ -35,9 +35,13 @@ const register = async (req, res) => {
     // if it is, sent a error status 400 informting the user that the username has been taken
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedidnumber = await bcrypt.hash(idnumber, 10);
-    const hashedAccountNumber = await bcrypt.hash(accountnumber.toString(), 10);
+
+    const passwordSalt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password + process.env.PEPPER, passwordSalt);
+    const idSalt = await bcrypt.genSalt(10);
+    const hashedidnumber = await bcrypt.hash(idnumber + process.env.PEPPER, idSalt);
+    const accountSalt = await bcrypt.genSalt(10);
+    const hashedAccountNumber = await bcrypt.hash(accountnumber.toString() + process.env.PEPPER, accountSalt);
 
     try {
         // method that stores the uesr registeration details in the database
@@ -48,8 +52,6 @@ const register = async (req, res) => {
         //if user doesnt store , return teh error message
         res.status(500).json({ error: e.message });
     } res.status(500).json({ error: e.message });
-
-
 };
 
 const login = async (req, res) => {
@@ -64,8 +66,8 @@ const login = async (req, res) => {
 
 
     // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
-    const matchingPassword = await bcrypt.compare(password, exists.password);
-    const matchingAccountNum = await bcrypt.compare(accountnumber, exists.accountnumber);
+    const matchingPassword = await bcrypt.compare(password + process.env.PEPPER, exists.password);
+    const matchingAccountNum = await bcrypt.compare(accountnumber + process.env.PEPPER, exists.accountnumber);
 
     // if if the password or account number doesnt match, inform the user with a message under the status code 400
     if (!matchingPassword || !matchingAccountNum) return res.status(400).json({ message: "Invalid credentials." });
