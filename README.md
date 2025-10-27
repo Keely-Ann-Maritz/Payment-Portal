@@ -19,7 +19,7 @@
 - Whitelisting Techniques
 - Blacklisting Techniques
 - JWT Token
-- bcrypt (Salting and Hashing)
+- bcrypt (Salting, Hashing and Pepper)
 - helmet.js
 - X-Frame-Options (DENY)
 - Content Security Policy (CSP)
