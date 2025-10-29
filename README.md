@@ -61,6 +61,7 @@
 ## Security Overview 
 
 | Attacks | Preventions |
+| -------- | ------------ |
 | Secure input information | bcrypt (Salting, Hashing and Pepper) |
 | Securing the data in transit | Frontend and Backend SSL Certificates |
 | Session Jacking | HTTPOnly, JWT Token, Blacklisting Techniques |
