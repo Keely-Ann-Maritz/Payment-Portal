@@ -60,6 +60,10 @@
 
 ## Security Overview 
 
+All data is stored in the MongoDB database.
+
+<br>
+
 | Attacks | Preventions |
 | -------- | ------------ |
 | Secure input information | bcrypt (Salting, Hashing and Pepper) |
@@ -71,7 +75,6 @@
 | Man in the Middle | Content Security Policy (CSP), Frontend and Backend SSL Certificates |
 | Denial of Service (DDos) | Rate limiting |
 
-All data is stored in the MongoDB database.
 
 <br>
 
