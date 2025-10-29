@@ -116,13 +116,15 @@
 3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
 4. Select the <b>Login</b> to Login to the Admin Portal.
 5. View a list of Employee accounts.
-6. Select the 
-
-      Use the navigation bar to navigate to the different pages:
-                - Add Employee
-                - View Employees
-                - Logout
-Select the <b>Logout</b> button to exit the application.
+6. Select the Add Employee navigation bar tab, to navigate to the Add Employee Form.
+7. Enter Employee information.
+8. Select the <b>Register Employee</b> button.
+9. Select the <b>Delete</b> button to delete an Employee account.
+10. Use the navigation bar to navigate to the different pages:
+      - Add Employee
+      - View Employees
+      - Logout
+11. Select the <b>Logout</b> button to exit the application.
       
 <br>
 
