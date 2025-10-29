@@ -108,7 +108,7 @@
     - Pending Payments
     - Reviewed Payments
     - Logout
-10.Select the <b>Logout</b> button to exit the application.
+10. Select the <b>Logout</b> button to exit the application.
 
 ### **Admin Portal**
 1. In the terminal, ensure the backend is running.
@@ -118,7 +118,7 @@
 5. View a list of Employee accounts.
 6. Select the Add Employee navigation bar tab, to navigate to the Add Employee Form.
 7. Enter Employee information.
-8. Select the <b>Register Employee</b> button.
+8. Select the <b>Register Employee</b> button to submit the form.
 9. Select the <b>Delete</b> button to delete an Employee account.
 10. Use the navigation bar to navigate to the different pages:
       - Add Employee
