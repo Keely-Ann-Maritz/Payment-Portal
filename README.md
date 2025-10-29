@@ -28,7 +28,7 @@
 
 ## Features
  ### **Backend**
- - Connects to and stores user data in a database,
+ - Connects to and stores user data in a database
  - You can store account information in the database
  - You can store payment information in the database
  - Sensitive information gets hashed, salted and a pepper value is added to the password
@@ -137,7 +137,7 @@ All data is stored in the MongoDB database.
  ### **Admin Portal**
  1. In the terminal, ensure the backend is running.
  2. Run the following command, in the frontend-admin folder: : ```npm run dev```
- 3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
+ 3. The user will be welcomed to a login page, upon opening the application. Enter the Super Admin credentials (username and password).
  4. Select the <b>Login</b> to Login to the Admin Portal.
  5. View a list of Employee accounts.
  6. Select the Add Employee navigation bar tab, to navigate to the Add Employee Form.
