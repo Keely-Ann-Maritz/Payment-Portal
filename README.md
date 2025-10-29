@@ -77,7 +77,7 @@
 <br>
 
 ## Instructions on how to run the application
-- **User Portal**
+**User Portal**
       1. In the terminal, ensure you are in the backend and frontend folder.
       2. Run the following command, in both the frontend and backend: ```npm run dev```
       3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
@@ -95,7 +95,7 @@
           - Logout
       13. Select the <b>Logout</b> button to exit the application.
 
-- **Employee Portal**
+**Employee Portal**
       1. In the terminal, ensure the backend is running.
       2. Run the following command, in the frontend-admin folder: : ```npm run dev```
       3. The user will be welcomed to a login page, upon opening the application. Enter the employee credentials (username and password).
@@ -110,7 +110,7 @@
                 - Logout
       10. Select the <b>Logout</b> button to exit the application.
 
-- **Admin Portal**
+**Admin Portal**
 1. In the terminal, ensure the backend is running.
 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
 3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
@@ -120,7 +120,7 @@
 
       Use the navigation bar to navigate to the different pages:
                 - Add Employee
-                - Reviewed Payments
+                - View Employees
                 - Logout
 Select the <b>Logout</b> button to exit the application.
       
