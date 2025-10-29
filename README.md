@@ -8,6 +8,13 @@
 
 <br>
 
+| Student Number | Name | Roles |
+| --------------- | ----- | ---------------- |
+| ST10085428 | Keely-Ann Maritz | Frontend, Backend, README File |
+| ST10085279 | Wiehan Smalberger | Frontend, Backend |
+
+<br>
+
 ## YouTube video
 * [Part 2 Demonstration Video](https://youtu.be/CcHt6UGd3lw)
 * [Part 3 Demonstration Video]()
