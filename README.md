@@ -27,34 +27,34 @@
 <br>
 
 ## Features
-### **Backend**
-- Connects to and stores user data in a database,
-- You can store account information in the database
-- You can store payment information in the database
-- Sensitive information gets hashed, salted and a pepper value is added to the password
-- Provides rate limiting for the login pages of up to 5 attempts to log in
-- Sanitises the inputs with DOM Purify and mongo express sanitize
-- Generates login tokens for the frontend
- 
-### **Frontend**
-- The user can login to their account
-- The user can register a new account
-- The user can make a payment
-- The user can view a history of all they payments they have made
-- The user can delete any of their payments
-- The user can log out of their account
- 
-### **Frontend-Admin**
-- The employee can login to their account
-- The employee can view a list of all the pending payments
-- The employee can change the status of the payment by accepting or rejecting they payment after reviewing the details of it.
-- The employee can view a list of all the accepted/ rejected payments
-- The employee can log out of their account
-- The super admin can login to their account.
-- The super admin can view a list of all employee accounts and their account information apart from the password.
-- The super admin can delete any employee account.
-- The super admin can create a new employee account.
-- The super admin can log out of their account
+ ### **Backend**
+ - Connects to and stores user data in a database,
+ - You can store account information in the database
+ - You can store payment information in the database
+ - Sensitive information gets hashed, salted and a pepper value is added to the password
+ - Provides rate limiting for the login pages of up to 5 attempts to log in
+ - Sanitises the inputs with DOM Purify and mongo express sanitize
+ - Generates login tokens for the frontend
+  
+ ### **Frontend**
+ - The user can login to their account
+ - The user can register a new account
+ - The user can make a payment
+ - The user can view a history of all they payments they have made
+ - The user can delete any of their payments
+ - The user can log out of their account
+  
+ ### **Frontend-Admin**
+ - The employee can login to their account
+ - The employee can view a list of all the pending payments
+ - The employee can change the status of the payment by accepting or rejecting they payment after reviewing the details of it.
+ - The employee can view a list of all the accepted/ rejected payments
+ - The employee can log out of their account
+ - The super admin can login to their account.
+ - The super admin can view a list of all employee accounts and their account information apart from the password.
+ - The super admin can delete any employee account.
+ - The super admin can create a new employee account.
+ - The super admin can log out of their account
 
 <br>
 
