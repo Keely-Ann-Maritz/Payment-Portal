@@ -100,54 +100,54 @@ All data is stored in the MongoDB database.
 <br>
 
 ## Instructions on how to run the application
-### **User Portal**
-1. In the terminal, ensure you are in the backend and frontend folder.
-2. Run the following command, in both the frontend and backend: ```npm run dev```
-3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
-4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
-5. If the user already has an account, enter the credentials to login to the Payment Portal.
-6. Once logged in, enter the payment information and card details.
-7. Select the <b>Pay Now</b> button to make the payment.
-8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history.
-9. If the user does not want to make a payment, select the <b>Skip</b> button.
-10. View all the payments on the Payment History page.
-11. Select the <b>Delete</b> button, if you wish to delete a payment.
-12. Use the navigation bar to navigate to the different pages:
-      - Make a payment
-      - Payment History
-      - Logout
-13. Select the <b>Logout</b> button to exit the application.
-
-### **Employee Portal**
-1. In the terminal, ensure the backend is running.
-2. Run the following command, in the frontend-admin folder: : ```npm run dev```
-3. The user will be welcomed to a login page, upon opening the application. Enter the employee credentials (username and password).
-4. Select the <b>Login</b> to Login to the Employee Portal.
-5. View a list of pending payments.
-6. Select the <b>Accept</b> button to Accept the payment.
-7. Select the <b>Reject</b> button to Reject the payment.
-8. View the reviewed payments, where all the accepted and rejected payments history is displayed.
-9. Use the navigation bar to navigate to the different pages:
-    - Pending Payments
-    - Reviewed Payments
-    - Logout
-10. Select the <b>Logout</b> button to exit the application.
-
-### **Admin Portal**
-1. In the terminal, ensure the backend is running.
-2. Run the following command, in the frontend-admin folder: : ```npm run dev```
-3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
-4. Select the <b>Login</b> to Login to the Admin Portal.
-5. View a list of Employee accounts.
-6. Select the Add Employee navigation bar tab, to navigate to the Add Employee Form.
-7. Enter Employee information.
-8. Select the <b>Register Employee</b> button to submit the form.
-9. Select the <b>Delete</b> button to delete an Employee account.
-10. Use the navigation bar to navigate to the different pages:
-      - Add Employee
-      - View Employees
-      - Logout
-11. Select the <b>Logout</b> button to exit the application.
+ ### **User Portal**
+ 1. In the terminal, ensure you are in the backend and frontend folder.
+ 2. Run the following command, in both the frontend and backend: ```npm run dev```
+ 3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
+ 4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
+ 5. If the user already has an account, enter the credentials to login to the Payment Portal.
+ 6. Once logged in, enter the payment information and card details.
+ 7. Select the <b>Pay Now</b> button to make the payment.
+ 8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history.
+ 9. If the user does not want to make a payment, select the <b>Skip</b> button.
+ 10. View all the payments on the Payment History page.
+ 11. Select the <b>Delete</b> button, if you wish to delete a payment.
+ 12. Use the navigation bar to navigate to the different pages:
+       - Make a payment
+       - Payment History
+       - Logout
+ 13. Select the <b>Logout</b> button to exit the application.
+ 
+ ### **Employee Portal**
+ 1. In the terminal, ensure the backend is running.
+ 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
+ 3. The user will be welcomed to a login page, upon opening the application. Enter the employee credentials (username and password).
+ 4. Select the <b>Login</b> to Login to the Employee Portal.
+ 5. View a list of pending payments.
+ 6. Select the <b>Accept</b> button to Accept the payment.
+ 7. Select the <b>Reject</b> button to Reject the payment.
+ 8. View the reviewed payments, where all the accepted and rejected payments history is displayed.
+ 9. Use the navigation bar to navigate to the different pages:
+     - Pending Payments
+     - Reviewed Payments
+     - Logout
+ 10. Select the <b>Logout</b> button to exit the application.
+ 
+ ### **Admin Portal**
+ 1. In the terminal, ensure the backend is running.
+ 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
+ 3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
+ 4. Select the <b>Login</b> to Login to the Admin Portal.
+ 5. View a list of Employee accounts.
+ 6. Select the Add Employee navigation bar tab, to navigate to the Add Employee Form.
+ 7. Enter Employee information.
+ 8. Select the <b>Register Employee</b> button to submit the form.
+ 9. Select the <b>Delete</b> button to delete an Employee account.
+ 10. Use the navigation bar to navigate to the different pages:
+       - Add Employee
+       - View Employees
+       - Logout
+ 11. Select the <b>Logout</b> button to exit the application.
       
 <br>
 
