@@ -21,7 +21,19 @@
 
 <br>
 
-##  Implemented the following attack preventions, listed in Part 1:
+## Introduction
+
+
+<br>
+
+
+## Features
+
+
+<br>
+
+
+## Security Overview 
 - Frontend and Backend SSL Certificates 
 - Regex
 - Whitelisting Techniques
@@ -39,6 +51,13 @@
 
 <br>
 
+## Changelog
+- Added Pepper to the bycrypt salting and hashing.
+- Implemented the Express-mongo-sanitize package and HTTPOnly
+- Implemented token validation
+
+<br>
+
 ## Instructions for setting up the Environment Development
 1. Install Visual Studio Code:
       -  Download link: [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download)
@@ -48,33 +67,63 @@
 4. Once, the repository is cloned in GitHub Desktop, Select the button to Open with Visual Studio Code.
 5. Ensure you are in the root folder.
 6. In the navigation bar, select the <b>Terminal</b> navigation link and open a new terminal.
-7. Once, the terminal has opened at the bottom of the screen, navigate into the backend and frontend folder.
-8. Run the following command in the backend and frontend, to install all packages: ```npm i```
+7. Once, the terminal has opened at the bottom of the screen, navigate into the backend and frontend folders.
+8. Run the following command in the backend and frontend portals, to install all packages: ```npm i```
 9. Add the <b>.env</b> file into the project.
-10. Run the commands to setup the SSL Certificates for the backend and frontend.
-11. Copy the certificates into a <b>certs</b> folder in the backend and frontend.
+10. Run the commands to setup the SSL Certificates for the backend and frontend portals.
+11. Copy the certificates into a <b>certs</b> folder in the backend and frontend portals.
 12. Ensure you are in the backend folder, in the terminal and install the https package.
 
 <br>
 
 ## Instructions on how to run the application
-1. In the terminal, ensure you are in the backend and frontend folders.
-2. Run the following command, in both the frontend and backend: ```npm run dev```
-3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
-4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
-5. If the user already has an account, enter the credentials to login to the Payment Portal.
-6. Once logged in, enter the payment information and card details.
-7. Select the <b>Pay Now</b> button to make the payment.
-8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history. 
-9. If the user does not want to make a payment, select the <b>Skip</b> button.
-10. View all the payments on the Payment History page.
-11. Select the <b>Delete</b> button, if you wish to delete a payment.
-12. Use the navigation bar to navigate to the different pages:
-    - Make a payment
-    - Payment History
-    - Logout
-13. Select the <b>Logout</b> button to exit the application.
-   
+- **User Portal**
+      1. In the terminal, ensure you are in the backend and frontend folder.
+      2. Run the following command, in both the frontend and backend: ```npm run dev```
+      3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
+      4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
+      5. If the user already has an account, enter the credentials to login to the Payment Portal.
+      6. Once logged in, enter the payment information and card details.
+      7. Select the <b>Pay Now</b> button to make the payment.
+      8. The user will be redirected to a Thank You page, informing them their payment was successful. Select the <b>Continue</b> button to view the payment history. 
+      9. If the user does not want to make a payment, select the <b>Skip</b> button.
+      10. View all the payments on the Payment History page.
+      11. Select the <b>Delete</b> button, if you wish to delete a payment.
+      12. Use the navigation bar to navigate to the different pages:
+          - Make a payment
+          - Payment History
+          - Logout
+      13. Select the <b>Logout</b> button to exit the application.
+
+- **Employee Portal**
+      1. In the terminal, ensure the backend is running.
+      2. Run the following command, in the frontend-admin folder: : ```npm run dev```
+      3. The user will be welcomed to a login page, upon opening the application. Enter the employee credentials (username and password).
+      4. Select the <b>Login<b> to Login to the Employee Portal.
+      5. View a list of pending payments.
+      6. Select the <b>Accept<b> button to Accept the payment.
+      7. Select the <b>Reject<b> button to Reject the payment.
+      8. View the reviewed payments, where all the accepted and rejected payments history is displayed.
+      9. Use the navigation bar to navigate to the different pages:
+                - Pending Payments
+                - Reviewed Payments
+                - Logout
+      10. Select the <b>Logout</b> button to exit the application.
+
+- **Admin Portal**
+1. In the terminal, ensure the backend is running.
+2. Run the following command, in the frontend-admin folder: : ```npm run dev```
+3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
+4. Select the <b>Login<b> to Login to the Admin Portal.
+5. View a list of Employee accounts.
+6. Select the 
+
+      Use the navigation bar to navigate to the different pages:
+                - Add Employee
+                - Reviewed Payments
+                - Logout
+Select the <b>Logout</b> button to exit the application.
+      
 <br>
 
 ## References
