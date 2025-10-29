@@ -77,7 +77,7 @@
 <br>
 
 ## Instructions on how to run the application
-**User Portal**
+### **User Portal**
 1. In the terminal, ensure you are in the backend and frontend folder.
 2. Run the following command, in both the frontend and backend: ```npm run dev```
 3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
@@ -99,10 +99,10 @@
 1. In the terminal, ensure the backend is running.
 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
 3. The user will be welcomed to a login page, upon opening the application. Enter the employee credentials (username and password).
-4. Select the <b>Login<b> to Login to the Employee Portal.
+4. Select the <b>Login</b> to Login to the Employee Portal.
 5. View a list of pending payments.
-6. Select the <b>Accept<b> button to Accept the payment.
-7. Select the <b>Reject<b> button to Reject the payment.
+6. Select the <b>Accept</b> button to Accept the payment.
+7. Select the <b>Reject</b> button to Reject the payment.
 8. View the reviewed payments, where all the accepted and rejected payments history is displayed.
 9. Use the navigation bar to navigate to the different pages:
     - Pending Payments
@@ -114,7 +114,7 @@
 1. In the terminal, ensure the backend is running.
 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
 3. The user will be welcomed to a login page, upon opening the application. Enter the Admin credentials (username and password).
-4. Select the <b>Login<b> to Login to the Admin Portal.
+4. Select the <b>Login</b> to Login to the Admin Portal.
 5. View a list of Employee accounts.
 6. Select the 
 
