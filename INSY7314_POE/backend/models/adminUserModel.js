@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// define the user schema for registering a user as well as being used for the login of a user
+// define the user schema for registering an admin or employee user as well as being used for the login of a user
 const admnUserSchema = new mongoose.Schema({
     fullname: String,
     username: String,
@@ -9,7 +9,7 @@ const admnUserSchema = new mongoose.Schema({
     admin: Boolean
 });
 
-// link the user to the database
+// link the admin/employee user to the database
 const adminUser = mongoose.model('adminUser', admnUserSchema);
 
 // expose it to the rest of the app

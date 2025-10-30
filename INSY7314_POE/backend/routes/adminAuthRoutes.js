@@ -11,22 +11,24 @@ const router = express.Router();
 const loginlimiter = rateLimit({
     windowMs: 5 * 60 * 1000, // 5 minutes
     message: "Too many attempts. Try again in 5 minutes",
-    limit: 5,
+    limit: 5, //5 attempts
     standardHeaders: true,
     legacyHeaders: false,
 });
 
 router.get('/getUserDetails', verifyToken, getUserDetails);
 
-// login and register are POST requests, this is because we require the username, account nummber and password from the user 
+// login and register are POST requests, this is because we require the username and password from the user 
 // Including the rate limiting into the login form to apply to that endpoint (Zanini, 2024)
 router.post('/adminLogin', loginlimiter, login);
 router.post('/adminRegister', register);
 // logout is a GET request, as we are just reading the token from the request header
 router.get('/adminLogout', logout);
 
+//this is a get request as we return all the employee users of the system
 router.get('/getEmployees', getEmployees)
 
+//this deletes a employee by its ID
 router.delete('/deleteEmployee/:id', deleteEmployee)
 
 // logout is a GET request, as we are just reading the token from the request header

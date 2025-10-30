@@ -27,14 +27,13 @@ const getPayments = async (req, res) => {
   }
 };
 
-// GET: Payments with pending status
+// GET: Payments with pending status gets returned to the frontend
 const getPendingPayments = async (req, res) => {
   try {
     // create a new variable to hold the result of our query
-    // by saying .find({}), we are sending a query with no parameters to filter the results,
-    // meaning that the database will return ALL items in the collection (so every payment in this case)
+    // meaning that the database will return ALL items in the collection where the status matches 'pending'(so every payment in this case)
     const payments = await Payment.find({ status: "pending" });
-    // return the payments
+    // return the pending payments
     res.status(200).json(payments);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -45,9 +44,8 @@ const getPendingPayments = async (req, res) => {
 //endpoint that pulls only the accepted or rejected payments - (mongodb, N/A)
 const getUpdatedStatusPayments = async (req, res) => {
   try {
-    // create a new variable to hold the result of our query
-    // by saying .find({}), we are sending a query with no parameters to filter the results,
-    // meaning that the database will return ALL items in the collection (so every payment in this case)
+
+    // meaning that the database will return ALL items in the collection that matches the status being accepted or rejected(so every payment in this case)
     const payments = await Payment.find({ $or: [{ status: "accepted" }, { status: "rejected" }] });
     // return the payments
     res.status(200).json(payments);
@@ -61,7 +59,7 @@ const getPaymentByUsername = async (req, res) => {
   // get the username of the payment that the user is looking for, from the parameters
   const username = req.params.username;
 
-  // if the username doesn't exist, inform the user
+  // if the username doesn't exist, inform the user with a message
   if (!username) {
     res.status(400).json({ message: "Please provide a username to search for!" });
   }
@@ -70,7 +68,7 @@ const getPaymentByUsername = async (req, res) => {
     // try find the payments related to that user, using the provided username
     const payment = await Payment.find({ username });
 
-    // if no payment is found matching the provided username, it would mean that they havent added any payments on their account yet
+    // if no payment is found matching the provided username, it would mean that they haven't added any payments on their account yet
     if (!payment) {
       res.status(404).json({ message: "No payment found that matches that username." });
     }
@@ -78,7 +76,7 @@ const getPaymentByUsername = async (req, res) => {
     // if there is paynments created by them, return all of them to the frontend to display to the logged in user
     res.status(200).json(payment);
   } catch (error) {
-    // throws a server error there is an issue getting the payments of teh user
+    // returns a server error there is an issue getting the payments of the user
     res.status(500).json({ error: error.message });
   }
 };
@@ -88,7 +86,7 @@ const createPayment = async (req, res) => {
   // from the request sent by the browser/frontend application, look in the body for the required fields
   const { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc, username } = req.body;
 
-  // checked that all information is provided
+  // checked that all fields is provided and not empty
   if (!paymentTitle || !currency || !provider || !amount || !swiftCode || !name || !cardNumber || !month || !year || !cvc) {
     res
       .status(400)
@@ -103,10 +101,12 @@ const createPayment = async (req, res) => {
 
     // salting and hashing the card number (Chaitanya, 2023)
     const cardNumSalt = await bcrypt.genSalt(10);
+    //hashing, saltig and concatenating a pepper value to the card number
     const hashedCardNumber = await bcrypt.hash(cardNumber.toString() + process.env.PEPPER, cardNumSalt);
 
     // salting and hashing the CVC/CVV (Chaitanya, 2023)
     const cvcSalt = await bcrypt.genSalt(10);
+    //hashing, saltig and concatenating a pepper value to the CVV number
 
     const hashedCVV = await bcrypt.hash(cvc.toString() + process.env.PEPPER, cvcSalt);
 
@@ -168,7 +168,7 @@ const updatePaymentStatus = async (req, res) => {
     }
 
     // otherwise, we then update the updated fields
-    // finally, ensure that the new version of teh payment (post update) is returned, rather than the old payment
+    // finally, ensure that the new version of the payment (post update) is returned, rather than the old payment
 
     payment = await Payment.findByIdAndUpdate(
 
@@ -212,7 +212,7 @@ const deletePayment = async (req, res) => {
       res.status(404).json({ message: "No payment found that matches that ID." });
     }
 
-    // find the payment, delete it, and return what it was
+    // find the payment, delete it, and return the details of the deleted payment
     payment = await Payment.findByIdAndDelete(id);
     res.status(202).json(payment);
   } catch (error) {

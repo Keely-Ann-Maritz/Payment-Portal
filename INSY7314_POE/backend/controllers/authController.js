@@ -27,6 +27,7 @@ const getUserDetails = async (req, res) => {
     }
 };
 
+//POST: when a user wants to register a new account
 const register = async (req, res) => {
     // request the required register information from the incoming register request
     const { username, password, fullname, idnumber, accountnumber } = req.body;
@@ -37,23 +38,27 @@ const register = async (req, res) => {
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
 
     const passwordSalt = await bcrypt.genSalt(10);
+    //hashing, salting and concatenating a pepper value to the password
     const hashedPassword = await bcrypt.hash(password + process.env.PEPPER, passwordSalt);
     const idSalt = await bcrypt.genSalt(10);
+    //hashing, salting and concatenating a pepper value to the  ID number
     const hashedidnumber = await bcrypt.hash(idnumber + process.env.PEPPER, idSalt);
     const accountSalt = await bcrypt.genSalt(10);
+    //hashing, salting and concatenating a pepper value to the account number
     const hashedAccountNumber = await bcrypt.hash(accountnumber.toString() + process.env.PEPPER, accountSalt);
 
     try {
-        // method that stores the uesr registeration details in the database
+        // method that stores the user registeration details in the database
         await User.create({ username: username, password: hashedPassword, fullname: fullname, idnumber: hashedidnumber, accountnumber: hashedAccountNumber });
         res.status(200).json({ token: generateJwt(username) });
 
     } catch (e) {
-        //if user doesnt store , return teh error message
+        //if user doesnt store , return the error message
         res.status(500).json({ error: e.message });
     } res.status(500).json({ error: e.message });
 };
 
+//POST: when a user awants to log into their account
 const login = async (req, res) => {
     //requesting the login details
     const { username, password, accountnumber } = req.body;
@@ -65,7 +70,8 @@ const login = async (req, res) => {
 
 
 
-    // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
+    // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db 
+    // and adding the pepper value before we compare  (Chaitanya, 2023)
     const matchingPassword = await bcrypt.compare(password + process.env.PEPPER, exists.password);
     const matchingAccountNum = await bcrypt.compare(accountnumber + process.env.PEPPER, exists.accountnumber);
 
@@ -86,6 +92,7 @@ const login = async (req, res) => {
     res.status(200).json({ message: "Logged in successfully!", token });
 };
 
+//GET: this method is for when a user wants to log out
 const logout = async (req, res) => {
     const token = req.cookies?.token;
     // check if there is indeed a token, if not, send an error back to the user

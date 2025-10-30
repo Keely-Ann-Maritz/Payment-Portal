@@ -1,4 +1,4 @@
-//importing bcrypt package to hash the passsword and account number
+//importing bcrypt package to hash the passswords of employees and admin accounts
 const bcrypt = require('bcryptjs');
 // importing the json web token package since we are creating a token to generate a token upon login
 const jwt = require('jsonwebtoken');
@@ -15,8 +15,10 @@ const generateJwt = (username) => {
         expiresIn: "1h",
     });
     // and returns it.
+
 };
 
+//gets the user details of the admin or employee
 const getUserDetails = async (req, res) => {
     try {
         const user = await adminUser.findOne({ username: req.user.username });
@@ -27,62 +29,65 @@ const getUserDetails = async (req, res) => {
     }
 };
 
-
+//POST: this method is for when a employee registers
 const register = async (req, res) => {
     // request the required register information from the incoming register request
     const { username, password, fullname, idnumber } = req.body;
-    // before signing the user up, we need to check if their username is already in use
+    // before registering the user, we need to check if their username is already taken
     const exists = await adminUser.findOne({ username: username })
     // if it is, sent a error status 400 informting the user that the username has been taken
     if (exists) return res.status(400).json({ message: "User already exists." });
     // if not, lets hash their password (by providing their password, and the number of random iterations to salt) (Chaitanya, 2023)
     const passwordSalt = await bcrypt.genSalt(10);
+    //we add a pepper value and hash and salt the password before storing it in the database
     const hashedPassword = await bcrypt.hash(password + process.env.PEPPER, passwordSalt);
 
     try {
-        // method that stores the uesr registeration details in the database
+        // method that stores the user registeration details in the database
         await adminUser.create({ username: username, password: hashedPassword, fullname: fullname, idnumber, admin: false });
         res.status(200).json({ success: true, token: generateJwt(username) });
 
     } catch (e) {
-        //if user doesnt store , return teh error message
+        //if user doesnt store , return the error message
         res.status(500).json({ error: e.message });
     } res.status(500).json({ error: e.message });
 
 
 };
 
+//POST: this method is for when a employee or suuper admin logs in
 const login = async (req, res) => {
     //requesting the login details
     const { username, password } = req.body;
-    //Finding the username that matches one in the database
+    //finding the username that matches one in the database
     const exists = await adminUser.findOne({ username: username })
 
     // if the user is not present in our collection, let them know to try again
     if (!exists) return res.status(400).json({ message: "Invalid credentials." });
 
 
-    // next, if the user DOES exist, we compare their entered account number and password to what we have hashed in mongo db  (Chaitanya, 2023)
+    // next, if the user does exist, we compare their entered password to what we have hashed in mongo db  (Chaitanya, 2023)
     const matchingPassword = await bcrypt.compare(password + process.env.PEPPER, exists.password);
 
-    // if if the password or account number doesnt match, inform the user with a message under the status code 400
+    // if if the password doesnt match, inform the user with a message under the status code 400
     if (!matchingPassword) return res.status(400).json({ message: "Invalid credentials." });
 
-    // if credentials do match, generate and send a JWT token generated from the username, to the front end 
+    // if the password do match, generate and send a JWT token generated from the username adn return it to the frontend
     const token = generateJwt(username);
     const role = exists.admin;
 
-    // Token with HTTPOnly (The Debug Arena,2025)
+    // Token with HTTPOnly for Admin or employee that is authenticated(The Debug Arena,2025)
     res.cookie("token", token, {
         httpOnly: true,
         secure: true,
         sameSite: 'None',
         maxAge: 24 * 60 * 60 * 1000
     });
-
+    //sends success message to the user before they are directed into a portal
     res.status(200).json({ message: "Logged in successfully!", token, role });
 };
 
+//GET: this method is for when a employee or admin logs out of their account
 const logout = async (req, res) => {
     const token = req.cookies?.token;
     // check if there is indeed a token, if not, send an error back to the user
@@ -101,22 +106,22 @@ const logout = async (req, res) => {
     res.status(200).json({ message: "Logged out successfully." });
 };
 
+//GET: gets all the employees
 const getEmployees = async (req, res) => {
     try {
         // create a new variable to hold the result of our query
-        // by saying .find({}), we are sending a query with no parameters to filter the results,
-        // meaning that the database will return ALL items in the collection (so every payment in this case)
+        // meaning that the database will return all employees in the collection where the admin value is false.
         const employees = await adminUser.find({ admin: false });
-        // return the payments
+        // return the employees
         res.status(200).json(employees);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-// DELETE: delete a payment from the database
+// DELETE: delete a Employee user from the database
 const deleteEmployee = async (req, res) => {
-    // we pass the id of the payment we want to remove
+    // we pass the id of the employee we want to remove
     const id = req.params.id;
 
     // checking to see if an ID was sent to the backend
@@ -124,16 +129,16 @@ const deleteEmployee = async (req, res) => {
         res.status(400).json({ message: "Please provide an ID to delete." });
     }
 
-    // first try find the payment
+    // first try find the employee user
     try {
         var employee = await adminUser.findById(id);
 
-        // if no payment is found, 404 and exit the method
+        // if no user is found, 404 and exit the method
         if (!employee) {
             res.status(404).json({ message: "No payment found that matches that ID." });
         }
 
-        // find the payment, delete it, and return what it was
+        // find the user, delete it, and return who the user that we deleted was
         employee = await adminUser.findByIdAndDelete(id);
         res.status(202).json(employee);
     } catch (error) {

@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 const corsOptions = {
-    // origin allows us to set where we will permit requests from (for now *, which allows everywhere and everyone!)
+    // origin allows us to set where we will permit requests from all those ports for the 2 frontend portals
     origin: ['https://localhost:5173',
         'https://localhost:5174',
         'https://localhost:8080',
@@ -61,6 +61,7 @@ const securityMiddlewares = (app) => {
     );
 
     app.use(cors(corsOptions));
+    //sanitises the inputs that comes from the endpoints to protect against SQL injection attacks
     app.use(mongoSanitize());
 };
 

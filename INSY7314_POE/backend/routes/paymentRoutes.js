@@ -4,7 +4,7 @@ const express = require('express');
 const { verifyToken } = require('../middlewares/authMiddleware.js');
 
 // call in our functions from the controller
-const { getPayments, getPaymentByUsername, createPayment, updatePayment, deletePayment, getPendingPayments, getUpdatedStatusPayments, updatePaymentStatus} = require('../controllers/paymentController.js');
+const { getPayments, getPaymentByUsername, createPayment, updatePayment, deletePayment, getPendingPayments, getUpdatedStatusPayments, updatePaymentStatus } = require('../controllers/paymentController.js');
 //const { getPaymentByUsername } = require('../../frontend/src/services/apiService.js');
 
 // set up our router instance
@@ -14,8 +14,10 @@ const router = express.Router();
 // to get all payments, we don't need to pass through the specific id of that payment
 router.get('/', getPayments);
 
+//this gets all the payments according to the status being pending and returns them
 router.get('/pending', getPendingPayments);
 
+// this updates the status according to if you seleted the accepted or rejected button
 router.get('/updatedStatus', getUpdatedStatusPayments);
 
 // to get a specific payment, we pass through the username associated to them

@@ -15,6 +15,7 @@ dotenv.config();
 // setting up express using the default parameters
 const app = express();
 
+//adding all the npm run dev and docker ports that the frontend portals will run on
 app.use(cors({
     origin: ["https://localhost:5173",
         "https://localhost:5174",
@@ -61,7 +62,7 @@ const port = process.env.API_PORT || 5000
 // call the method from our dbService file to connect to our Mongo database
 connectToMongo();
 
-//create a vartible to hold where our certificate lives
+//create a vartible to hold where our certificates are stored
 //we did 'npm install fs'
 const options = {
     key: fs.readFileSync('./certs/localhost+1-key.pem'),
