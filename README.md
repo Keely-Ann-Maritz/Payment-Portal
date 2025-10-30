@@ -105,8 +105,8 @@ All data is stored in the MongoDB database.
 
 ## Instructions on how to run the application
  ### **User Portal**
- 1. In the terminal, ensure you are in the backend and frontend folder.
- 2. Run the following command, in both the frontend and backend: ```npm run dev```
+ 1. In the terminal, navigate into the INSY7314 Folder and build your docker containers by running: ```docker-compose up --build```
+ 2. In the browser, run the following link: ```https://localhost:8080/```
  3. If the user does not have an account, select the Register link to navigate to the Register page to create an account.
  4. Once the user has created an account, they will be redirected to the Login, enter the login details to login to your account.
  5. If the user already has an account, enter the credentials to login to the Payment Portal.
@@ -123,8 +123,8 @@ All data is stored in the MongoDB database.
  13. Select the <b>Logout</b> button to exit the application.
  
  ### **Employee Portal**
- 1. In the terminal, ensure the backend is running.
- 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
+ 1. In the terminal, navigate into the INSY7314 Folder and build your docker containers by running: ```docker-compose up --build```
+ 2. In the browser, run the following link: ```https://localhost:8081/```
  3. The user will be welcomed to a login page, upon opening the application. Enter the employee credentials (username and password).
  4. Select the <b>Login</b> to Login to the Employee Portal.
  5. View a list of pending payments.
@@ -138,8 +138,8 @@ All data is stored in the MongoDB database.
  10. Select the <b>Logout</b> button to exit the application.
  
  ### **Admin Portal**
- 1. In the terminal, ensure the backend is running.
- 2. Run the following command, in the frontend-admin folder: : ```npm run dev```
+ 1. In the terminal, navigate into the INSY7314 Folder and build your docker containers by running: ```docker-compose up --build```
+ 2. In the browser, run the following link: ```https://localhost:8081/```
  3. The user will be welcomed to a login page, upon opening the application. Enter the Super Admin credentials (username and password).
  4. Select the <b>Login</b> to Login to the Admin Portal.
  5. View a list of Employee accounts.
@@ -152,7 +152,9 @@ All data is stored in the MongoDB database.
        - View Employees
        - Logout
  11. Select the <b>Logout</b> button to exit the application.
-      
+
+To check if the backend is running, run the following in the broswer: ```https://localhost:5000/```
+
 <br>
 
 ## References
