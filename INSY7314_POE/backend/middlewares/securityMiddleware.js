@@ -6,7 +6,9 @@ import cors from 'cors';
 const corsOptions = {
     // origin allows us to set where we will permit requests from (for now *, which allows everywhere and everyone!)
     origin: ['https://localhost:5173',
-        'https://localhost:5174'],
+        'https://localhost:5174',
+        'https://localhost:8080',
+        'https://localhost:8081'],
     // controlling what types of HTTP requests we will permit
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // allow the flow of credentials between our backend API and out frontend web portal

@@ -11,11 +11,14 @@ import ViewEmployees from './pages/ViewEmployees.jsx'
 import ViewPendingPayments from './pages/ViewPendingPayments.jsx'
 import ReviewedPayments from './pages/ReviewedPayments.jsx'
 import './App.css'
+import { useAuth } from "./context/AuthContext.jsx";
 
 // Routes for all the pages and the navbar, and which needs authentication to be accessed
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
-  const [role,setRole] = useState(null);
+  const [role, setRole] = useState(null);
+  const { login } = useAuth();
+
 
   // Retreiving the role from the session and retreiving the authentication token (The Debug Arena, 2024)
   useEffect(() => {
@@ -23,21 +26,21 @@ function App() {
     const token = sessionStorage.getItem("token");
     // Checking if the token and role exists and ensuring the user stays logged in if they refresh the page (Krishnam,2024)
     if (storedRole && token) {
-        setRole(storedRole);
-        login(); 
+      setRole(storedRole);
+      //login();
     }
   }, []);
 
   // Checking if the role is being checked and if it is an admin or employee logging in (Filip, 2024)
- function adminNavbar() {
+  function adminNavbar() {
     if (!showNavbar || !role) return null;
-    switch(role) {
-        case 'admin':
-            return <AdminNavigation role={role} />;
-        default:
-            return <EmployeeNavigation role={role} />;
+    switch (role) {
+      case 'admin':
+        return <AdminNavigation role={role} />;
+      default:
+        return <EmployeeNavigation role={role} />;
     }
-}
+  }
 
   return (
     <Router>
@@ -45,7 +48,7 @@ function App() {
       {adminNavbar()}
       <Routes>
         <Route path="/" element={<AdminLogin setShowNavbar={setShowNavbar} setRole={setRole} />} />
-        <Route path="/AdminLogin" element={<AdminLogin setShowNavbar={setShowNavbar} setRole={setRole}/>} />
+        <Route path="/AdminLogin" element={<AdminLogin setShowNavbar={setShowNavbar} setRole={setRole} />} />
         <Route path="/AddEmployee" element={<ProtectedRoute><AddEmployee setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
         <Route path="/ViewEmployees" element={<ProtectedRoute><ViewEmployees setShowNavbar={setShowNavbar} /></ProtectedRoute>} />
         <Route path="/ViewPendingPayments" element={<ProtectedRoute><ViewPendingPayments setShowNavbar={setShowNavbar} /></ProtectedRoute>} />

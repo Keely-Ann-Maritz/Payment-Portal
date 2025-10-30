@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
     // if the user is not authenticated...
     if (!isAuthenticated) {
         // navigate them back TO the login page, and REPLACE the current request with this.
-        return <Navigate to="/AdminLogin" replace />
+        return <Navigate to="/" replace />
     }
 
     // if authenticated, let them have access to the payment form and payment history page

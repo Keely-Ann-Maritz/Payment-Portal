@@ -1,6 +1,6 @@
 // calling in the required imports to handle routing between multiple pages
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navigation from './components/Navigation.jsx'
+import Navigation from './components/navigation.jsx'
 import { useState } from 'react'
 
 // call in our pages
