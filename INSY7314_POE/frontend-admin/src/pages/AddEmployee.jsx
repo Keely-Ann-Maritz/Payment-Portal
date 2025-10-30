@@ -11,7 +11,7 @@ import { useLayoutEffect } from 'react'
 
 // Hiding navigation bar (sahilatahar, 2023)
 export default function AddEmployee({ setShowNavbar }) {
-    // this formData is for CREATING A NEW PAYMENT
+    // this formData is for creating a new payment
     const [formData, setFormData] = useState({
         username: "",
         idnumber: "",

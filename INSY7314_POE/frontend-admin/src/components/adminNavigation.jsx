@@ -5,9 +5,10 @@ import { Navbar, Nav, Container } from 'react-bootstrap'
 // Importing authorization (The Debug Arena, 2025)
 import { useAuth } from "../context/AuthContext.jsx";
 
+// Importing logout
 import { Logout } from "../services/apiService.js";
 
-
+// Admin Navigation function
 export default function AdminNavigation() {
     // Using the navigation (GeeksforGeeks,2025)
     const navigate = useNavigate()

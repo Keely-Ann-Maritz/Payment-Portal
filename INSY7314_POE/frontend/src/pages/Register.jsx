@@ -5,7 +5,6 @@ import {
     RegisterUser
 } from "../services/apiService.js";
 
-// Hiding navigation bar (sahilatahar, 2023)
 import React, { useState } from "react";
 import { useLayoutEffect } from 'react'
 
@@ -36,14 +35,14 @@ export default function Register({ setShowNavbar }) {
         // prevent the button from being pressed automatically when it is created by React
         e.preventDefault();
 
-        //implementing regex patterns for the different inputs that needs to be met (GeeksforGeeks, 2025)
+        // implementing regex patterns for the different inputs that needs to be met (GeeksforGeeks, 2025)
         let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         let regexIdNumber = /^\d{13}$/;
         let regexUsername = /^[a-zA-Z][a-zA-Z0-9_]{3,}$/;
         let regexAccountNum = /^\d{8,}$/;
         let regexFullname = /^[a-zA-Z\s-]+$/;
 
-        //to see which input has been checked
+        // to see which input has been checked
         let fullnameChecked = true;;
         let usernameChecked = true;;
         let idnumChecked = true;;
@@ -99,7 +98,7 @@ export default function Register({ setShowNavbar }) {
         if (passwordChecked && idnumChecked && usernameChecked && fullnameChecked && accountnumChecked) {
             try {
                 const checkRegister = await RegisterUser(formData);
-                // let the user know if it was successful
+                // let the user know the process was successful
                 alert("User Created!");
                 // and reset the form
                 setFormData({ fullname: "", username: "", idnumber: "", accountnumber: "", password: "" });
@@ -121,7 +120,8 @@ export default function Register({ setShowNavbar }) {
     const handleRegister = () => {
         navigate("/Login");
     };
-    //registration errors variables
+    
+    // registration errors variables
     const [formErrors, setFormErrors] = useState({
         username: "",
         accountnumber: "",

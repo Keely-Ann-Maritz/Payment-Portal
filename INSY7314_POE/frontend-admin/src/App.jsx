@@ -1,3 +1,4 @@
+// Required imports 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AdminNavigation from './components/adminNavigation.jsx'
 import EmployeeNavigation from './components/employeeNavigation.jsx'

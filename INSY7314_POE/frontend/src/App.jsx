@@ -10,9 +10,9 @@ import FormThankYou from './pages/FormThankYou.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import PaymentHistory from './pages/paymentHistory.jsx'
 import Register from './pages/Register.jsx'
-
 import './App.css'
-//routes for all the pages and the navbar, and which needs authentication to be accessed
+
+// routes for all the pages and the navbar, and which needs authentication to be accessed
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
   return (

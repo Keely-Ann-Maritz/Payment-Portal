@@ -1,7 +1,6 @@
 // importing required react components (dangelo,2022)
 import { useEffect, useState } from "react";
 import { useLayoutEffect } from 'react'
-
 import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
@@ -22,7 +21,7 @@ export default function PaymentHistory({ setShowNavbar }) {
     const fetchPayments = async () => {
         const username= sessionStorage.getItem("username")
         
-        // fetch all payments using the apiService method we created earlier, storing the response in a temp variable
+        // fetch all payments using the apiService method, storing the response in a temp variable
         const res = await getPaymentByUsername(username);
         // and update our payments variable with the response data
         setPayments(res.data);
@@ -36,7 +35,7 @@ export default function PaymentHistory({ setShowNavbar }) {
 
     // we create a method to handle when the delete button is pressed
     const handleDelete = async (id) => {
-        // prompt the user to make sure that they're sure that they're sure they want to delete
+        // prompt the user to confirm if they wish to delete a payment
         if (
             window.confirm(
                 "Are you sure you want to delete this payment?"
@@ -78,7 +77,7 @@ export default function PaymentHistory({ setShowNavbar }) {
                             </tr>
                         )}
                         {/* if there ARE payments, we iterate through each book in the payments array (using temp variable book)
-            similar to a foreach loop, and we map the correct attribute to the correct column in the table */}
+                            similar to a foreach loop, and we map the correct attribute to the correct column in the table */}
                         {payments.map((payment) => (
                             /* key lets us identify each row */
                             <tr key={payment._id}>

@@ -1,7 +1,6 @@
 // importing required react components (dangelo,2022)
 import { useEffect, useState } from "react";
 import { useLayoutEffect } from 'react'
-
 import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
@@ -20,7 +19,6 @@ export default function ViewEmployees({ setShowNavbar }) {
     }, [])
 
     const fetchEmployees = async () => {
-
         // fetch all payments using the apiService method we created earlier, storing the response in a temp variable
         const res = await getEmployees();
         // and update our payments variable with the response data
@@ -67,14 +65,14 @@ export default function ViewEmployees({ setShowNavbar }) {
                     </thead>
                     {/* tbody - table body (data lives here) */}
                     <tbody>
-                        {/* if there are NO payments, print a message across the table saying so */}
+                        {/* if there are no payments, print a message across the table saying so */}
                         {employees.length === 0 && (
                             <tr>
                                 <td colSpan="5">No Employees available.</td>
                             </tr>
                         )}
-                        {/* if there ARE payments, we iterate through each book in the payments array (using temp variable book)
-            similar to a foreach loop, and we map the correct attribute to the correct column in the table */}
+                        {/* if there are payments, we iterate through each book in the payments array (using temp variable book)
+                            similar to a foreach loop, and we map the correct attribute to the correct column in the table */}
                         {employees.map((employee) => (
                             /* key lets us identify each row */
                             <tr key={employee._id}>

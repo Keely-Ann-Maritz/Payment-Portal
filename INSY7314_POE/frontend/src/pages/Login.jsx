@@ -6,9 +6,6 @@ import { useState, useEffect } from 'react'
 import { useLayoutEffect } from 'react'
 import { fetchUserDetails, LoginUser } from "../services/apiService.js";
 
-//importing the login user method that is called in the api service
-
-
 // Hiding navigation bar (sahilatahar, 2023)
 export default function Login({ setShowNavbar }) {
   // this formData is for the login credentials
@@ -17,6 +14,7 @@ export default function Login({ setShowNavbar }) {
     accountnumber: "",
     password: "",
   });
+
   //This for displaying errors
   const [formErrors, setFormErrors] = useState({
     loginError: "",
@@ -112,7 +110,7 @@ export default function Login({ setShowNavbar }) {
       // (The Debug Arena, 2025)
       catch (error) {
         if(error.response){
-            //if the rate limit is reached for the endpoint the user would be informed
+            // if the rate limit is reached for the endpoint the user would be informed
             if (error.response.status === 429) {
               errors.loginError = error.response.data.message || "Too many attempts! Try again in 5 minutes";
             } else {
@@ -126,7 +124,7 @@ export default function Login({ setShowNavbar }) {
     setFormErrors(errors);
   };
 
-  // Login form html and inputs(Hallale,2024)
+  // Login form html and inputs (Hallale,2024)
   return (
     <div className=" backgroundImage bg-light d-flex align-items-center justify-content-center vh-100  " >
       <div className="card shadow-lg w-100" style={{ maxWidth: "480px" }}>

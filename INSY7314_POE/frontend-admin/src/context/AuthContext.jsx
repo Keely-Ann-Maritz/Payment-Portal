@@ -1,17 +1,15 @@
-// we need the required imports first
+// Required imports
 import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react'
 
-// first we create our little section of memory for remembering if we're logged in
+// Remembering if we're logged in
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     // variable to hold whether authenticated, and a corresponding setter method
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // here we create methods to handle various auth functions
-    // for now, all they do is updated our auth state, in the real world they'd handle
-    // actual auth.
+    // handle various auth functions - updated our auth state
     const login = () => setIsAuthenticated(true);
     const logout = () => setIsAuthenticated(false);
 

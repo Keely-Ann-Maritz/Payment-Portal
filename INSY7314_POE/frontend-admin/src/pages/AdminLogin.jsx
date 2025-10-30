@@ -1,13 +1,10 @@
-// calling in AuthContext so we can use the LOGIN method
+// calling in AuthContext so we can use the login method
 import { useAuth } from "../context/AuthContext.jsx";
 // calling in Navigate so we can redirect the user to the dashboard
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useLayoutEffect } from 'react'
 import { fetchUserDetails, LoginAdmin } from "../services/apiService.js";
-
-//importing the login user method that is called in the api service
-
 
 // Hiding navigation bar (sahilatahar, 2023)
 export default function AdminLogin({ setShowNavbar, setRole }) {
@@ -39,22 +36,20 @@ export default function AdminLogin({ setShowNavbar, setRole }) {
 
     // then in our method to handle a new login...
     const handleEmployeeLogin = () => {
-        // .. we login
+        // login and navigate the employee to the view pending payments page
         login();
-        // and go where we need to go
         navigate("/ViewPendingPayments");
     };
 
     const handleAdminLogin = () => {
-        // .. we login
+        // login and navigate the admin to the view employees page
         login();
-        // and go where we need to go
         navigate("/ViewEmployees");
     };
 
     const goToRegister = () => {
 
-        // and go where we need to go
+        // direct to the register page
         navigate("/register");
     };
 
@@ -93,36 +88,40 @@ export default function AdminLogin({ setShowNavbar, setRole }) {
                 //passing the form data t be checked to see if the user credentials match
                 const checkLogin = await LoginAdmin(formData);
 
-                // (The Debug Arena, 2024)
+                // Checking the login and token for the admin and employee (The Debug Arena, 2024)
                 if (checkLogin && checkLogin.token) {
 
-
+                    // if the role is true, the user is an admin
                     if (checkLogin.role == true) {
                         sessionStorage.setItem("role", "admin");
                         setRole("admin");
                         sessionStorage.setItem("adminUsername", formData.username);
                         sessionStorage.setItem("token", checkLogin.token);
+
+                        // fetching the users details
                         const fetchDetails = await fetchUserDetails(checkLogin.token);
                         console.log("Fetch user details:", fetchDetails.data);
 
                         sessionStorage.setItem("userDetails", JSON.stringify(fetchDetails.data));
-                        //telling the user that they have been logged in
+                        // telling the user that they have been logged in
                         alert("User Logged in!");
                         setFormData({ username: "", password: "" });
                         // authenticating the user and taking them to the add payment form
                         handleAdminLogin()
                     }
+                    // otherwise the user is an employee, if it is false
                     else {
                         sessionStorage.setItem("role", "employee");
                         setRole("employee");
                         sessionStorage.setItem("EmployeeUsername", formData.username);
                         sessionStorage.setItem("token", checkLogin.token);
 
+                        // fetching the users details
                         const fetchDetails = await fetchUserDetails(checkLogin.token);
                         console.log("Fetch user details:", fetchDetails.data);
 
                         sessionStorage.setItem("userDetails", JSON.stringify(fetchDetails.data));
-                        //telling the user that they have been logged in
+                        // telling the user that they have been logged in
                         alert("User Logged in!");
                         setFormData({ username: "", accountnumber: "", password: "" });
                         // authenticating the user and taking them to the add payment form
@@ -132,11 +131,12 @@ export default function AdminLogin({ setShowNavbar, setRole }) {
 
                 } else {
 
+                    // Displaying an error message
                     errors.loginError = "Backend Error";
 
                 }
             }
-            // (The Debug Arena, 2025)
+            // If the user has attempted to login with the incorrect details multiple times, the following error message will display (The Debug Arena, 2025)
             catch (error) {
                 if (error.response) {
                     //if the rate limit is reached for the endpoint the user would be informed
