@@ -2,18 +2,18 @@
 import { Navigate, useNavigate } from "react-router-dom";
 // import styling packages
 import {
-    RegisterUser
+    RegisterAdmin
 } from "../services/apiService.js";
 
+// Hiding navigation bar (sahilatahar, 2023)
 import React, { useState } from "react";
 import { useLayoutEffect } from 'react'
 
 // Hiding navigation bar (sahilatahar, 2023)
-export default function Register({ setShowNavbar }) {
-    // this formData is for CREATING A NEW PAYMENT
+export default function AddEmployee({ setShowNavbar }) {
+    // this formData is for creating a new payment
     const [formData, setFormData] = useState({
         username: "",
-        accountnumber: "",
         idnumber: "",
         fullname: "",
         password: "",
@@ -35,29 +35,19 @@ export default function Register({ setShowNavbar }) {
         // prevent the button from being pressed automatically when it is created by React
         e.preventDefault();
 
-        // implementing regex patterns for the different inputs that needs to be met (GeeksforGeeks, 2025)
+        //implementing regex patterns for the different inputs that needs to be met (GeeksforGeeks, 2025)
         let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         let regexIdNumber = /^\d{13}$/;
         let regexUsername = /^[a-zA-Z][a-zA-Z0-9_]{3,}$/;
-        let regexAccountNum = /^\d{8,}$/;
         let regexFullname = /^[a-zA-Z\s-]+$/;
 
-        // to see which input has been checked
+        //to see which input has been checked
         let fullnameChecked = true;;
         let usernameChecked = true;;
         let idnumChecked = true;;
-        let accountnumChecked = true;;
         let passwordChecked = true;
         let errors = {};
 
-        // for account number 
-        if (!regexAccountNum.test(formData.accountnumber)) {
-            errors.accountnumber = "Account number must be atleast 8 numbers";
-            accountnumChecked = false;
-        }
-        else {
-            errors.accountnumber = "";
-        }
 
         // for Username
         if (!regexUsername.test(formData.username)) {
@@ -95,13 +85,13 @@ export default function Register({ setShowNavbar }) {
         }
 
         // call our API method after we have checked that all inputs meet their regex pattern, and then to create a new payments
-        if (passwordChecked && idnumChecked && usernameChecked && fullnameChecked && accountnumChecked) {
+        if (passwordChecked && idnumChecked && usernameChecked && fullnameChecked) {
             try {
-                const checkRegister = await RegisterUser(formData);
-                // let the user know the process was successful
+                const checkRegister = await RegisterAdmin(formData);
+                // let the user know if it was successful
                 alert("User Created!");
                 // and reset the form
-                setFormData({ fullname: "", username: "", idnumber: "", accountnumber: "", password: "" });
+                setFormData({ fullname: "", username: "", idnumber: "", password: "" });
                 // navigate to Login Screen
                 handleRegister()
             } catch (error) {
@@ -116,15 +106,19 @@ export default function Register({ setShowNavbar }) {
     // set up for navigation
     const navigate = useNavigate();
 
-    // then in our method we navigate to the login
+    // then in our method we navigate to the ViewEmployee
     const handleRegister = () => {
-        navigate("/Login");
+        navigate("/ViewEmployees");
+    };
+
+     // then in our method we navigate to the ViewEmployee
+    const handleBack = () => {
+        navigate("/ViewEmployees");
     };
     
-    // registration errors variables
+    //registration errors variables
     const [formErrors, setFormErrors] = useState({
         username: "",
-        accountnumber: "",
         password: "",
         fullname: "",
         idnumber: ""
@@ -136,8 +130,8 @@ export default function Register({ setShowNavbar }) {
             <div className="card shadow-lg w-100" style={{ maxWidth: "480px" }}>
                 <div className="card-body">
                     <div className="text-center">
-                        <h1 className="card-title h3">Register</h1>
-                        <p className="card-text text-muted">Register below to create your account</p>
+                        <h1 className="card-title h3">Add Employee</h1>
+                        <p className="card-text text-muted">Create an account</p>
                     </div>
                     <div className="mt-4">
                         <form formErrors onSubmit={handleSubmit} >
@@ -154,12 +148,6 @@ export default function Register({ setShowNavbar }) {
 
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="accountnumber" className="form-label text-muted">Account Number</label>
-                                <input className="form-control" type='number' name="accountnumber" placeholder="34783479" min="0" value={formData.accountnumber} onChange={handleInputChange} required />
-                                <div className="text-danger mt-1 small">{formErrors.accountnumber}</div>
-
-                            </div>
-                            <div className="mb-4">
                                 <label htmlFor="accountnumber" className="form-label text-muted">ID Number</label>
                                 <input className="form-control" type='number' name="idnumber" placeholder="4873493850938" min="0" value={formData.idnumber} onChange={handleInputChange} required />
                                 <div className="text-danger mt-1 small">{formErrors.idnumber}</div>
@@ -173,9 +161,10 @@ export default function Register({ setShowNavbar }) {
                             <div className="d-grid">
                                 <button type="submit" style={{ backgroundColor: '#610595' }} className="btn btn-dark btn-lg">Register</button>
                             </div>
-                            <p className="text-center text-muted mt-4">Don't have an account yet?
-                                <a onClick={handleRegister} className="text-decoration-none"> Login</a>.
-                            </p>
+                            <br/>
+                            <div className="d-grid">
+                                <button type="submit" style={{ backgroundColor: 'grey' }} className="btn btn-dark btn-lg" onClick={handleBack}>Back</button>
+                            </div>
                         </form>
                     </div>
                 </div>

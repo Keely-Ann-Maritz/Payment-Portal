@@ -3,55 +3,80 @@ import { useEffect, useState } from "react";
 import { useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../App.css'
-
+ 
 import {
-    getPaymentByUsername,
-    deletePayment,
+    getPendingPayments,
+    updateStatus
 } from "../services/apiService.js";
-
+ 
+ 
 // Payment History (sahilatahar, 2023)
-export default function PaymentHistory({ setShowNavbar }) {
+export default function ViewPendingPayments({ setShowNavbar }) {
     const [payments, setPayments] = useState([]);
-
+    const navigate = useNavigate();
+ 
+ 
     // Displaying the navigation bar on this page (sahilatahar, 2023)
     useLayoutEffect(() => {
         setShowNavbar(true);
     }, [])
-
+ 
+ 
     const fetchPayments = async () => {
-        const username= sessionStorage.getItem("username")
-        
-        // fetch all payments using the apiService method, storing the response in a temp variable
-        const res = await getPaymentByUsername(username);
+        const username = sessionStorage.getItem("username")
+        // fetch all payments using the apiService method we created earlier, storing the response in a temp variable
+        const res = await getPendingPayments();
         // and update our payments variable with the response data
         setPayments(res.data);
+        // navigating to the view pending payments page
+        navigate("/ViewPendingPayments");
     };
-
+ 
+ 
     // this method will run as soon as the page is loaded
     useEffect(() => {
         // fetching all of the payments in the background
         fetchPayments();
+        // navigating to the view pending payments page
+        navigate("/ViewPendingPayments");
     }, []);
-
+ 
+ 
     // we create a method to handle when the delete button is pressed
-    const handleDelete = async (id) => {
-        // prompt the user to confirm if they wish to delete a payment
-        if (
-            window.confirm(
-                "Are you sure you want to delete this payment?"
-            )
-        ) {
-            // if yes, delete the payment using the provided id
-            await deletePayment(id);
-            // and update our cached payments array
-            fetchPayments();
+    const handleStatus = async (id, status) => {
+        // prompt the user to make sure that they're sure that they're sure they want to delete
+ 
+        if (status === "accepted") {
+            if (
+                window.confirm(
+                    "Are you sure you want to accept this payment?"
+                )
+            ) {
+                // if yes, delete the payment using the provided id
+                await updateStatus(id, status);
+                // and update our cached payments array
+                await fetchPayments();
+            }
+        }
+        else if (status === "rejected") {
+            if (
+                window.confirm(
+                    "Are you sure you want to reject this payment?"
+                )
+            ) {
+                // if yes, delete the payment using the provided id
+                await updateStatus(id, status);
+                // and update our cached payments array
+                await fetchPayments();
+            }
         }
     };
-
-    // Payment Table 
+ 
+ 
+    // Payment Table
     return (
         <div>
-            <h1 className="paymentHistoryHeading">Payment History</h1>
+            <h1 className="paymentHistoryHeading">Pending Payments</h1>
             <div className="container mt-3">
                 <table border="1" className="table table-hover">
                     {/* thead specifies that the following row will be headings */}
@@ -59,6 +84,7 @@ export default function PaymentHistory({ setShowNavbar }) {
                         {/* tr denotes a new row */}
                         <tr>
                             {/* and each th represents a heading */}
+                            <th>Payee Name</th>
                             <th>Payment Title</th>
                             <th>Provider</th>
                             <th>Currency</th>
@@ -66,6 +92,7 @@ export default function PaymentHistory({ setShowNavbar }) {
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     {/* tbody - table body (data lives here) */}
@@ -73,14 +100,15 @@ export default function PaymentHistory({ setShowNavbar }) {
                         {/* if there are NO payments, print a message across the table saying so */}
                         {payments.length === 0 && (
                             <tr>
-                                <td colSpan="5">No payments available.</td>
+                                <td colSpan="5">No pending payments available.</td>
                             </tr>
                         )}
-                        {/* if there ARE payments, we iterate through each book in the payments array (using temp variable book)
+                        {/* if there ARE payments, we iterate through each book in the payments array (using temp variable book) 
                             similar to a foreach loop, and we map the correct attribute to the correct column in the table */}
                         {payments.map((payment) => (
                             /* key lets us identify each row */
-                            <tr key={payment._id}>
+                                <tr key={payment._id}>
+                                <td>{payment.name}</td>
                                 <td>{payment.paymentTitle}</td>
                                 <td>{payment.provider}</td>
                                 <td>{payment.currency}</td>
@@ -89,12 +117,20 @@ export default function PaymentHistory({ setShowNavbar }) {
                                 <td>{payment.status}</td>
                                 <td>
                                     <button
-                                        className="btn btn-danger "
+                                        className="btn btn-success me-2"
                                         onClick={() => {
-                                            handleDelete(payment._id);
+                                            handleStatus(payment._id, "accepted");
                                         }}
                                     >
-                                        Delete
+                                        Accept
+                                    </button>
+                                    <button
+                                        className="btn btn-danger "
+                                        onClick={() => {
+                                            handleStatus(payment._id, "rejected");
+                                        }}
+                                    >
+                                        Reject
                                     </button>
                                 </td>
                             </tr>
@@ -105,6 +141,6 @@ export default function PaymentHistory({ setShowNavbar }) {
         </div>
     );
 }
-
-// References 
-// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].
+ 
+// References
+// sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only&a… [Accessed 4 October 2025].

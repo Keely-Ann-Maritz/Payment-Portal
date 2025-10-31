@@ -1,8 +1,7 @@
+// Required imports 
 import { useNavigate } from 'react-router-dom'
 import { useLayoutEffect } from 'react'
-
 import '../App.css'
-
 import Head from './Head.jsx'
 import iconComplete from '../assets/icon-complete.svg'
 

@@ -1,19 +1,26 @@
 const express = require('express');
 const { register, login, logout } = require('../controllers/authController.js');
-
+const { verifyToken } = require('../middlewares/authMiddleware.js');
+const jwt = require('jsonwebtoken');
+const User = require('../models/userModel.js');
+const { getUserDetails } = require('../controllers/authController.js');
 // calling rate limiting package (Zanini, 2024)
 const { rateLimit } = require("express-rate-limit");
 
 const router = express.Router();
 
+
 // Setting the limit to 5 minutes after 5 consecutive attempts at logging in which helps against DDOS attacks (Zanini, 2024)
 const loginlimiter = rateLimit({
     windowMs: 5 * 60 * 1000, // 5 minutes
     message: "Too many attempts. Try again in 5 minutes",
-    limit: 5,
+    limit: 5, //5 attempts
     standardHeaders: true,
     legacyHeaders: false,
 });
+
+//this route verifies the token and returns teh user details
+router.get('/getUserDetails', verifyToken, getUserDetails);
 
 // login and register are POST requests, this is because we require the username, account nummber and password from the user 
 // Including the rate limiting into the login form to apply to that endpoint (Zanini, 2024)

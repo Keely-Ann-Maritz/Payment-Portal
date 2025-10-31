@@ -27,21 +27,48 @@ const getPayments = async (req, res) => {
   }
 };
 
+// GET: Payments with pending status gets returned to the frontend
+const getPendingPayments = async (req, res) => {
+  try {
+    // create a new variable to hold the result of our query
+    // meaning that the database will return ALL items in the collection where the status matches 'pending'(so every payment in this case)
+    const payments = await Payment.find({ status: "pending" });
+    // return the pending payments
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+//endpoint that pulls only the accepted or rejected payments - (mongodb, N/A)
+const getUpdatedStatusPayments = async (req, res) => {
+  try {
+
+    // meaning that the database will return ALL items in the collection that matches the status being accepted or rejected(so every payment in this case)
+    const payments = await Payment.find({ $or: [{ status: "accepted" }, { status: "rejected" }] });
+    // return the payments
+    res.status(200).json(payments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // GET: payments for a specific username
 const getPaymentByUsername = async (req, res) => {
   // get the username of the payment that the user is looking for, from the parameters
   const username = req.params.username;
 
-  // if the username doesn't exist, inform the user
+  // if the username doesn't exist, inform the user with a message
   if (!username) {
     res.status(400).json({ message: "Please provide a username to search for!" });
   }
 
   try {
     // try find the payments related to that user, using the provided username
-    const payment = await Payment.find({username});
+    const payment = await Payment.find({ username });
 
-    // if no payment is found matching the provided username, it would mean that they havent added any payments on their account yet
+    // if no payment is found matching the provided username, it would mean that they haven't added any payments on their account yet
     if (!payment) {
       res.status(404).json({ message: "No payment found that matches that username." });
     }
@@ -49,7 +76,7 @@ const getPaymentByUsername = async (req, res) => {
     // if there is paynments created by them, return all of them to the frontend to display to the logged in user
     res.status(200).json(payment);
   } catch (error) {
-    // throws a server error there is an issue getting the payments of teh user
+    // returns a server error there is an issue getting the payments of the user
     res.status(500).json({ error: error.message });
   }
 };
@@ -59,9 +86,9 @@ const createPayment = async (req, res) => {
   // from the request sent by the browser/frontend application, look in the body for the required fields
   const { paymentTitle, currency, provider, amount, swiftCode, name, cardNumber, month, year, cvc, username } = req.body;
 
-  // checked that all information is provided
+  // checked that all fields is provided and not empty
   if (!paymentTitle || !currency || !provider || !amount || !swiftCode || !name || !cardNumber || !month || !year || !cvc) {
-     res
+    res
       .status(400)
       .json({ message: "Please ensure that all fields are provided." });
   }
@@ -69,17 +96,19 @@ const createPayment = async (req, res) => {
   try {
     // sanitzing the input fields to protect against XSS attacks (Das, 2025)
     const sanitizedPaymentTitle = DOMPurify.sanitize(paymentTitle)
-    const sanitizedSwiftCode= DOMPurify.sanitize(swiftCode)
+    const sanitizedSwiftCode = DOMPurify.sanitize(swiftCode)
     const sanitizedName = DOMPurify.sanitize(name)
 
     // salting and hashing the card number (Chaitanya, 2023)
     const cardNumSalt = await bcrypt.genSalt(10);
-    const hashedCardNumber = await bcrypt.hash(cardNumber.toString(), cardNumSalt);
+    //hashing, saltig and concatenating a pepper value to the card number
+    const hashedCardNumber = await bcrypt.hash(cardNumber.toString() + process.env.PEPPER, cardNumSalt);
 
     // salting and hashing the CVC/CVV (Chaitanya, 2023)
     const cvcSalt = await bcrypt.genSalt(10);
+    //hashing, saltig and concatenating a pepper value to the CVV number
 
-    const hashedCVV = await bcrypt.hash(cvc.toString(), cvcSalt);
+    const hashedCVV = await bcrypt.hash(cvc.toString() + process.env.PEPPER, cvcSalt);
 
     // create a new payment instance using the information provided to us (Chaitanya, 2023)
     // using the DOMPurify sanitized variables (Das, 2025)
@@ -122,6 +151,48 @@ const updatePayment = async (req, res) => {
   }
 };
 
+// Updating the payment status
+const updatePaymentStatus = async (req, res) => {
+
+  // first we get the ID from the url
+  const id = req.params.id;
+  const status = req.params.status;
+
+  try {
+    // firstly find the payment we need to update
+    let payment = await Payment.findById(id);
+
+    // if no payment ID is given, inform the user and don't proceed any further
+    if (!payment) {
+      res.status(404).json({ message: "No payment found that matches that ID." });
+    }
+
+    // otherwise, we then update the updated fields
+    // finally, ensure that the new version of the payment (post update) is returned, rather than the old payment
+
+    payment = await Payment.findByIdAndUpdate(
+
+      id,
+
+      { status: status },
+
+      { new: true }
+
+    );
+
+    // return success status 200 upon the payment successfully updating
+
+    res.status(202).json(payment);
+
+  } catch (error) {
+
+    // if it doesnt update we inform the frontend user
+
+    res.status(500).json({ error: error.message });
+
+  }
+
+};
 // DELETE: delete a payment from the database
 const deletePayment = async (req, res) => {
   // we pass the id of the payment we want to remove
@@ -141,7 +212,7 @@ const deletePayment = async (req, res) => {
       res.status(404).json({ message: "No payment found that matches that ID." });
     }
 
-    // find the payment, delete it, and return what it was
+    // find the payment, delete it, and return the details of the deleted payment
     payment = await Payment.findByIdAndDelete(id);
     res.status(202).json(payment);
   } catch (error) {
@@ -155,9 +226,13 @@ module.exports = {
   createPayment,
   updatePayment,
   deletePayment,
+  getPendingPayments,
+  getUpdatedStatusPayments,
+  updatePaymentStatus
 };
 
-// References 
+// References
 // Chaitanya, A., 2023.Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide. [online] Available at: <Salting and Hashing Passwords with bcrypt.js: A Comprehensive Guide | by Arun Chaitanya | Medium> [Accessed 2 October 2025].
 // Das, A.,2025.7 Best Practices for Sanitizing Input in Node.js. [online] Available at: < https://medium.com/devmap/7-best-practices-for-sanitizing-input-in-node-js-e61638440096> [Accessed 6 October 2025].
+// mongodb, N/A.$or . [online] Available at: <https://www.mongodb.com/docs/manual/reference/operator/query/or/> [Accessed 25 October 2025].
 

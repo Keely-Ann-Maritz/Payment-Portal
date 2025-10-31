@@ -1,6 +1,6 @@
 // calling in the required imports to handle routing between multiple pages
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navigation from './components/Navigation.jsx'
+import Navigation from './components/navigation.jsx'
 import { useState } from 'react'
 
 // call in our pages
@@ -10,9 +10,9 @@ import FormThankYou from './pages/FormThankYou.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import PaymentHistory from './pages/paymentHistory.jsx'
 import Register from './pages/Register.jsx'
-
 import './App.css'
-//routes for all the pages and the navbar, and which needs authentication to be accessed
+
+// routes for all the pages and the navbar, and which needs authentication to be accessed
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
   return (
@@ -33,5 +33,5 @@ function App() {
 
 export default App
 
-// References 
+// References
 // sahilatahar, 2023.In React, how to have a navbar on specific pages only. [online] Available at: < https://stackoverflow.com/questions/76942172/in-react-how-to-have-a-navbar-on-specific-pages-only> [Accessed 4 October 2025].

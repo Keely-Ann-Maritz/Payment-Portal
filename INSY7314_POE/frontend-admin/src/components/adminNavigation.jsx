@@ -8,7 +8,8 @@ import { useAuth } from "../context/AuthContext.jsx";
 // Importing logout
 import { Logout } from "../services/apiService.js";
 
-export default function Navigation() {
+// Admin Navigation function
+export default function AdminNavigation() {
     // Using the navigation (GeeksforGeeks,2025)
     const navigate = useNavigate()
     // Logging out variable (The Debug Arena, 2025)
@@ -23,14 +24,15 @@ export default function Navigation() {
         navigate('/')
     }
 
-    const username = sessionStorage.getItem("username");
+    const username = sessionStorage.getItem("adminUsername") || sessionStorage.getItem("EmployeeUsername");
+
 
     // Navigation bar which will display on teh payment history page(GeeksforGeeks,2025)
     return (
         <Navbar expand='lg' className='navbar-glass' style={{ backgroundColor: '#610595' }}>
             <Container>
                 <Navbar.Brand as={Link} to='/' className='text-white fw-bold fs-4'>
-                    <span className='text-primary-accent'></span> Payment Portal
+                    <span className='text-primary-accent'></span> Administrator Portal
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls='navbar-nav' className='border-0 text-white' />
@@ -39,17 +41,17 @@ export default function Navigation() {
                     <Nav className='me-auto gap-3'>
                         <Nav.Link
                             as={Link}
-                            to='/Form'
+                            to='/AddEmployee'
                             className='text-white hover-text-white transition-colors'
                         >
-                            Make Payment
+                            Add Employee
                         </Nav.Link>
                         <Nav.Link
                             as={Link}
-                            to='/paymentHistory'
+                            to='/ViewEmployees'
                             className='text-white hover-text-white transition-colors'
                         >
-                            Payment History
+                            View Accounts
                         </Nav.Link>
                     </Nav>
                     <Nav>

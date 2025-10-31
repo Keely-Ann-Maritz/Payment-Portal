@@ -1,14 +1,19 @@
 
-const helmet = require('helmet');
-const cors = require('cors');
+import mongoSanitize from '@exortek/express-mongo-sanitize'
+import helmet from 'helmet';
+import cors from 'cors';
 
 const corsOptions = {
-    // origin allows us to set where we will permit requests from (for now *, which allows everywhere and everyone!)
-    origin: '*',
+    // origin allows us to set where we will permit requests from all those ports for the 2 frontend portals
+    origin: ['https://localhost:5173',
+        'https://localhost:5174',
+        'https://localhost:8080',
+        'https://localhost:8081'],
     // controlling what types of HTTP requests we will permit
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // allow the flow of credentials between our backend API and out frontend web portal
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 // Setting the default Content Security Policy (CSP) to false (usefulcodes, 2025)
@@ -45,20 +50,22 @@ const securityMiddlewares = (app) => {
     app.use(
         helmet.contentSecurityPolicy({
             directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "'unsafe-inline'"],
-            styleSrc: ["'self'", "https://fonts.googleapis.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            imgSrc: ["'self'", "data:"],
-            connectSrc: ["'self'", "https://api.example.com"],
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "'unsafe-inline'"],
+                styleSrc: ["'self'", "https://fonts.googleapis.com"],
+                fontSrc: ["'self'", "https://fonts.gstatic.com"],
+                imgSrc: ["'self'", "data:"],
+                connectSrc: ["'self'", "https://api.example.com"],
             },
         })
     );
 
     app.use(cors(corsOptions));
+    //sanitises the inputs that comes from the endpoints to protect against SQL injection attacks
+    app.use(mongoSanitize());
 };
 
-module.exports = { securityMiddlewares }
+export { securityMiddlewares };
 
 // References
 // usefulcodes, 2025.Content Security Policy (CSP) Implementation in React. [online] Available at: <https://useful.codes/content-security-policy-csp-implementation-in-react/> [Accessed 7 October 2025].

@@ -1,16 +1,15 @@
-// Required imports 
+// Required imports
 import { useEffect } from 'react';
 import { createContext, useContext, useState } from 'react'
-import { fetchUserDetails } from '../services/apiService';
 
-// Remember if we're logged in
+// Remembering if we're logged in
 const AuthContext = createContext();
 
-export function AuthProvider({children}) {
+export function AuthProvider({ children }) {
     // variable to hold whether authenticated, and a corresponding setter method
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Handle various auth functions - updated our auth state
+    // handle various auth functions - updated our auth state
     const login = () => setIsAuthenticated(true);
     const logout = () => setIsAuthenticated(false);
 

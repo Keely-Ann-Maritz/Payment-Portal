@@ -53,17 +53,17 @@ export default function PaymentForm({ setShowNavbar }) {
     })
   }, [formData.cardNumber])
 
-  // (dangelo,2022)
+  // Regex (dangelo,2022)
   function containsOnlyLettters(str) {
     return /^[a-zA-Z]+$/.test(str);
   }
 
-  // (dangelo,2022)
+  // Regex (dangelo,2022)
   function containsLetttersAndSpaces(str) {
     return /^[a-zA-Z\s]+$/.test(str);
   }
 
-  // (dangelo,2022)
+  // Regex (dangelo,2022)
   function containsOnlyNumbers(str) {
     const removedSpaces = str.replace(/\s/g, '')
     return /^\d+$/.test(removedSpaces);
@@ -164,7 +164,7 @@ export default function PaymentForm({ setShowNavbar }) {
   };
 
   
-  // (dangelo,2022)
+  // Handle Input method (dangelo,2022)
   const handleInput = (e) => {
     const { name, value } = e.target
     setFormData(prevFormData => {
