@@ -15,6 +15,13 @@
 
 <br>
 
+## Admin Portal Credentials 
+| Username | Password |
+| --------------- | ----- | ---------------- |
+| Admin | Admin123 |
+
+<br>
+
 ## YouTube video
 * [Part 2 Demonstration Video](https://youtu.be/CcHt6UGd3lw)
 * [Part 3 Demonstration Video]()
