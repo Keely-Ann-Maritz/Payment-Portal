@@ -43,17 +43,32 @@ export default function ViewPendingPayments({ setShowNavbar }) {
  
  
     // we create a method to handle when the delete button is pressed
-    const handleDelete = async (id, status) => {
+    const handleStatus = async (id, status) => {
         // prompt the user to make sure that they're sure that they're sure they want to delete
-        if (
-            window.confirm( "Are you sure you want to update this payment status?")
-        ) {
-            // if yes, delete the payment using the provided id
-            await updateStatus(id, status);
-            // and update our cached payments array
-            fetchPayments();
-            // navigating to the view pending payments page
-            navigate("/ViewPendingPayments");
+ 
+        if (status === "accepted") {
+            if (
+                window.confirm(
+                    "Are you sure you want to accept this payment?"
+                )
+            ) {
+                // if yes, delete the payment using the provided id
+                await updateStatus(id, status);
+                // and update our cached payments array
+                await fetchPayments();
+            }
+        }
+        else if (status === "rejected") {
+            if (
+                window.confirm(
+                    "Are you sure you want to reject this payment?"
+                )
+            ) {
+                // if yes, delete the payment using the provided id
+                await updateStatus(id, status);
+                // and update our cached payments array
+                await fetchPayments();
+            }
         }
     };
  
@@ -102,20 +117,17 @@ export default function ViewPendingPayments({ setShowNavbar }) {
                                 <td>{payment.status}</td>
                                 <td>
                                     <button
-                                        className="btn btn-success "
+                                        className="btn btn-success me-2"
                                         onClick={() => {
-                                            handleDelete(payment._id, "accepted");
+                                            handleStatus(payment._id, "accepted");
                                         }}
                                     >
                                         Accept
                                     </button>
-                                </td>
- 
-                                <td>
                                     <button
                                         className="btn btn-danger "
                                         onClick={() => {
-                                            handleDelete(payment._id, "rejected");
+                                            handleStatus(payment._id, "rejected");
                                         }}
                                     >
                                         Reject
