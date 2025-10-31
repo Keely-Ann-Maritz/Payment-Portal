@@ -17,7 +17,7 @@
 
 ## Admin Portal Credentials 
 | Username | Password |
-| --------------- | ----- | ---------------- |
+| --------------- | ----- | 
 | Admin | Admin123 |
 
 <br>
