@@ -24,7 +24,7 @@
 
 ## YouTube video
 * [Part 2 Demonstration Video](https://youtu.be/CcHt6UGd3lw)
-* [Part 3 Demonstration Video]()
+* [Part 3 Demonstration Video](https://youtu.be/SDugh0YGFxA)
 
 <br>
 
